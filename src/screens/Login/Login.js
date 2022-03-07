@@ -1,8 +1,9 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "./styles";
 import { Button, Input, BackButton } from "../../common";
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -22,6 +23,18 @@ export default function Login() {
             variant="link"
             style={styles.forgotPWLink}
           />
+          <Button
+            title="Login"
+            onPress={() => navigation.navigate("GetStarted")}
+          />
+        </View>
+        <View style={styles.socialLoginWrapper}>
+          <View style={styles.divider} />
+          <Text style={styles.dividerText}>OR</Text>
+          <TouchableOpacity style={styles.socialLoginButton}>
+            <AntDesign name="google" size={24} color="#015EFF" />
+            <Text style={styles.socialLoginLabel}>Login with Google</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.buttonWrapper}>
@@ -34,10 +47,6 @@ export default function Login() {
             onPress={() => navigation.navigate("Signup")}
           />
         </View>
-        <Button
-          title="Login"
-          onPress={() => navigation.navigate("GetStarted")}
-        />
       </View>
     </View>
   );
