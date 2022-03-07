@@ -17,7 +17,11 @@ export default function Login() {
         </View>
         <View style={styles.formWrapper}>
           <Input placeholder="email address" style={styles.input} />
-          <Input placeholder="password" style={styles.input} />
+          <Input
+            secureTextEntry={true}
+            placeholder="password"
+            style={styles.input}
+          />
           <Button
             title="Forgot password?"
             variant="link"

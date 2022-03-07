@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   blurViewWrapper: {
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   headingWrapper: {
     justifyContent: "flex-start",
