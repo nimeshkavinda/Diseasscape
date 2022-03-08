@@ -16,7 +16,7 @@ export default function App() {
           component={GetStarted}
         />
         <Stack.Screen
-          // options={{ headerShown: false }}
+          options={{ headerShown: false }}
           name="Signup"
           component={Signup}
         />
