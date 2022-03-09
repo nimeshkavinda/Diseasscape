@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import AppStack from "./src/navigation";
 import AppLoading from "expo-app-loading";
-import React, { useState } from "react";
 import useFonts from "./src/hooks/useFonts";
 
 export default function App() {
@@ -15,7 +15,9 @@ export default function App() {
       <AppLoading
         startAsync={LoadFonts}
         onFinish={() => SetIsReady(true)}
-        onError={() => {}}
+        onError={(err) => {
+          console.log(err.message);
+        }}
       />
     );
   }
