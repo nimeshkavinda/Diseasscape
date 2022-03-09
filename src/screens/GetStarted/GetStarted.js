@@ -1,7 +1,7 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import styles from "./styles";
-import { Button } from "../../common";
+import { Button, Text } from "../../common";
 import { Video } from "expo-av";
 import { BlurView } from "expo-blur";
 import { StatusBar } from "expo-status-bar";

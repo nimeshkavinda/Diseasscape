@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "./styles";
-import { Button, Input, BackButton } from "../../common";
+import { Button, Input, BackButton, Text } from "../../common";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 

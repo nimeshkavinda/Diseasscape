@@ -1,3 +1,4 @@
 export { default as Button } from "./Button/Button";
 export { default as Input } from "./Input/Input";
 export { default as BackButton } from "./BackButton/BackButton";
+export { default as Text } from "./Text/Text";
