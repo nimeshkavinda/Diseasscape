@@ -26,10 +26,11 @@ export default function Login() {
             title="Forgot password?"
             variant="link"
             style={styles.forgotPWLink}
+            onPress={() => navigation.navigate("ForgotPassword")}
           />
           <Button
             title="Login"
-            onPress={() => navigation.navigate("GetStarted")}
+            onPress={() => navigation.navigate("HomeStack")}
           />
         </View>
         <View style={styles.socialLoginWrapper}>
