@@ -1,6 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components/native";
+import colors from "../../theme/colors";
+
+const borderColor = (isError) => {
+  if (isError) {
+    return `1px solid ${colors.error.primary}`;
+  }
+  return `none`;
+};
 
 const TextInput = styled.TextInput`
   display: flex;
@@ -11,6 +19,7 @@ const TextInput = styled.TextInput`
   border-radius: 12px;
   background-color: #f4f4f6;
   font-size: 18px;
+  border: ${({ isError }) => borderColor(isError)};
 `;
 
 export default function Input({
@@ -18,6 +27,7 @@ export default function Input({
   value,
   placeholder,
   onChangeText,
+  isError = false,
   ...props
 }) {
   return (
@@ -26,6 +36,7 @@ export default function Input({
       value={value}
       placeholder={placeholder}
       onChangeText={onChangeText}
+      isError={isError}
       selectionColor={"#9F9EA4"}
       {...props}
     />
@@ -37,4 +48,5 @@ Input.propTypes = {
   value: PropTypes.any,
   placeholder: PropTypes.string,
   onChangeText: PropTypes.func,
+  isError: PropTypes.bool,
 };
