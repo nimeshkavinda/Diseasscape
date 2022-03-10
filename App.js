@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import AppStack from "./src/navigation";
 import AppLoading from "expo-app-loading";
 import useFonts from "./src/hooks/useFonts";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import logger from "redux-logger";
+import rootReducer from "./src/redux/reducers";
+import thunk from "redux-thunk";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "./firebase.config";
+
+initializeApp(firebaseConfig);
+const store = createStore(rootReducer, {}, applyMiddleware(thunk, logger));
 
 export default function App() {
   const [IsReady, SetIsReady] = useState(false);
@@ -22,5 +32,9 @@ export default function App() {
     );
   }
 
-  return <AppStack />;
+  return (
+    <Provider store={store}>
+      <AppStack />
+    </Provider>
+  );
 }

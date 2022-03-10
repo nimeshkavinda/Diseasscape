@@ -1,9 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
-import Home from "../screens/Home/Home";
-import Profile from "../screens/Profile/Profile";
 import colors from "../theme/colors";
 import { Platform } from "react-native";
+import Home from "../screens/Home/Home";
+import Profile from "../screens/Profile/Profile";
+import Post from "../screens/Post/Post";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +17,8 @@ export default function HomeStack() {
           let iconName;
           if (route.name === "Home") {
             iconName = focused ? "home" : "home";
+          } else if (route.name === "Post") {
+            iconName = focused ? "pluscircleo" : "pluscircleo";
           } else if (route.name === "Profile") {
             iconName = focused ? "user" : "user";
           }
@@ -44,6 +47,11 @@ export default function HomeStack() {
         name="Home"
         options={{ headerShown: false }}
         component={Home}
+      />
+      <Tab.Screen
+        name="Post"
+        options={{ headerShown: false }}
+        component={Post}
       />
       <Tab.Screen
         name="Profile"

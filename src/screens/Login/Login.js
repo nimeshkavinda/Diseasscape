@@ -1,12 +1,16 @@
-import { View, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, TouchableOpacity, Alert } from "react-native";
+import React, { useState } from "react";
 import styles from "./styles";
 import { Button, Input, BackButton, Text, ValidationText } from "../../common";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import ac from "../../redux/actions";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     control,
     handleSubmit,
@@ -20,7 +24,22 @@ export default function Login() {
 
   const onSubmit = (data) => {
     console.log(data);
+    // Alert.alert(
+    //   "Login failure",
+    //   "Failed to login",
+    //   [
+    //     {
+    //       text: "OK",
+    //       style: "default",
+    //     },
+    //   ],
+    //   {
+    //     cancelable: true,
+    //   }
+    // );
     // navigation.navigate("HomeStack");
+
+    dispatch(ac.signIn(data.email, data.password));
   };
 
   const navigation = useNavigation();
@@ -37,6 +56,7 @@ export default function Login() {
             control={control}
             rules={{
               required: true,
+              pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
@@ -50,7 +70,11 @@ export default function Login() {
             )}
             name="email"
           />
-          {errors.email && <ValidationText>Email is required</ValidationText>}
+          {errors.email?.type === "required" ? (
+            <ValidationText>Email is required</ValidationText>
+          ) : errors.email?.type === "pattern" ? (
+            <ValidationText>Email is not valid</ValidationText>
+          ) : null}
 
           <Controller
             control={control}
@@ -59,7 +83,7 @@ export default function Login() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                secureTextEntry={true}
+                secureTextEntry={showPassword ? false : true}
                 placeholder="password"
                 style={styles.input}
                 onBlur={onBlur}
