@@ -7,13 +7,10 @@ import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import rootReducer from "./src/redux/reducers";
 import thunk from "redux-thunk";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "./firebase.config";
 
-initializeApp(firebaseConfig);
 const store = createStore(rootReducer, {}, applyMiddleware(thunk, logger));
 
-export default function App() {
+const App = () => {
   const [IsReady, SetIsReady] = useState(false);
 
   const LoadFonts = async () => {
@@ -37,4 +34,6 @@ export default function App() {
       <AppStack />
     </Provider>
   );
-}
+};
+
+export default App;

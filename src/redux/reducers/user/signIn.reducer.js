@@ -1,7 +1,7 @@
 import types from "../../types";
 
 export const signIn = (state = { fetching: false, error: false }, action) => {
-  switch (action.type) {
+  switch (action.data) {
     case types.user.signIn.started:
       return [...state, { fetching: true }];
     case types.user.signIn.success:

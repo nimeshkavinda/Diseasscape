@@ -5,7 +5,7 @@ import { Button, Input, BackButton, Text, ValidationText } from "../../common";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ac from "../../redux/actions";
 
 export default function Login() {
@@ -23,7 +23,6 @@ export default function Login() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     // Alert.alert(
     //   "Login failure",
     //   "Failed to login",
