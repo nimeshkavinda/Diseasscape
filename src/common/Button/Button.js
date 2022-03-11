@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components/native";
 import colors from "../../theme/colors";
+import { ActivityIndicator } from "react-native";
 
 const backgroundColor = (variant) => {
   switch (variant) {
@@ -45,12 +46,43 @@ const Title = styled.Text`
   color: ${({ variant }) => textColor(variant)};
 `;
 
-export default function Button({ title, onPress, style, variant = "primary" }) {
+const LoadingView = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+export default function Button({
+  title,
+  onPress,
+  style,
+  isLoading = false,
+  variant = "primary",
+}) {
   return (
-    <ButtonContainer variant={variant} style={style} onPress={onPress}>
-      <Title variant={variant} style={style}>
-        {title}
-      </Title>
+    <ButtonContainer
+      variant={variant}
+      style={style}
+      onPress={onPress}
+      disabled={isLoading}
+    >
+      {isLoading ? (
+        <LoadingView>
+          <ActivityIndicator
+            size="small"
+            color={colors.primary.text}
+            style={{ marginRight: 8 }}
+          />
+          <Title variant={variant} style={style}>
+            {title}
+          </Title>
+        </LoadingView>
+      ) : (
+        <Title variant={variant} style={style}>
+          {title}
+        </Title>
+      )}
     </ButtonContainer>
   );
 }
@@ -60,4 +92,5 @@ Button.propTypes = {
   title: PropTypes.string,
   onPress: PropTypes.func,
   variant: PropTypes.oneOf(["primary", "secondary", "link"]),
+  isLoading: PropTypes.bool,
 };
