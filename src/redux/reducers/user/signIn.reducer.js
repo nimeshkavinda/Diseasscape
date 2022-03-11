@@ -9,7 +9,7 @@ export const signIn = (state = { fetching: false, error: false }, action) => {
       return Object.assign({}, { fetching: false, data: { ...action.data } });
 
     case types.user.signIn.failed:
-      return Object.assign({}, { fetching: false, error: { ...action.error } });
+      return Object.assign({}, { fetching: false, error: { ...action.data } });
 
     default:
       return state;

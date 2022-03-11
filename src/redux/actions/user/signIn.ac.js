@@ -10,10 +10,9 @@ export const signIn = (email, password) => async (dispatch) => {
       const data = userCredential.user;
       dispatch(generateSyncAction(types.user.signIn.success, data));
     })
-    .catch((err) => {
-      //   const errorCode = error.code;
-      // const error = err.message;
-      dispatch(generateSyncAction(types.user.signIn.failed, err));
+    .catch((error) => {
+      // const error = { errorCode: err.code, message: err.message };
+      dispatch(generateSyncAction(types.user.signIn.failed, error));
     });
 };
 

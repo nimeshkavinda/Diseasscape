@@ -1,5 +1,5 @@
-import { View, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
-import React from "react";
+import { View, TouchableOpacity, Alert } from "react-native";
+import React, { useEffect } from "react";
 import styles from "./styles";
 import { Button, Input, BackButton, Text, ValidationText } from "../../common";
 import { useNavigation } from "@react-navigation/native";
@@ -21,36 +21,40 @@ export default function Login() {
     },
   });
 
-  // const fetching = useSelector(({ signIn: { fetching } }) => {
-  //   return fetching;
-  // });
+  const signIn = useSelector(({ signIn }) => signIn);
 
-  // const { user } = useSelector(({ signIn: data }) => {
-  //   return data ? data : {};
-  // });
-
-  // const { error } = useSelector(({ signIn: { error } }) => {
-  //   return error ? error : {};
-  // });
+  const fetching = useSelector(({ signIn: { fetching } }) => {
+    return fetching;
+  });
 
   const onSubmit = (data) => {
-    // Alert.alert(
-    //   "Login failure",
-    //   "Failed to login",
-    //   [
-    //     {
-    //       text: "OK",
-    //       style: "default",
-    //     },
-    //   ],
-    //   {
-    //     cancelable: true,
-    //   }
-    // );
-    // navigation.navigate("HomeStack");
-
     dispatch(ac.signIn(data.email, data.password));
   };
+
+  useEffect(
+    function () {
+      if (signIn.data) {
+        console.log(signIn.data);
+        // navigation.navigate("HomeStack");
+      }
+      if (signIn.error) {
+        Alert.alert(
+          "Failed to login",
+          signIn.error.code,
+          [
+            {
+              text: "OK",
+              style: "default",
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+      }
+    },
+    [signIn]
+  );
 
   const navigation = useNavigation();
   return (
@@ -114,7 +118,11 @@ export default function Login() {
             style={styles.forgotPWLink}
             onPress={() => navigation.navigate("ForgotPassword")}
           />
-          <Button title="Login" onPress={handleSubmit(onSubmit)} />
+          <Button
+            title="Login"
+            isLoading={fetching}
+            onPress={handleSubmit(onSubmit)}
+          />
         </View>
         <View style={styles.socialLoginWrapper}>
           <View style={styles.divider} />
