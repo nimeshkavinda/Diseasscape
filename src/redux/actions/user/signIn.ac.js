@@ -12,8 +12,8 @@ export const signIn = (email, password) => async (dispatch) => {
     })
     .catch((err) => {
       //   const errorCode = error.code;
-      const error = err.message;
-      dispatch(generateSyncAction(types.user.signIn.failed, error));
+      // const error = err.message;
+      dispatch(generateSyncAction(types.user.signIn.failed, err));
     });
 };
 
