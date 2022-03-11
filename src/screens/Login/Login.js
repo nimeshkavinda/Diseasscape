@@ -7,6 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import ac from "../../redux/actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -31,11 +32,57 @@ export default function Login() {
     dispatch(ac.signIn(data.email, data.password));
   };
 
+  const removeKeys = async () => {
+    const keys = ["@userToken", "userToken"];
+    try {
+      await AsyncStorage.multiRemove(keys);
+    } catch (e) {
+      // remove error
+    }
+  };
+
+  const getAllKeys = async () => {
+    let keys = [];
+    try {
+      keys = await AsyncStorage.getAllKeys();
+      console.log("Async storage keys: ", keys);
+    } catch (e) {
+      // read key error
+    }
+  };
+
+  const getKey = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        // value previously stored
+        console.log(`Async storage item: ${key}`, value);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  const setAuthToken = async (user) => {
+    try {
+      const jsonUser = JSON.stringify(user);
+      await AsyncStorage.setItem("userToken", jsonUser);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(
     function () {
       if (signIn.data) {
         console.log(signIn.data);
+        // setAuthToken(signIn.data);
         // navigation.navigate("HomeStack");
+        // removeKeys();
+        getKey(
+          "firebase:authUser:AIzaSyCuCI4SPT1UVPVg-MuKE36YxLcTjzp4xnE:[DEFAULT]"
+        );
+        getAllKeys();
       }
       if (signIn.error) {
         Alert.alert(
