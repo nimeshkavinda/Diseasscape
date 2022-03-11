@@ -7,8 +7,13 @@ import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import rootReducer from "./src/redux/reducers";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-const store = createStore(rootReducer, {}, applyMiddleware(thunk, logger));
+const store = createStore(
+  rootReducer,
+  {},
+  composeWithDevTools(applyMiddleware(thunk, logger))
+);
 
 const App = () => {
   const [IsReady, SetIsReady] = useState(false);
