@@ -1,16 +1,15 @@
-import { View, TouchableOpacity, Alert } from "react-native";
-import React, { useState } from "react";
+import { View, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import React from "react";
 import styles from "./styles";
 import { Button, Input, BackButton, Text, ValidationText } from "../../common";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ac from "../../redux/actions";
 
 export default function Login() {
   const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
   const {
     control,
     handleSubmit,
@@ -21,6 +20,18 @@ export default function Login() {
       password: "",
     },
   });
+
+  // const fetching = useSelector(({ signIn: { fetching } }) => {
+  //   return fetching;
+  // });
+
+  // const { user } = useSelector(({ signIn: data }) => {
+  //   return data ? data : {};
+  // });
+
+  // const { error } = useSelector(({ signIn: { error } }) => {
+  //   return error ? error : {};
+  // });
 
   const onSubmit = (data) => {
     // Alert.alert(
@@ -82,7 +93,7 @@ export default function Login() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                secureTextEntry={showPassword ? false : true}
+                secureTextEntry={true}
                 placeholder="password"
                 style={styles.input}
                 onBlur={onBlur}
