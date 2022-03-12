@@ -26,10 +26,10 @@ export default {
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF",
-        config: {
-          googleMaps: {
-            apiKey: process.env.GOOGLE_MAPS_API_KEY,
-          },
+      },
+      config: {
+        googleMaps: {
+          apiKey: process.env.GOOGLE_MAPS_API_KEY,
         },
       },
     },
