@@ -1,4 +1,5 @@
-import { StyleSheet, Platform, StatusBar } from "react-native";
+import { StyleSheet, Dimensions, Platform, StatusBar } from "react-native";
+import colors from "../../theme/colors";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -8,20 +9,25 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header: {
+    backgroundColor: "transparent",
     paddingHorizontal: 20,
-    paddingVertical: 30,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    paddingVertical: 20,
+    zIndex: 99,
   },
-  greeting: {},
-  greetingText: {
-    fontSize: 28,
-    fontWeight: "700",
-    lineHeight: 30,
+  map: {
+    position: "absolute",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
-  userName: { fontSize: 28, fontWeight: "500" },
-  avatar: { width: 50, height: 50, borderRadius: 50 },
+  searchInput: {
+    elevation: 6,
+    shadowColor: colors.grey.dark,
+    shadowOpacity: 0.1,
+    shadowOffset: {
+      height: 6,
+    },
+    shadowRadius: 30,
+  },
 });
 
 export default styles;

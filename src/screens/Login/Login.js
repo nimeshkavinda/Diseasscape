@@ -75,9 +75,8 @@ export default function Login() {
   useEffect(
     function () {
       if (signIn.data) {
-        console.log(signIn.data);
         // setAuthToken(signIn.data);
-        // navigation.navigate("HomeStack");
+        navigation.navigate("HomeStack");
         // removeKeys();
         getKey(
           "firebase:authUser:AIzaSyCuCI4SPT1UVPVg-MuKE36YxLcTjzp4xnE:[DEFAULT]"
