@@ -8,6 +8,7 @@ import logger from "redux-logger";
 import rootReducer from "./src/redux/reducers";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const store = createStore(
   rootReducer,
@@ -35,9 +36,11 @@ const App = () => {
   }
 
   return (
-    <Provider store={store}>
-      <AppStack />
-    </Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <AppStack />
+      </Provider>
+    </GestureHandlerRootView>
   );
 };
 
