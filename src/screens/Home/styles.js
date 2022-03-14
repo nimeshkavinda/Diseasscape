@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions, Platform, StatusBar } from "react-native";
+import colors from "../../theme/colors";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -28,6 +29,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     justifyContent: "center",
     alignItems: "center",
+    elevation: 6,
+    shadowColor: colors.grey.dark,
+    shadowOpacity: 0.1,
+    shadowOffset: {
+      height: 6,
+    },
+    shadowRadius: 30,
   },
   filterOptionTitle: { fontSize: 14, fontWeight: "500" },
   map: {
