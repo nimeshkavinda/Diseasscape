@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header: {
+    flex: 1,
     backgroundColor: "transparent",
     paddingHorizontal: 20,
     paddingVertical: 20,

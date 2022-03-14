@@ -5,6 +5,8 @@ import { Platform } from "react-native";
 import Home from "../screens/Home/Home";
 import Profile from "../screens/Profile/Profile";
 import Post from "../screens/Post/Post";
+import Events from "../screens/Events/Events";
+import LeaderBoard from "../screens/LeaderBoard/LeaderBoard";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,8 +19,12 @@ export default function HomeStack() {
           let iconName;
           if (route.name === "Home") {
             iconName = focused ? "home" : "home";
+          } else if (route.name === "Events") {
+            iconName = focused ? "calendar" : "calendar";
           } else if (route.name === "Post") {
             iconName = focused ? "pluscircleo" : "pluscircleo";
+          } else if (route.name === "LeaderBoard") {
+            iconName = focused ? "Trophy" : "Trophy";
           } else if (route.name === "Profile") {
             iconName = focused ? "user" : "user";
           }
@@ -49,9 +55,19 @@ export default function HomeStack() {
         component={Home}
       />
       <Tab.Screen
+        name="Events"
+        options={{ headerShown: false }}
+        component={Events}
+      />
+      <Tab.Screen
         name="Post"
         options={{ headerShown: false }}
         component={Post}
+      />
+      <Tab.Screen
+        name="LeaderBoard"
+        options={{ headerShown: false }}
+        component={LeaderBoard}
       />
       <Tab.Screen
         name="Profile"
