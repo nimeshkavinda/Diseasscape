@@ -12,23 +12,21 @@ import Constants from "expo-constants";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [initialRegion, setInitialRegion] = useState();
   const { coords, address, error } = useLocation();
   const [region, setRegion] = useState();
+  const [searchFocus, setSearchFocus] = useState(false);
   const [markers, setMarkers] = useState();
   const sheetRef = useRef(null);
   const snapPoints = useMemo(() => ["3%", "15%", "45%"], []);
 
-  const onRegionChange = (region) => {
-    // setRegion(region);
-  };
-
   useEffect(() => {
     if (coords && address !== null) {
-      setRegion({
+      setInitialRegion({
         latitude: coords?.latitude,
         longitude: coords?.longitude,
-        latitudeDelta: 0.03,
-        longitudeDelta: 0.09,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.01,
       });
       setIsLoaded(true);
     }
@@ -49,33 +47,94 @@ const Home = () => {
     }
   }, [coords, address, error]);
 
-  console.log(region);
+  const userLocation = {
+    description: "Current Location",
+    geometry: {
+      location: { lat: initialRegion?.latitude, lng: initialRegion?.longitude },
+    },
+  };
+
+  const onSearchResultSelect = (data, details) => {
+    console.log("Data: ", data, "Details: ", details);
+    setRegion({
+      latitude: details.geometry.location.lat,
+      longitude: details.geometry.location.lng,
+      latitudeDelta: 0.05,
+      longitudeDelta: 0.01,
+    });
+  };
+
+  const onRegionChange = (region) => {
+    // setRegion(region);
+    console.log("Region changed: ", region);
+  };
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <View style={styles.header}>
-        {/* <Input style={styles.searchInput} placeholder="Search" /> */}
+      <View
+        style={[
+          styles.header,
+          searchFocus === true
+            ? {
+                flex: 1,
+                backgroundColor: "#fff",
+              }
+            : { flex: 0.08 },
+        ]}
+      >
         <GooglePlacesAutocomplete
-          placeholder="Search"
-          onPress={(data, details = null) => {
-            // 'details' is provided when fetchDetails = true
-            console.log(data, details);
+          placeholder="Search places"
+          onPress={onSearchResultSelect}
+          textInputProps={{
+            onFocus: () => setSearchFocus(true),
+            onBlur: () => setSearchFocus(false),
           }}
+          // debounce={100}
+          fetchDetails={true}
+          disableScroll={true}
           query={{
             key: Constants.manifest?.extra?.googleMapsApiKey,
             language: "en",
             components: "country:lk",
           }}
           onFail={(error) => console.error(error)}
+          predefinedPlaces={[userLocation]}
+          enablePoweredByContainer={false}
+          styles={{
+            textInputContainer: {
+              elevation: 6,
+              shadowColor: colors.grey.dark,
+              shadowOpacity: 0.1,
+              shadowOffset: {
+                height: 6,
+              },
+              shadowRadius: 30,
+            },
+            textInput: {
+              borderRadius: 12,
+              height: 60,
+              fontSize: 18,
+            },
+            row: {
+              flexDirection: "row",
+              backgroundColor: "transparent",
+              paddingHorizontal: 5,
+              paddingVertical: 20,
+              height: 63,
+            },
+            separator: {
+              height: 1,
+              backgroundColor: colors.grey.medium,
+            },
+            description: { fontSize: 18 },
+          }}
         />
       </View>
       {isLoaded && (
         <Map
-          // mapType="hybrid"
           style={styles.map}
-          initialRegion={region}
+          initialRegion={initialRegion}
           region={region}
-          animateToRegion={{ region: region, duration: 5 }}
           onRegionChange={onRegionChange}
         >
           <Marker
@@ -87,8 +146,6 @@ const Home = () => {
         </Map>
       )}
       <BottomSheet
-        // index={0}
-        // enablePanDownToClose={true}
         ref={sheetRef}
         snapPoints={snapPoints}
         handleIndicatorStyle={{ backgroundColor: colors.grey.medium }}

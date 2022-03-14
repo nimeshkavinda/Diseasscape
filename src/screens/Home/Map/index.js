@@ -1,15 +1,20 @@
 import MapView from "react-native-maps";
 import PropTypes from "prop-types";
 
-const Map = ({ style, children, region, onRegionChange, ...props }) => {
+const Map = ({
+  style,
+  children,
+  initialRegion,
+  region,
+  onRegionChange,
+  ...props
+}) => {
   return (
     <MapView
       {...props}
-      // mapType="hybrid"
       style={style}
-      initialRegion={region}
+      initialRegion={initialRegion}
       region={region}
-      animateToRegion={{ region: region, duration: 5 }}
       onRegionChange={onRegionChange}
     >
       {children}
@@ -20,6 +25,7 @@ const Map = ({ style, children, region, onRegionChange, ...props }) => {
 Map.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   children: PropTypes.node,
+  initialRegion: PropTypes.object,
   region: PropTypes.object,
   onRegionChange: PropTypes.func,
 };

@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header: {
-    flex: 1,
     backgroundColor: "transparent",
     paddingHorizontal: 20,
     paddingVertical: 20,
@@ -19,15 +18,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-  },
-  searchInput: {
-    elevation: 6,
-    shadowColor: colors.grey.dark,
-    shadowOpacity: 0.1,
-    shadowOffset: {
-      height: 6,
-    },
-    shadowRadius: 30,
   },
 });
 
