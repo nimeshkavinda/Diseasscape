@@ -1,4 +1,10 @@
-import { View, SafeAreaView } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  FlatList,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Text } from "../../common";
 import styles from "./styles";
@@ -9,6 +15,7 @@ import Map from "./Map";
 import { Marker } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Constants from "expo-constants";
+import filterItemData from "../../data/filterItem.data";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -16,9 +23,11 @@ const Home = () => {
   const { coords, address, error } = useLocation();
   const [region, setRegion] = useState();
   const [searchFocus, setSearchFocus] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
   const [markers, setMarkers] = useState();
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["3%", "15%", "45%"], []);
+  const snapPoints = useMemo(() => ["20%", "45%", "70%"], []);
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -57,6 +66,7 @@ const Home = () => {
   const onSearchResultSelect = (data, details) => {
     console.log("Data: ", data, "Details: ", details);
     setRegion({
+      name: details.name,
       latitude: details.geometry.location.lat,
       longitude: details.geometry.location.lng,
       latitudeDelta: 0.05,
@@ -69,65 +79,111 @@ const Home = () => {
     console.log("Region changed: ", region);
   };
 
+  const FilterItem = ({ item, onPress, backgroundColor, textColor }) => (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.filterOption, backgroundColor]}
+    >
+      <Text style={[styles.filterOptionTitle, textColor]}>{item?.title}</Text>
+    </TouchableOpacity>
+  );
+
+  const renderFilterItem = ({ item }) => {
+    const backgroundColor =
+      item.id === selectedId ? colors.primary.bg : colors.secondary.bg;
+    const color =
+      item.id === selectedId ? colors.primary.text : colors.secondary.text;
+
+    return (
+      <FilterItem
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+        backgroundColor={{ backgroundColor }}
+        textColor={{ color }}
+      />
+    );
+  };
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View
         style={[
-          styles.header,
+          styles.headerWrapper,
           searchFocus === true
             ? {
                 flex: 1,
                 backgroundColor: "#fff",
               }
-            : { flex: 0.08 },
+            : { flex: 0.25 },
         ]}
       >
-        <GooglePlacesAutocomplete
-          placeholder="Search places"
-          onPress={onSearchResultSelect}
-          textInputProps={{
-            onFocus: () => setSearchFocus(true),
-            onBlur: () => setSearchFocus(false),
-          }}
-          // debounce={100}
-          fetchDetails={true}
-          disableScroll={true}
-          query={{
-            key: Constants.manifest?.extra?.googleMapsApiKey,
-            language: "en",
-            components: "country:lk",
-          }}
-          onFail={(error) => console.error(error)}
-          predefinedPlaces={[userLocation]}
-          enablePoweredByContainer={false}
-          styles={{
-            textInputContainer: {
-              elevation: 6,
-              shadowColor: colors.grey.dark,
-              shadowOpacity: 0.1,
-              shadowOffset: {
-                height: 6,
+        <View
+          style={[
+            styles.search,
+            searchFocus === true
+              ? {
+                  height: Dimensions.get("window").height,
+                  backgroundColor: "#fff",
+                }
+              : { flex: 0.1 },
+          ]}
+        >
+          <GooglePlacesAutocomplete
+            placeholder="Search places"
+            onPress={onSearchResultSelect}
+            textInputProps={{
+              onFocus: () => setSearchFocus(true),
+              onBlur: () => setSearchFocus(false),
+            }}
+            // debounce={100}
+            fetchDetails={true}
+            disableScroll={true}
+            query={{
+              key: Constants.manifest?.extra?.googleMapsApiKey,
+              language: "en",
+              components: "country:lk",
+            }}
+            onFail={(error) => console.error(error)}
+            predefinedPlaces={[userLocation]}
+            enablePoweredByContainer={false}
+            styles={{
+              textInputContainer: {
+                elevation: 6,
+                shadowColor: colors.grey.dark,
+                shadowOpacity: 0.1,
+                shadowOffset: {
+                  height: 6,
+                },
+                shadowRadius: 30,
               },
-              shadowRadius: 30,
-            },
-            textInput: {
-              borderRadius: 12,
-              height: 60,
-              fontSize: 18,
-            },
-            row: {
-              flexDirection: "row",
-              backgroundColor: "transparent",
-              paddingHorizontal: 5,
-              paddingVertical: 20,
-              height: 63,
-            },
-            separator: {
-              height: 1,
-              backgroundColor: colors.grey.medium,
-            },
-            description: { fontSize: 18 },
-          }}
+              textInput: {
+                borderRadius: 12,
+                height: 60,
+                fontSize: 18,
+                paddingHorizontal: 16,
+              },
+              row: {
+                flexDirection: "row",
+                backgroundColor: "transparent",
+                paddingHorizontal: 4,
+                paddingVertical: 20,
+                height: 63,
+              },
+              separator: {
+                height: 1,
+                backgroundColor: colors.grey.medium,
+              },
+              description: { fontSize: 18 },
+            }}
+          />
+        </View>
+        <FlatList
+          data={filterItemData}
+          renderItem={renderFilterItem}
+          keyExtractor={(item) => item.id}
+          style={styles.filterWrapper}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
         />
       </View>
       {isLoaded && (
@@ -150,8 +206,10 @@ const Home = () => {
         snapPoints={snapPoints}
         handleIndicatorStyle={{ backgroundColor: colors.grey.medium }}
       >
-        <BottomSheetView>
-          <Text>test</Text>
+        <BottomSheetView style={styles.locationInfoWrapper}>
+          <View style={styles.locationInfo}>
+            <Text style={styles.locationName}>{region?.name}</Text>
+          </View>
         </BottomSheetView>
       </BottomSheet>
     </SafeAreaView>
