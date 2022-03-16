@@ -133,7 +133,7 @@ const Home = () => {
                 flex: 1,
                 backgroundColor: "#fff",
               }
-            : { flex: 0.8 },
+            : { flex: 0.23 },
         ]}
       >
         <View
@@ -144,7 +144,7 @@ const Home = () => {
                   height: Dimensions.get("window").height,
                   backgroundColor: "#fff",
                 }
-              : { flex: 0.1 },
+              : { flex: 2 },
           ]}
         >
           <GooglePlacesAutocomplete
