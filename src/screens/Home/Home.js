@@ -1,10 +1,4 @@
-import {
-  View,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { View, SafeAreaView, FlatList, Dimensions } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Text, FilterButton } from "../../common";
 import styles from "./styles";
@@ -27,7 +21,6 @@ const Home = () => {
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedFilterId, setSelectedFilterId] = useState(1);
 
-  // markers
   const [patientMarkers, setPatientMarkers] = useState(patients);
   const [postMarkers, setPostMarkers] = useState(posts);
   const [eventMarkers, setEventMarkers] = useState(events);
@@ -98,33 +91,6 @@ const Home = () => {
       longitudeDelta: 0.01,
     });
   };
-
-  // const FilterItem = ({ item, onPress, backgroundColor, textColor }) => (
-  //   <TouchableOpacity
-  //     onPress={() => setSelectedFilterId(item.id)}
-  //     style={[styles.filterOption, backgroundColor]}
-  //   >
-  //     <Text style={[styles.filterOptionTitle, textColor]}>{item?.title}</Text>
-  //   </TouchableOpacity>
-  // );
-
-  // const renderFilterItem = ({ item }) => {
-  //   const backgroundColor =
-  //     item.id === selectedFilterId ? colors.primary.bg : colors.secondary.bg;
-  //   const color =
-  //     item.id === selectedFilterId
-  //       ? colors.primary.text
-  //       : colors.secondary.text;
-
-  //   return (
-  //     <FilterItem
-  //       item={item}
-  //       onPress={() => setSelectedId(item.id)}
-  //       backgroundColor={{ backgroundColor }}
-  //       textColor={{ color }}
-  //     />
-  //   );
-  // };
 
   return (
     <SafeAreaView style={styles.wrapper}>
