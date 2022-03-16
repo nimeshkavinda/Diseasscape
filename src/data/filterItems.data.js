@@ -1,4 +1,4 @@
-const filterItemData = [
+const filterItems = [
   {
     id: 1,
     title: "All",
@@ -17,4 +17,4 @@ const filterItemData = [
   },
 ];
 
-export default filterItemData;
+export default filterItems;

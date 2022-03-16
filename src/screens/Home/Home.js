@@ -7,11 +7,12 @@ import useLocation from "../../hooks/useLocation";
 import MapView, { Marker } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Constants from "expo-constants";
-import filterItemData from "../../data/filterItem.data";
+import filterItems from "../../data/filterItems.data";
 import patients from "../../data/patients.data";
 import posts from "../../data/posts.data";
 import events from "../../data/events.data";
 import AllStatsModal from "./AllStatsModal/AllStatsModal";
+import PatientModal from "./PatientModal/PatientModal";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,7 +21,13 @@ const Home = () => {
   const [region, setRegion] = useState();
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedFilterId, setSelectedFilterId] = useState(1);
+
+  // all stats
   const [statsModalVisibility, setStatsModalVisibility] = useState(true);
+
+  // patients
+  const [patientModalVisibility, setPatientModalVisibility] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState();
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -100,7 +107,16 @@ const Home = () => {
         />
       );
     } else if (selectedFilterId === 2) {
-      return null;
+      return (
+        <PatientModal
+          visible={patientModalVisibility}
+          patientId={selectedPatient?.id}
+          patient={selectedPatient}
+          isNearYou={
+            userRegion?.vicinity === selectedPatient?.vicinity ? true : false
+          }
+        />
+      );
     } else if (selectedFilterId === 3) {
       return null;
     } else if (selectedFilterId === 4) {
@@ -117,10 +133,8 @@ const Home = () => {
             <Marker
               key={patient.id}
               coordinate={patient.latLng}
-              title={patient.title}
-              description={patient.title}
               pinColor="red"
-              onPress={() => console.log(patient)}
+              onPress={() => onPatientSelect(patient)}
             />
           ))}
           {posts.map((post) => (
@@ -148,10 +162,8 @@ const Home = () => {
             <Marker
               key={patient.id}
               coordinate={patient.latLng}
-              title={patient.title}
-              description={patient.title}
               pinColor="red"
-              onPress={() => console.log(patient)}
+              onPress={() => onPatientSelect(patient)}
             />
           ))}
         </>
@@ -184,6 +196,12 @@ const Home = () => {
       );
     }
     return null;
+  };
+
+  const onPatientSelect = (patient) => {
+    console.log("Selected Patient: ", patient);
+    setSelectedPatient(patient);
+    setPatientModalVisibility(true);
   };
 
   return (
@@ -261,7 +279,7 @@ const Home = () => {
           />
         </View>
         <FlatList
-          data={filterItemData}
+          data={filterItems}
           renderItem={({ item }) => (
             <FilterButton
               item={item}

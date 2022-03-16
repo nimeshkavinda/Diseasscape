@@ -16,7 +16,7 @@ const AllStatsModal = ({
   visible,
 }) => {
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["14%", "28%"], []);
+  const snapPoints = useMemo(() => ["15%", "30%"], []);
   const handleClosePress = () => sheetRef.current.snapToPosition(-1);
   const openModal = () => sheetRef.current.snapToIndex(0);
 
