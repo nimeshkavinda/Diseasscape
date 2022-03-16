@@ -84,6 +84,7 @@ const Home = () => {
       latitudeDelta: 0.05,
       longitudeDelta: 0.01,
     });
+    setStatsModalVisibility(true);
   };
 
   return (
@@ -247,6 +248,7 @@ const Home = () => {
         </MapView>
       )}
       <AllStatsModal
+        visible={statsModalVisibility}
         name={region?.name}
         vicinity={region?.vicinity}
         patients={124}

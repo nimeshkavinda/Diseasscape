@@ -1,5 +1,5 @@
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import colors from "../../../theme/colors";
@@ -7,12 +7,26 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const AllStatsModal = ({ name, vicinity, patients, posts, events }) => {
+const AllStatsModal = ({
+  name,
+  vicinity,
+  patients,
+  posts,
+  events,
+  visible,
+}) => {
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["28%"], []);
+  const snapPoints = useMemo(() => ["14%", "28%"], []);
+  const handleClosePress = () => sheetRef.current.snapToPosition(-1);
+  const openModal = () => sheetRef.current.snapToIndex(0);
+
+  useEffect(() => {
+    openModal();
+  }, [name, vicinity]);
 
   return (
     <BottomSheet
+      index={visible == true ? 0 : -1}
       ref={sheetRef}
       snapPoints={snapPoints}
       handleIndicatorStyle={{ backgroundColor: colors.grey.medium }}
@@ -30,7 +44,7 @@ const AllStatsModal = ({ name, vicinity, patients, posts, events }) => {
               <Text style={styles.locationVicinityText}>{vicinity}</Text>
             </View>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleClosePress}>
             <AntDesign
               name="closecircle"
               size={24}

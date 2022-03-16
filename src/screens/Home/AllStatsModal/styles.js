@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     borderBottomColor: colors.grey.medium,
     borderBottomWidth: 1,
-    paddingBottom: 20,
+    paddingBottom: 22,
   },
   locationHeaderTitle: {
     flexDirection: "column",
@@ -47,12 +47,15 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#808080",
   },
-  locationDataCount: { flexDirection: "row", alignItems: "center" },
+  locationDataCount: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 6,
+  },
   locationDataCountText: {
     fontSize: 21,
     fontWeight: "bold",
     marginLeft: 6,
-    marginVertical: 6,
   },
 });
 
