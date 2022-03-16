@@ -1,8 +1,7 @@
 import { View, SafeAreaView, FlatList, Dimensions } from "react-native";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Text, FilterButton } from "../../common";
+import React, { useEffect, useState } from "react";
+import { FilterButton } from "../../common";
 import styles from "./styles";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import colors from "../../theme/colors";
 import useLocation from "../../hooks/useLocation";
 import MapView, { Marker } from "react-native-maps";
@@ -12,6 +11,7 @@ import filterItemData from "../../data/filterItem.data";
 import patients from "../../data/patients.data";
 import posts from "../../data/posts.data";
 import events from "../../data/events.data";
+import BottomSheetModal from "./BottomSheetModal/BottomSheetModal";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,13 +20,6 @@ const Home = () => {
   const [region, setRegion] = useState();
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedFilterId, setSelectedFilterId] = useState(1);
-
-  const [patientMarkers, setPatientMarkers] = useState(patients);
-  const [postMarkers, setPostMarkers] = useState(posts);
-  const [eventMarkers, setEventMarkers] = useState(events);
-
-  const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["35%", "45%", "70%"], []);
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -127,13 +120,12 @@ const Home = () => {
             debounce={200}
             fetchDetails={true}
             disableScroll={true}
-            // currentLocation={true}
             query={{
               key: Constants.manifest?.extra?.googleMapsApiKey,
               language: "en",
               components: "country:lk",
             }}
-            onFail={(error) => console.error(error)}
+            onFail={(error) => console.error("Autocomplete err: ", error)}
             predefinedPlaces={[userLocation]}
             enablePoweredByContainer={false}
             styles={{
@@ -253,39 +245,7 @@ const Home = () => {
           )}
         </MapView>
       )}
-      {/* <BottomSheet
-        ref={sheetRef}
-        snapPoints={snapPoints}
-        handleIndicatorStyle={{ backgroundColor: colors.grey.medium }}
-      >
-        <BottomSheetView style={styles.locationInfoWrapper}>
-          <View style={styles.locationInfo}>
-            <View style={styles.locationHeaderWrapper}>
-              <Text style={styles.locationName}>{region?.name}</Text>
-              <View style={styles.locationProvince}>
-                <FontAwesome5 name="map-marker-alt" size={14} color="black" />
-                <Text style={styles.locationProvinceText}>
-                  {region?.vicinity}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.locationDataWrapper}>
-              <View style={styles.locationData}>
-                <Text style={styles.locationDataCount}>300</Text>
-                <Text style={styles.locationDataTitle}>Patients</Text>
-              </View>
-              <View style={styles.locationData}>
-                <Text style={styles.locationDataCount}>15</Text>
-                <Text style={styles.locationDataTitle}>Risk sites</Text>
-              </View>
-              <View style={styles.locationData}>
-                <Text style={styles.locationDataCount}>8</Text>
-                <Text style={styles.locationDataTitle}>Events</Text>
-              </View>
-            </View>
-          </View>
-        </BottomSheetView>
-      </BottomSheet> */}
+      <BottomSheetModal />
     </SafeAreaView>
   );
 };
