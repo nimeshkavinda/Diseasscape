@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions, Platform, StatusBar } from "react-native";
+import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import colors from "../../theme/colors";
 
 const styles = StyleSheet.create({
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     zIndex: 999,
   },
-  filterWrapper: { top: 38, paddingVertical: 14, paddingLeft: 20 },
+  filterWrapper: { paddingVertical: 14, paddingLeft: 20 },
   filterOption: {
     height: 36,
     paddingVertical: Platform.OS === "android" ? 8 : 10,
@@ -50,7 +51,39 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
   locationInfo: {},
-  locationName: { width: "60%", fontSize: 24, fontWeight: "bold" },
+  locationHeaderWrapper: { flexDirection: "column" },
+  locationName: { fontSize: 26, fontWeight: "bold", marginBottom: 6 },
+  locationProvince: { flexDirection: "row", alignItems: "center" },
+  locationProvinceText: {
+    marginLeft: 6,
+    fontSize: 16,
+    fontWeight: "500",
+    color: colors.grey.dark,
+  },
+  locationDataWrapper: {
+    backgroundColor: "#F3F4FA",
+    marginVertical: 25,
+    padding: 30,
+    borderRadius: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  locationData: {
+    flexDirection: "column",
+    alignItems: "center",
+    width: "33.3%",
+  },
+  locationDataCount: {
+    fontSize: 21,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  locationDataTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#909090",
+  },
 });
 
 export default styles;

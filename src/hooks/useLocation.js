@@ -27,10 +27,13 @@ const useLocation = () => {
     if (coords) {
       let { latitude, longitude } = coords;
 
-      let regionName = await Location.reverseGeocodeAsync({
-        longitude,
-        latitude,
-      });
+      let regionName = await Location.reverseGeocodeAsync(
+        {
+          longitude,
+          latitude,
+        },
+        { useGoogleMaps: true }
+      );
 
       setLocation({
         ...location,

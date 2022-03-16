@@ -16,22 +16,33 @@ import { Marker } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Constants from "expo-constants";
 import filterItemData from "../../data/filterItem.data";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [initialRegion, setInitialRegion] = useState();
+  const [userRegion, setUserRegion] = useState();
   const { coords, address, error } = useLocation();
   const [region, setRegion] = useState();
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-
   const [markers, setMarkers] = useState();
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["20%", "45%", "70%"], []);
+  const snapPoints = useMemo(() => ["35%", "45%", "70%"], []);
 
   useEffect(() => {
     if (coords && address !== null) {
-      setInitialRegion({
+      console.log("Coords: ", coords, "Address: ", address);
+      setUserRegion({
+        name: address?.city,
+        vicinity: address?.city,
+        latitude: coords?.latitude,
+        longitude: coords?.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.01,
+      });
+      setRegion({
+        name: address?.city,
+        vicinity: address?.city,
         latitude: coords?.latitude,
         longitude: coords?.longitude,
         latitudeDelta: 0.05,
@@ -59,14 +70,22 @@ const Home = () => {
   const userLocation = {
     description: "Current Location",
     geometry: {
-      location: { lat: initialRegion?.latitude, lng: initialRegion?.longitude },
+      location: { lat: userRegion?.latitude, lng: userRegion?.longitude },
     },
+    address: { name: address?.city, vicinity: address?.city },
   };
 
   const onSearchResultSelect = (data, details) => {
     console.log("Data: ", data, "Details: ", details);
     setRegion({
-      name: details.name,
+      name:
+        data.description === "Current Location"
+          ? data.address?.name
+          : details.name,
+      vicinity:
+        data.description === "Current Location"
+          ? data.address?.vicinity
+          : details.vicinity,
       latitude: details.geometry.location.lat,
       longitude: details.geometry.location.lng,
       latitudeDelta: 0.05,
@@ -76,7 +95,7 @@ const Home = () => {
 
   const onRegionChange = (region) => {
     // setRegion(region);
-    console.log("Region changed: ", region);
+    // console.log("Region changed: ", region);
   };
 
   const FilterItem = ({ item, onPress, backgroundColor, textColor }) => (
@@ -114,7 +133,7 @@ const Home = () => {
                 flex: 1,
                 backgroundColor: "#fff",
               }
-            : { flex: 0.25 },
+            : { flex: 0.8 },
         ]}
       >
         <View
@@ -135,9 +154,11 @@ const Home = () => {
               onFocus: () => setSearchFocus(true),
               onBlur: () => setSearchFocus(false),
             }}
-            // debounce={100}
+            minLength={2}
+            debounce={200}
             fetchDetails={true}
             disableScroll={true}
+            // currentLocation={true}
             query={{
               key: Constants.manifest?.extra?.googleMapsApiKey,
               language: "en",
@@ -189,7 +210,7 @@ const Home = () => {
       {isLoaded && (
         <Map
           style={styles.map}
-          initialRegion={initialRegion}
+          initialRegion={userRegion}
           region={region}
           onRegionChange={onRegionChange}
         >
@@ -208,7 +229,29 @@ const Home = () => {
       >
         <BottomSheetView style={styles.locationInfoWrapper}>
           <View style={styles.locationInfo}>
-            <Text style={styles.locationName}>{region?.name}</Text>
+            <View style={styles.locationHeaderWrapper}>
+              <Text style={styles.locationName}>{region?.name}</Text>
+              <View style={styles.locationProvince}>
+                <FontAwesome5 name="map-marker-alt" size={14} color="black" />
+                <Text style={styles.locationProvinceText}>
+                  {region?.vicinity}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.locationDataWrapper}>
+              <View style={styles.locationData}>
+                <Text style={styles.locationDataCount}>300</Text>
+                <Text style={styles.locationDataTitle}>Patients</Text>
+              </View>
+              <View style={styles.locationData}>
+                <Text style={styles.locationDataCount}>15</Text>
+                <Text style={styles.locationDataTitle}>Risk sites</Text>
+              </View>
+              <View style={styles.locationData}>
+                <Text style={styles.locationDataCount}>8</Text>
+                <Text style={styles.locationDataTitle}>Events</Text>
+              </View>
+            </View>
           </View>
         </BottomSheetView>
       </BottomSheet>

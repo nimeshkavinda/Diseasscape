@@ -9,15 +9,11 @@ const filterItemData = [
   },
   {
     id: 3,
-    title: "Risk Sites",
+    title: "Risk sites",
   },
   {
     id: 4,
-    title: "Meetups",
-  },
-  {
-    id: 5,
-    title: "COVID-19",
+    title: "Events",
   },
 ];
 

@@ -16,22 +16,24 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   buttonWrapper: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
   },
   title: {
-    fontSize: 38,
+    fontSize: 30,
     fontWeight: "700",
-    lineHeight: 42,
+    lineHeight: 34,
     marginBottom: 8,
     width: "90%",
   },
   subtitle: {
-    fontSize: 28,
+    fontSize: 21,
     fontWeight: "500",
   },
   linkButton: {
     marginTop: 8,
-    marginBottom: 6,
+    marginBottom: 4,
   },
   video: {
     position: "absolute",

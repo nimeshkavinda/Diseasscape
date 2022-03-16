@@ -14,7 +14,7 @@ export default function GetStarted() {
       <Video
         style={styles.video}
         source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/diseasscape.appspot.com/o/1.mp4?alt=media&token=4258d7be-b2fa-4edd-9560-dcf573c8559e",
+          uri: "https://firebasestorage.googleapis.com/v0/b/diseasscape.appspot.com/o/1.mp4?alt=media&token=0390b605-5de8-4fe3-8f44-05ff6be43718",
         }}
         useNativeControls={false}
         resizeMode="cover"
@@ -22,10 +22,14 @@ export default function GetStarted() {
         isMuted
         shouldPlay
       />
-      <BlurView intensity={80} tint="light" style={styles.blurViewWrapper}>
+      <BlurView intensity={100} tint="light" style={styles.blurViewWrapper}>
         <View style={styles.headingWrapper}>
-          <Text style={styles.title}>It is health that is the real wealth</Text>
-          <Text style={styles.subtitle}>Start your campaign now</Text>
+          <Text style={styles.title}>
+            The groundwork of all happiness is health.
+          </Text>
+          <Text style={styles.subtitle}>
+            It's a responsibility we all share
+          </Text>
         </View>
         <View style={styles.buttonWrapper}>
           <Button
@@ -40,7 +44,7 @@ export default function GetStarted() {
           />
         </View>
       </BlurView>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
     </View>
   );
 }
