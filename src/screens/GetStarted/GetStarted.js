@@ -44,7 +44,7 @@ export default function GetStarted() {
           />
         </View>
       </BlurView>
-      <StatusBar style="light" />
+      {/* <StatusBar style="light" /> */}
     </View>
   );
 }

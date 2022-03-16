@@ -9,7 +9,7 @@ const filterItemData = [
   },
   {
     id: 3,
-    title: "Risk sites",
+    title: "Posts",
   },
   {
     id: 4,

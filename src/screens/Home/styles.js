@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions, Platform, StatusBar } from "react-native";
-import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import colors from "../../theme/colors";
 
 const styles = StyleSheet.create({

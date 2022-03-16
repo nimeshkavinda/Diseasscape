@@ -11,12 +11,13 @@ import styles from "./styles";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import colors from "../../theme/colors";
 import useLocation from "../../hooks/useLocation";
-import Map from "./Map";
-import { Marker } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Constants from "expo-constants";
 import filterItemData from "../../data/filterItem.data";
-import { FontAwesome5 } from "@expo/vector-icons";
+import patients from "../../data/patients.data";
+import posts from "../../data/posts.data";
+import events from "../../data/events.data";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,8 +25,13 @@ const Home = () => {
   const { coords, address, error } = useLocation();
   const [region, setRegion] = useState();
   const [searchFocus, setSearchFocus] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
-  const [markers, setMarkers] = useState();
+  const [selectedFilterId, setSelectedFilterId] = useState(1);
+
+  // markers
+  const [patientMarkers, setPatientMarkers] = useState(patients);
+  const [postMarkers, setPostMarkers] = useState(posts);
+  const [eventMarkers, setEventMarkers] = useState(events);
+
   const sheetRef = useRef(null);
   const snapPoints = useMemo(() => ["35%", "45%", "70%"], []);
 
@@ -93,14 +99,9 @@ const Home = () => {
     });
   };
 
-  const onRegionChange = (region) => {
-    // setRegion(region);
-    // console.log("Region changed: ", region);
-  };
-
   const FilterItem = ({ item, onPress, backgroundColor, textColor }) => (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => setSelectedFilterId(item.id)}
       style={[styles.filterOption, backgroundColor]}
     >
       <Text style={[styles.filterOptionTitle, textColor]}>{item?.title}</Text>
@@ -109,9 +110,11 @@ const Home = () => {
 
   const renderFilterItem = ({ item }) => {
     const backgroundColor =
-      item.id === selectedId ? colors.primary.bg : colors.secondary.bg;
+      item.id === selectedFilterId ? colors.primary.bg : colors.secondary.bg;
     const color =
-      item.id === selectedId ? colors.primary.text : colors.secondary.text;
+      item.id === selectedFilterId
+        ? colors.primary.text
+        : colors.secondary.text;
 
     return (
       <FilterItem
@@ -208,21 +211,83 @@ const Home = () => {
         />
       </View>
       {isLoaded && (
-        <Map
-          style={styles.map}
-          initialRegion={userRegion}
-          region={region}
-          onRegionChange={onRegionChange}
-        >
-          <Marker
-            coordinate={{
-              latitude: coords?.latitude,
-              longitude: coords?.longitude,
-            }}
-          />
-        </Map>
+        <MapView style={styles.map} initialRegion={userRegion} region={region}>
+          {selectedFilterId === 1 ? (
+            <>
+              {patients.map((patient) => (
+                <Marker
+                  key={patient.id}
+                  coordinate={{
+                    latitude: patient.location.lat,
+                    longitude: patient.location.lng,
+                  }}
+                  title={patient.title}
+                  description={patient.title}
+                />
+              ))}
+              {posts.map((post) => (
+                <Marker
+                  key={post.id}
+                  coordinate={{
+                    latitude: post.location.lat,
+                    longitude: post.location.lng,
+                  }}
+                  title={post.title}
+                  description={post.title}
+                />
+              ))}
+              {events.map((event) => (
+                <Marker
+                  key={event.id}
+                  coordinate={{
+                    latitude: event.location.lat,
+                    longitude: event.location.lng,
+                  }}
+                  title={event.title}
+                  description={event.title}
+                />
+              ))}
+            </>
+          ) : selectedFilterId === 2 ? (
+            patients.map((patient) => (
+              <Marker
+                key={patient.id}
+                coordinate={{
+                  latitude: patient.location.lat,
+                  longitude: patient.location.lng,
+                }}
+                title={patient.title}
+                description={patient.title}
+              />
+            ))
+          ) : selectedFilterId === 3 ? (
+            posts.map((post) => (
+              <Marker
+                key={post.id}
+                coordinate={{
+                  latitude: post.location.lat,
+                  longitude: post.location.lng,
+                }}
+                title={post.title}
+                description={post.title}
+              />
+            ))
+          ) : (
+            events.map((event) => (
+              <Marker
+                key={event.id}
+                coordinate={{
+                  latitude: event.location.lat,
+                  longitude: event.location.lng,
+                }}
+                title={event.title}
+                description={event.title}
+              />
+            ))
+          )}
+        </MapView>
       )}
-      <BottomSheet
+      {/* <BottomSheet
         ref={sheetRef}
         snapPoints={snapPoints}
         handleIndicatorStyle={{ backgroundColor: colors.grey.medium }}
@@ -254,7 +319,7 @@ const Home = () => {
             </View>
           </View>
         </BottomSheetView>
-      </BottomSheet>
+      </BottomSheet> */}
     </SafeAreaView>
   );
 };
