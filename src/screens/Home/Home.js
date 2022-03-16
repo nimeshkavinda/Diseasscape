@@ -87,6 +87,105 @@ const Home = () => {
     setStatsModalVisibility(true);
   };
 
+  const BottomSheet = () => {
+    if (selectedFilterId === 1) {
+      return (
+        <AllStatsModal
+          visible={statsModalVisibility}
+          name={region?.name}
+          vicinity={region?.vicinity}
+          patients={124}
+          posts={41}
+          events={11}
+        />
+      );
+    } else if (selectedFilterId === 2) {
+      return null;
+    } else if (selectedFilterId === 3) {
+      return null;
+    } else if (selectedFilterId === 4) {
+      return null;
+    }
+    return null;
+  };
+
+  const MapMarkers = () => {
+    if (selectedFilterId === 1) {
+      return (
+        <>
+          {patients.map((patient) => (
+            <Marker
+              key={patient.id}
+              coordinate={patient.latLng}
+              title={patient.title}
+              description={patient.title}
+              pinColor="red"
+              onPress={() => console.log(patient)}
+            />
+          ))}
+          {posts.map((post) => (
+            <Marker
+              key={post.id}
+              coordinate={post.latLng}
+              pinColor="green"
+              onPress={() => console.log(post)}
+            />
+          ))}
+          {events.map((event) => (
+            <Marker
+              key={event.id}
+              coordinate={event.latLng}
+              pinColor="blue"
+              onPress={() => console.log(event)}
+            />
+          ))}
+        </>
+      );
+    } else if (selectedFilterId === 2) {
+      return (
+        <>
+          {patients.map((patient) => (
+            <Marker
+              key={patient.id}
+              coordinate={patient.latLng}
+              title={patient.title}
+              description={patient.title}
+              pinColor="red"
+              onPress={() => console.log(patient)}
+            />
+          ))}
+        </>
+      );
+    } else if (selectedFilterId === 3) {
+      return (
+        <>
+          {posts.map((post) => (
+            <Marker
+              key={post.id}
+              coordinate={post.latLng}
+              pinColor="green"
+              onPress={() => console.log(post)}
+            />
+          ))}
+        </>
+      );
+    } else if (selectedFilterId === 4) {
+      return (
+        <>
+          {events.map((event) => (
+            <Marker
+              key={event.id}
+              coordinate={event.latLng}
+              pinColor="blue"
+              onPress={() => console.log(event)}
+            />
+          ))}
+        </>
+      );
+    }
+    return null;
+  };
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View
@@ -178,83 +277,10 @@ const Home = () => {
       </View>
       {isLoaded && (
         <MapView style={styles.map} initialRegion={userRegion} region={region}>
-          {selectedFilterId === 1 ? (
-            <>
-              {patients.map((patient) => (
-                <Marker
-                  key={patient.id}
-                  coordinate={patient.latLng}
-                  title={patient.title}
-                  description={patient.title}
-                  pinColor="red"
-                  onPress={() => console.log(patient)}
-                />
-              ))}
-              {posts.map((post) => (
-                <Marker
-                  key={post.id}
-                  coordinate={post.latLng}
-                  title={post.title}
-                  description={post.title}
-                  pinColor="green"
-                  onPress={() => console.log(post)}
-                />
-              ))}
-              {events.map((event) => (
-                <Marker
-                  key={event.id}
-                  coordinate={event.latLng}
-                  title={event.title}
-                  description={event.title}
-                  pinColor="blue"
-                  onPress={() => console.log(event)}
-                />
-              ))}
-            </>
-          ) : selectedFilterId === 2 ? (
-            patients.map((patient) => (
-              <Marker
-                key={patient.id}
-                coordinate={patient.latLng}
-                title={patient.title}
-                description={patient.title}
-                pinColor="red"
-                onPress={() => console.log(patient)}
-              />
-            ))
-          ) : selectedFilterId === 3 ? (
-            posts.map((post) => (
-              <Marker
-                key={post.id}
-                coordinate={post.latLng}
-                title={post.title}
-                description={post.title}
-                pinColor="green"
-                onPress={() => console.log(post)}
-              />
-            ))
-          ) : (
-            events.map((event) => (
-              <Marker
-                key={event.id}
-                coordinate={event.latLng}
-                title={event.title}
-                description={event.title}
-                pinColor="blue"
-                onPress={() => console.log(event)}
-              />
-            ))
-          )}
+          <MapMarkers />
         </MapView>
       )}
-      <AllStatsModal
-        visible={statsModalVisibility}
-        name={region?.name}
-        vicinity={region?.vicinity}
-        patients={124}
-        posts={41}
-        events={11}
-      />
+      <BottomSheet />
     </SafeAreaView>
   );
 };

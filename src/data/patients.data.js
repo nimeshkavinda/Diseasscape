@@ -8,6 +8,7 @@ const patients = [
       latitude: 6.828772,
       longitude: 80.089142,
     },
+    description: "Sick since yesterday",
   },
 ];
 

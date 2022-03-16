@@ -22,7 +22,7 @@ const AllStatsModal = ({
 
   useEffect(() => {
     openModal();
-  }, [name, vicinity]);
+  }, [vicinity]);
 
   return (
     <BottomSheet
