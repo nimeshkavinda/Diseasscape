@@ -11,7 +11,7 @@ import filterItemData from "../../data/filterItem.data";
 import patients from "../../data/patients.data";
 import posts from "../../data/posts.data";
 import events from "../../data/events.data";
-import BottomSheetModal from "./BottomSheetModal/BottomSheetModal";
+import AllStatsModal from "./AllStatsModal/AllStatsModal";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,6 +20,7 @@ const Home = () => {
   const [region, setRegion] = useState();
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedFilterId, setSelectedFilterId] = useState(1);
+  const [statsModalVisibility, setStatsModalVisibility] = useState(true);
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -245,7 +246,13 @@ const Home = () => {
           )}
         </MapView>
       )}
-      <BottomSheetModal />
+      <AllStatsModal
+        name={region?.name}
+        vicinity={region?.vicinity}
+        patients={124}
+        posts={41}
+        events={11}
+      />
     </SafeAreaView>
   );
 };

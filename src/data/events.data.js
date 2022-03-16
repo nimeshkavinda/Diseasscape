@@ -9,8 +9,8 @@ const events = [
     name: "Udumulla",
     vicinity: "Padukka",
     latLng: {
-      latitude: 6.6308,
-      longitude: 79.9757,
+      latitude: 6.84,
+      longitude: 80.0891,
     },
   },
 ];

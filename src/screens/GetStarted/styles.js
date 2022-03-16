@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "700",
-    lineHeight: 34,
+    lineHeight: 36,
     marginBottom: 8,
     width: "90%",
   },

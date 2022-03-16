@@ -9,8 +9,8 @@ const posts = [
     name: "Udumulla",
     vicinity: "Padukka",
     latLng: {
-      latitude: 6.6408,
-      longitude: 79.9807,
+      latitude: 6.824,
+      longitude: 80.084,
     },
   },
   {
@@ -23,8 +23,8 @@ const posts = [
     name: "Wadduwa",
     vicinity: "Wadduwa",
     latLng: {
-      latitude: 6.6308,
-      longitude: 79.9807,
+      latitude: 6.835,
+      longitude: 80.09,
     },
   },
 ];

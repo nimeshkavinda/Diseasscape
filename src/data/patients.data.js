@@ -5,8 +5,8 @@ const patients = [
     name: "Udumulla",
     vicinity: "Padukka",
     latLng: {
-      latitude: 6.6508,
-      longitude: 79.9807,
+      latitude: 6.828772,
+      longitude: 80.089142,
     },
   },
 ];
