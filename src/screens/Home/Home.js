@@ -6,7 +6,7 @@ import {
   Dimensions,
 } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Text } from "../../common";
+import { Text, FilterButton } from "../../common";
 import styles from "./styles";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import colors from "../../theme/colors";
@@ -99,32 +99,32 @@ const Home = () => {
     });
   };
 
-  const FilterItem = ({ item, onPress, backgroundColor, textColor }) => (
-    <TouchableOpacity
-      onPress={() => setSelectedFilterId(item.id)}
-      style={[styles.filterOption, backgroundColor]}
-    >
-      <Text style={[styles.filterOptionTitle, textColor]}>{item?.title}</Text>
-    </TouchableOpacity>
-  );
+  // const FilterItem = ({ item, onPress, backgroundColor, textColor }) => (
+  //   <TouchableOpacity
+  //     onPress={() => setSelectedFilterId(item.id)}
+  //     style={[styles.filterOption, backgroundColor]}
+  //   >
+  //     <Text style={[styles.filterOptionTitle, textColor]}>{item?.title}</Text>
+  //   </TouchableOpacity>
+  // );
 
-  const renderFilterItem = ({ item }) => {
-    const backgroundColor =
-      item.id === selectedFilterId ? colors.primary.bg : colors.secondary.bg;
-    const color =
-      item.id === selectedFilterId
-        ? colors.primary.text
-        : colors.secondary.text;
+  // const renderFilterItem = ({ item }) => {
+  //   const backgroundColor =
+  //     item.id === selectedFilterId ? colors.primary.bg : colors.secondary.bg;
+  //   const color =
+  //     item.id === selectedFilterId
+  //       ? colors.primary.text
+  //       : colors.secondary.text;
 
-    return (
-      <FilterItem
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={{ backgroundColor }}
-        textColor={{ color }}
-      />
-    );
-  };
+  //   return (
+  //     <FilterItem
+  //       item={item}
+  //       onPress={() => setSelectedId(item.id)}
+  //       backgroundColor={{ backgroundColor }}
+  //       textColor={{ color }}
+  //     />
+  //   );
+  // };
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -203,7 +203,13 @@ const Home = () => {
         </View>
         <FlatList
           data={filterItemData}
-          renderItem={renderFilterItem}
+          renderItem={({ item }) => (
+            <FilterButton
+              item={item}
+              selectedFilterId={selectedFilterId}
+              onPress={() => setSelectedFilterId(item.id)}
+            />
+          )}
           keyExtractor={(item) => item.id}
           style={styles.filterWrapper}
           horizontal={true}
