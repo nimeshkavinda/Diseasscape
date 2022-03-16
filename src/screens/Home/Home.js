@@ -217,34 +217,31 @@ const Home = () => {
               {patients.map((patient) => (
                 <Marker
                   key={patient.id}
-                  coordinate={{
-                    latitude: patient.location.lat,
-                    longitude: patient.location.lng,
-                  }}
+                  coordinate={patient.latLng}
                   title={patient.title}
                   description={patient.title}
+                  pinColor="red"
+                  onPress={() => console.log(patient)}
                 />
               ))}
               {posts.map((post) => (
                 <Marker
                   key={post.id}
-                  coordinate={{
-                    latitude: post.location.lat,
-                    longitude: post.location.lng,
-                  }}
+                  coordinate={post.latLng}
                   title={post.title}
                   description={post.title}
+                  pinColor="green"
+                  onPress={() => console.log(post)}
                 />
               ))}
               {events.map((event) => (
                 <Marker
                   key={event.id}
-                  coordinate={{
-                    latitude: event.location.lat,
-                    longitude: event.location.lng,
-                  }}
+                  coordinate={event.latLng}
                   title={event.title}
                   description={event.title}
+                  pinColor="blue"
+                  onPress={() => console.log(event)}
                 />
               ))}
             </>
@@ -252,36 +249,33 @@ const Home = () => {
             patients.map((patient) => (
               <Marker
                 key={patient.id}
-                coordinate={{
-                  latitude: patient.location.lat,
-                  longitude: patient.location.lng,
-                }}
+                coordinate={patient.latLng}
                 title={patient.title}
                 description={patient.title}
+                pinColor="red"
+                onPress={() => console.log(patient)}
               />
             ))
           ) : selectedFilterId === 3 ? (
             posts.map((post) => (
               <Marker
                 key={post.id}
-                coordinate={{
-                  latitude: post.location.lat,
-                  longitude: post.location.lng,
-                }}
+                coordinate={post.latLng}
                 title={post.title}
                 description={post.title}
+                pinColor="green"
+                onPress={() => console.log(post)}
               />
             ))
           ) : (
             events.map((event) => (
               <Marker
                 key={event.id}
-                coordinate={{
-                  latitude: event.location.lat,
-                  longitude: event.location.lng,
-                }}
+                coordinate={event.latLng}
                 title={event.title}
                 description={event.title}
+                pinColor="blue"
+                onPress={() => console.log(event)}
               />
             ))
           )}

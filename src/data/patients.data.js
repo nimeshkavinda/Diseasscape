@@ -2,11 +2,11 @@ const patients = [
   {
     id: 1,
     title: "Nimesh",
-    location: {
-      name: "Udumulla",
-      vicinity: "Padukka",
-      lat: 6.6508,
-      lng: 79.9807,
+    name: "Udumulla",
+    vicinity: "Padukka",
+    latLng: {
+      latitude: 6.6508,
+      longitude: 79.9807,
     },
   },
 ];

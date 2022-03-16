@@ -6,11 +6,11 @@ const posts = [
       "https://pbs.twimg.com/media/Dbj4iEiVQAI5rVr.jpg",
       "https://caricom.org/wp-content/uploads/stagnant-water.jpg",
     ],
-    location: {
-      name: "Udumulla",
-      vicinity: "Padukka",
-      lat: 6.6408,
-      lng: 79.9807,
+    name: "Udumulla",
+    vicinity: "Padukka",
+    latLng: {
+      latitude: 6.6408,
+      longitude: 79.9807,
     },
   },
   {
@@ -20,11 +20,11 @@ const posts = [
       "https://pbs.twimg.com/media/Dbj4iEiVQAI5rVr.jpg",
       "https://caricom.org/wp-content/uploads/stagnant-water.jpg",
     ],
-    location: {
-      name: "Wadduwa",
-      vicinity: "Wadduwa",
-      lat: 6.6308,
-      lng: 79.9807,
+    name: "Wadduwa",
+    vicinity: "Wadduwa",
+    latLng: {
+      latitude: 6.6308,
+      longitude: 79.9807,
     },
   },
 ];
