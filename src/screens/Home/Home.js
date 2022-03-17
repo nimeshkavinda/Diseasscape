@@ -200,7 +200,13 @@ const Home = () => {
               coordinate={patient.latLng}
               pinColor="red"
               // onPress={() => onPatientSelect(patient)}
-            />
+            >
+              <MaterialCommunityIcons
+                name="map-marker"
+                size={26}
+                color={colors.error.primary}
+              />
+            </Marker>
           ))}
           {posts.map((post) => (
             <Marker
@@ -208,7 +214,13 @@ const Home = () => {
               coordinate={post.latLng}
               pinColor="green"
               // onPress={() => onPostSelect(post)}
-            />
+            >
+              <MaterialCommunityIcons
+                name="map-marker-radius"
+                size={26}
+                color={colors.warning.primary}
+              />
+            </Marker>
           ))}
           {events.map((event) => (
             <Marker
@@ -216,7 +228,13 @@ const Home = () => {
               coordinate={event.latLng}
               pinColor="blue"
               // onPress={() => onEventSelect(event)}
-            />
+            >
+              <MaterialCommunityIcons
+                name="map-marker-right"
+                size={26}
+                color={colors.success.primary}
+              />
+            </Marker>
           ))}
         </>
       );
@@ -233,13 +251,13 @@ const Home = () => {
                 <MaterialCommunityIcons
                   name="map-marker"
                   size={36}
-                  color="black"
+                  color={colors.error.primary}
                 />
               ) : (
                 <MaterialCommunityIcons
                   name="map-marker"
                   size={26}
-                  color="black"
+                  color={colors.error.primary}
                 />
               )}
             </Marker>
@@ -257,15 +275,15 @@ const Home = () => {
             >
               {selectedPost?.id === post.id ? (
                 <MaterialCommunityIcons
-                  name="map-marker"
+                  name="map-marker-radius"
                   size={36}
-                  color="black"
+                  color={colors.warning.primary}
                 />
               ) : (
                 <MaterialCommunityIcons
-                  name="map-marker"
+                  name="map-marker-radius"
                   size={26}
-                  color="black"
+                  color={colors.warning.primary}
                 />
               )}
             </Marker>
@@ -283,15 +301,15 @@ const Home = () => {
             >
               {selectedEvent?.id === event.id ? (
                 <MaterialCommunityIcons
-                  name="map-marker"
+                  name="map-marker-right"
                   size={36}
-                  color="black"
+                  color={colors.success.primary}
                 />
               ) : (
                 <MaterialCommunityIcons
-                  name="map-marker"
+                  name="map-marker-right"
                   size={26}
-                  color="black"
+                  color={colors.success.primary}
                 />
               )}
             </Marker>
