@@ -15,6 +15,7 @@ import AllStatsModal from "./AllStatsModal/AllStatsModal";
 import PatientModal from "./PatientModal/PatientModal";
 import PostsModal from "./PostsModal/PostsModal";
 import EventsModal from "./EventsModal/EventsModal";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -226,9 +227,22 @@ const Home = () => {
             <Marker
               key={patient.id}
               coordinate={patient.latLng}
-              pinColor="red"
               onPress={() => onPatientSelect(patient)}
-            />
+            >
+              {selectedPatient?.id === patient.id ? (
+                <MaterialCommunityIcons
+                  name="map-marker"
+                  size={36}
+                  color="black"
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="map-marker"
+                  size={26}
+                  color="black"
+                />
+              )}
+            </Marker>
           ))}
         </>
       );
@@ -239,9 +253,22 @@ const Home = () => {
             <Marker
               key={post.id}
               coordinate={post.latLng}
-              pinColor="green"
               onPress={() => onPostSelect(post)}
-            />
+            >
+              {selectedPost?.id === post.id ? (
+                <MaterialCommunityIcons
+                  name="map-marker"
+                  size={36}
+                  color="black"
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="map-marker"
+                  size={26}
+                  color="black"
+                />
+              )}
+            </Marker>
           ))}
         </>
       );
@@ -252,9 +279,22 @@ const Home = () => {
             <Marker
               key={event.id}
               coordinate={event.latLng}
-              pinColor="blue"
               onPress={() => onEventSelect(event)}
-            />
+            >
+              {selectedEvent?.id === event.id ? (
+                <MaterialCommunityIcons
+                  name="map-marker"
+                  size={36}
+                  color="black"
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="map-marker"
+                  size={26}
+                  color="black"
+                />
+              )}
+            </Marker>
           ))}
         </>
       );
