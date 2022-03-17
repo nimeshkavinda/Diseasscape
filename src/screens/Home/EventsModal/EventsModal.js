@@ -98,68 +98,6 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
                 </>
               )}
             </View>
-            <View style={styles.eventDetailsWrapper}>
-              <View style={styles.eventDetails}>
-                <Text style={styles.eventDetailsTitle}>Date</Text>
-                <View
-                  style={[
-                    styles.eventDetailsPill,
-                    { backgroundColor: colors.secondary.bg },
-                  ]}
-                >
-                  <Entypo
-                    name="calendar"
-                    size={14}
-                    color={colors.secondary.text}
-                  />
-                  <Text
-                    style={[styles.detail, { color: colors.secondary.text }]}
-                  >
-                    {event?.date}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eventDetails}>
-                <Text style={styles.eventDetailsTitle}>Time</Text>
-                <View
-                  style={[
-                    styles.eventDetailsPill,
-                    { backgroundColor: colors.success.secondary },
-                  ]}
-                >
-                  <Entypo
-                    name="clock"
-                    size={14}
-                    color={colors.success.primary}
-                  />
-                  <Text
-                    style={[styles.detail, { color: colors.success.primary }]}
-                  >
-                    {event?.time}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eventDetails}>
-                <Text style={styles.eventDetailsTitle}>Going</Text>
-                <View
-                  style={[
-                    styles.eventDetailsPill,
-                    { backgroundColor: colors.warning.secondary },
-                  ]}
-                >
-                  <Ionicons
-                    name="people"
-                    size={14}
-                    color={colors.warning.primary}
-                  />
-                  <Text
-                    style={[styles.detail, { color: colors.warning.primary }]}
-                  >
-                    {event && Object.keys(event?.participants).length}
-                  </Text>
-                </View>
-              </View>
-            </View>
           </View>
           <TouchableOpacity onPress={handleClosePress}>
             <AntDesign
@@ -168,6 +106,54 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
               color={colors.grey.medium}
             />
           </TouchableOpacity>
+        </View>
+        <View style={styles.eventDetailsWrapper}>
+          <View style={styles.eventDetails}>
+            <Text style={styles.eventDetailsTitle}>Date</Text>
+            <View
+              style={[
+                styles.eventDetailsPill,
+                { backgroundColor: colors.secondary.bg },
+              ]}
+            >
+              <Entypo name="calendar" size={14} color={colors.secondary.text} />
+              <Text style={[styles.detail, { color: colors.secondary.text }]}>
+                {event?.date}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.eventDetails}>
+            <Text style={styles.eventDetailsTitle}>Time</Text>
+            <View
+              style={[
+                styles.eventDetailsPill,
+                { backgroundColor: colors.success.secondary },
+              ]}
+            >
+              <Entypo name="clock" size={14} color={colors.success.primary} />
+              <Text style={[styles.detail, { color: colors.success.primary }]}>
+                {event?.time}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.eventDetails}>
+            <Text style={styles.eventDetailsTitle}>Going</Text>
+            <View
+              style={[
+                styles.eventDetailsPill,
+                { backgroundColor: colors.warning.secondary },
+              ]}
+            >
+              <Ionicons
+                name="people"
+                size={14}
+                color={colors.warning.primary}
+              />
+              <Text style={[styles.detail, { color: colors.warning.primary }]}>
+                {event && Object.keys(event?.participants).length}
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={styles.descriptionWrapper}>
           <Text style={styles.descriptionTitle}>Description</Text>

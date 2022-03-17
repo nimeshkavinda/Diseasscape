@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   eventDetailsWrapper: {
-    marginVertical: 20,
+    marginTop: 15,
+    marginBottom: 20,
+    paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -94,7 +96,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginHorizontal: 20,
   },
-  postCardFlatList: { paddingLeft: 20, paddingTop: 25, paddingBottom: 30 },
+  postsFlatListWrapper: {},
+  postCardFlatList: { paddingLeft: 20, paddingVertical: 10 },
   postCard: {
     elevation: 6,
     shadowColor: colors.grey.dark,
@@ -110,6 +113,7 @@ const styles = StyleSheet.create({
     width: 275,
     borderRadius: 10,
     marginRight: 20,
+    marginVertical: 20,
   },
   postCardImg: {
     height: 80,
