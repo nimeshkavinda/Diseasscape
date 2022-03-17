@@ -7,14 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const AllStatsModal = ({
-  name,
-  vicinity,
-  patients,
-  posts,
-  events,
-  visible,
-}) => {
+const AllStatsModal = ({ name, vicinity, stats, visible }) => {
   const sheetRef = useRef(null);
   const snapPoints = useMemo(() => ["15%", "30%"], []);
   const handleClosePress = () => sheetRef.current.snapToPosition(-1);
@@ -22,7 +15,9 @@ const AllStatsModal = ({
 
   useEffect(() => {
     openModal();
-  }, [vicinity]);
+  }, [vicinity, stats]);
+
+  console.log("All stats: ", stats);
 
   return (
     <BottomSheet
@@ -69,7 +64,7 @@ const AllStatsModal = ({
                   { color: colors.error.primary },
                 ]}
               >
-                {patients}
+                {stats?.patients?.length}
               </Text>
             </View>
           </View>
@@ -87,7 +82,7 @@ const AllStatsModal = ({
                   { color: colors.warning.primary },
                 ]}
               >
-                {posts}
+                {stats?.posts?.length}
               </Text>
             </View>
           </View>
@@ -105,7 +100,7 @@ const AllStatsModal = ({
                   { color: colors.success.primary },
                 ]}
               >
-                {events}
+                {stats?.events?.length}
               </Text>
             </View>
           </View>

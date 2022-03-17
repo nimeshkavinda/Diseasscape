@@ -22,7 +22,7 @@ const events = [
     participants: [
       { id: 2, fullName: "John Doe" },
       { id: 3, fullName: "Elon Musk" },
-      { id: 4, fulName: "Gotabaya Rajapaksha" },
+      { id: 4, fullName: "Gotabaya Rajapaksha" },
     ],
   },
 ];

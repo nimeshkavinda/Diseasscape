@@ -26,6 +26,7 @@ const Home = () => {
 
   // all stats
   const [statsModalVisibility, setStatsModalVisibility] = useState(true);
+  const [allStats, setAllStats] = useState();
 
   // patients
   const [patientModalVisibility, setPatientModalVisibility] = useState(false);
@@ -38,6 +39,26 @@ const Home = () => {
   //events
   const [eventModalVisibility, setEventModalVisibility] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState();
+
+  const getPatientsInVicinity = patients.filter((patient) => {
+    return patient?.location?.vicinity === region?.vicinity;
+  });
+
+  const getPostsInVicinity = posts.filter((post) => {
+    return post?.location?.vicinity === region?.vicinity;
+  });
+
+  const getEventsInVicinity = events.filter((event) => {
+    return event?.location?.vicinity === region?.vicinity;
+  });
+
+  const userLocation = {
+    description: "Current Location",
+    geometry: {
+      location: { lat: userRegion?.latitude, lng: userRegion?.longitude },
+    },
+    address: { name: address?.city, vicinity: address?.city },
+  };
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -58,6 +79,11 @@ const Home = () => {
         latitudeDelta: 0.05,
         longitudeDelta: 0.01,
       });
+      setAllStats({
+        patients: getPatientsInVicinity,
+        posts: getPostsInVicinity,
+        events: getEventsInVicinity,
+      });
       setIsLoaded(true);
     }
     if (error !== null) {
@@ -77,13 +103,13 @@ const Home = () => {
     }
   }, [coords, address, error]);
 
-  const userLocation = {
-    description: "Current Location",
-    geometry: {
-      location: { lat: userRegion?.latitude, lng: userRegion?.longitude },
-    },
-    address: { name: address?.city, vicinity: address?.city },
-  };
+  useEffect(() => {
+    setAllStats({
+      patients: getPatientsInVicinity,
+      posts: getPostsInVicinity,
+      events: getEventsInVicinity,
+    });
+  }, [region]);
 
   const onSearchResultSelect = (data, details) => {
     console.log("Data: ", data, "Details: ", details);
@@ -101,6 +127,11 @@ const Home = () => {
       latitudeDelta: 0.05,
       longitudeDelta: 0.01,
     });
+    setAllStats({
+      patients: getPatientsInVicinity,
+      posts: getPostsInVicinity,
+      events: getEventsInVicinity,
+    });
     setStatsModalVisibility(true);
   };
 
@@ -111,9 +142,7 @@ const Home = () => {
           visible={statsModalVisibility}
           name={region?.name}
           vicinity={region?.vicinity}
-          patients={124}
-          posts={41}
-          events={11}
+          stats={allStats}
         />
       );
     } else if (selectedFilterId === 2) {
