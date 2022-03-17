@@ -60,7 +60,9 @@ const PatientModal = ({ visible, patientId, patient, isNearYou }) => {
             </Text>
             <View style={styles.locationDetails}>
               <MaterialCommunityIcons name="map-marker-radius" size={18} />
-              <Text style={styles.locationText}>{patient?.vicinity}</Text>
+              <Text style={styles.locationText}>
+                {patient?.location?.vicinity}
+              </Text>
               {isNearYou && (
                 <>
                   <Entypo

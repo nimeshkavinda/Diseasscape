@@ -6,8 +6,10 @@ const events = [
       "https://pbs.twimg.com/media/Dbj4iEiVQAI5rVr.jpg",
       "https://caricom.org/wp-content/uploads/stagnant-water.jpg",
     ],
-    name: "Udumulla",
-    vicinity: "Padukka",
+    location: {
+      name: "Udumulla",
+      vicinity: "Padukka",
+    },
     latLng: {
       latitude: 6.84,
       longitude: 80.0891,

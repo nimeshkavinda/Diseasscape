@@ -4,59 +4,41 @@ import colors from "../../../theme/colors";
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#fff",
-    paddingHorizontal: 20,
     paddingVertical: 10,
     zIndex: 99,
   },
-  locationHeaderWrapper: {
+  headerWrapper: {
+    paddingHorizontal: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
+    paddingBottom: 24,
     borderBottomColor: colors.grey.medium,
     borderBottomWidth: 1,
-    paddingBottom: 10,
   },
-  locationHeaderTitle: {
-    flexDirection: "column",
-    marginBottom: 20,
-  },
-  locationName: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  locationVicinity: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginTop: 4,
-  },
-  locationVicinityText: {
+  headerRow: { flexDirection: "row", alignItems: "center" },
+  name: { fontSize: 32, fontWeight: "bold", marginVertical: 8 },
+  locationDetails: { flexDirection: "row", alignItems: "center" },
+  locationText: {
     fontSize: 16,
+    marginHorizontal: 4,
     fontWeight: "normal",
-    marginLeft: 3,
-    color: colors.secondary.text,
   },
-  locationDataWrapper: {
-    flexDirection: "row",
+  tag: {
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    borderRadius: 5,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 20,
   },
-  locationData: { alignItems: "flex-start" },
-  locationDataTitle: {
+  type: { textTransform: "capitalize" },
+  flatListWrapper: { paddingVertical: 20, height: 250 },
+  imgFlatList: { height: 400, paddingHorizontal: 20 },
+  postImage: { width: 250, height: 200, borderRadius: 10, marginRight: 10 },
+  descriptionWrapper: { paddingHorizontal: 20 },
+  descriptionTitle: { fontSize: 16, fontWeight: "bold", marginBottom: 10 },
+  description: {
     fontSize: 16,
-    fontWeight: "500",
-    color: "#808080",
-  },
-  locationDataCount: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 6,
-  },
-  locationDataCountText: {
-    fontSize: 21,
-    fontWeight: "bold",
-    marginLeft: 6,
   },
 });
 

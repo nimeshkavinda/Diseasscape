@@ -13,6 +13,7 @@ import posts from "../../data/posts.data";
 import events from "../../data/events.data";
 import AllStatsModal from "./AllStatsModal/AllStatsModal";
 import PatientModal from "./PatientModal/PatientModal";
+import PostsModal from "./PostsModal/PostsModal";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -28,6 +29,10 @@ const Home = () => {
   // patients
   const [patientModalVisibility, setPatientModalVisibility] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState();
+
+  // posts
+  const [postsModalVisibility, setPostsModalVisibility] = useState(false);
+  const [selectedPost, setSelectedPost] = useState();
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -113,12 +118,25 @@ const Home = () => {
           patientId={selectedPatient?.id}
           patient={selectedPatient}
           isNearYou={
-            userRegion?.vicinity === selectedPatient?.vicinity ? true : false
+            userRegion?.vicinity === selectedPatient?.location?.vicinity
+              ? true
+              : false
           }
         />
       );
     } else if (selectedFilterId === 3) {
-      return null;
+      return (
+        <PostsModal
+          visible={postsModalVisibility}
+          postId={selectedPost?.id}
+          post={selectedPost}
+          isNearYou={
+            userRegion?.vicinity === selectedPost?.location?.vicinity
+              ? true
+              : false
+          }
+        />
+      );
     } else if (selectedFilterId === 4) {
       return null;
     }
@@ -134,7 +152,7 @@ const Home = () => {
               key={patient.id}
               coordinate={patient.latLng}
               pinColor="red"
-              onPress={() => onPatientSelect(patient)}
+              // onPress={() => onPatientSelect(patient)}
             />
           ))}
           {posts.map((post) => (
@@ -142,7 +160,7 @@ const Home = () => {
               key={post.id}
               coordinate={post.latLng}
               pinColor="green"
-              onPress={() => console.log(post)}
+              // onPress={() => onPostSelect(post)}
             />
           ))}
           {events.map((event) => (
@@ -176,7 +194,7 @@ const Home = () => {
               key={post.id}
               coordinate={post.latLng}
               pinColor="green"
-              onPress={() => console.log(post)}
+              onPress={() => onPostSelect(post)}
             />
           ))}
         </>
@@ -202,6 +220,12 @@ const Home = () => {
     console.log("Selected Patient: ", patient);
     setSelectedPatient(patient);
     setPatientModalVisibility(true);
+  };
+
+  const onPostSelect = (post) => {
+    console.log("Selected post: ", post);
+    setSelectedPost(post);
+    setPostsModalVisibility(true);
   };
 
   return (

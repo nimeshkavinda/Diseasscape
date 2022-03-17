@@ -4,8 +4,7 @@ const patients = [
     date: "Fri 18 Mar, 2022",
     status: "positive",
     disease: "Dengue",
-    name: "Udumulla",
-    vicinity: "Udumulla",
+    location: { name: "Udumulla", vicinity: "Udumulla" },
     latLng: {
       latitude: 6.828772,
       longitude: 80.089142,
@@ -16,8 +15,7 @@ const patients = [
     date: "Wed 16 Mar, 2022",
     status: "symptoms",
     disease: "Dengue",
-    name: "Udumulla",
-    vicinity: "Udumulla",
+    location: { name: "Udumulla", vicinity: "Udumulla" },
     latLng: {
       latitude: 6.838772,
       longitude: 80.09,
