@@ -1,6 +1,10 @@
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetView,
+  TouchableOpacity,
+} from "@gorhom/bottom-sheet";
+import { FlatList } from "react-native-gesture-handler";
 import React, { useEffect, useMemo, useRef } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
+import { View, Text, Image } from "react-native";
 import styles from "./styles";
 import colors from "../../../theme/colors";
 import { AntDesign } from "@expo/vector-icons";
