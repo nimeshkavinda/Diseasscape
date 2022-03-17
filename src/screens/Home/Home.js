@@ -14,6 +14,7 @@ import events from "../../data/events.data";
 import AllStatsModal from "./AllStatsModal/AllStatsModal";
 import PatientModal from "./PatientModal/PatientModal";
 import PostsModal from "./PostsModal/PostsModal";
+import EventsModal from "./EventsModal/EventsModal";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,8 +32,12 @@ const Home = () => {
   const [selectedPatient, setSelectedPatient] = useState();
 
   // posts
-  const [postsModalVisibility, setPostsModalVisibility] = useState(false);
+  const [postModalVisibility, setPostModalVisibility] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
+
+  //events
+  const [eventModalVisibility, setEventModalVisibility] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState();
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -127,7 +132,7 @@ const Home = () => {
     } else if (selectedFilterId === 3) {
       return (
         <PostsModal
-          visible={postsModalVisibility}
+          visible={postModalVisibility}
           postId={selectedPost?.id}
           post={selectedPost}
           isNearYou={
@@ -138,7 +143,19 @@ const Home = () => {
         />
       );
     } else if (selectedFilterId === 4) {
-      return null;
+      return (
+        <EventsModal
+          visible={eventModalVisibility}
+          eventId={selectedEvent?.id}
+          event={selectedEvent}
+          posts={posts}
+          isNearYou={
+            userRegion?.vicinity === selectedEvent?.location?.vicinity
+              ? true
+              : false
+          }
+        />
+      );
     }
     return null;
   };
@@ -168,7 +185,7 @@ const Home = () => {
               key={event.id}
               coordinate={event.latLng}
               pinColor="blue"
-              onPress={() => console.log(event)}
+              // onPress={() => onEventSelect(event)}
             />
           ))}
         </>
@@ -207,7 +224,7 @@ const Home = () => {
               key={event.id}
               coordinate={event.latLng}
               pinColor="blue"
-              onPress={() => console.log(event)}
+              onPress={() => onEventSelect(event)}
             />
           ))}
         </>
@@ -223,9 +240,15 @@ const Home = () => {
   };
 
   const onPostSelect = (post) => {
-    console.log("Selected post: ", post);
+    console.log("Selected Post: ", post);
     setSelectedPost(post);
-    setPostsModalVisibility(true);
+    setPostModalVisibility(true);
+  };
+
+  const onEventSelect = (event) => {
+    console.log("Selected Event: ", event);
+    setSelectedEvent(event);
+    setEventModalVisibility(true);
   };
 
   return (

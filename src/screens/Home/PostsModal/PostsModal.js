@@ -55,7 +55,9 @@ const PostsModal = ({ visible, postId, post, isNearYou }) => {
                 </Text>
               </View>
             </View>
-            <Text style={styles.name}>{post?.title}</Text>
+            <Text style={styles.name} numberOfLines={2}>
+              {post?.title}
+            </Text>
             <View style={styles.locationDetails}>
               <MaterialCommunityIcons name="map-marker-radius" size={18} />
               <Text style={styles.locationText}>

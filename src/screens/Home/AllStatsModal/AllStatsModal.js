@@ -34,7 +34,9 @@ const AllStatsModal = ({
       <BottomSheetView style={styles.wrapper}>
         <View style={styles.locationHeaderWrapper}>
           <View style={styles.locationHeaderTitle}>
-            <Text style={styles.locationName}>{name}</Text>
+            <Text style={styles.locationName} numberOfLines={2}>
+              {name}
+            </Text>
             <View style={styles.locationVicinity}>
               <MaterialCommunityIcons
                 name="map-marker-radius"
@@ -77,12 +79,12 @@ const AllStatsModal = ({
               <MaterialCommunityIcons
                 name="asterisk"
                 size={24}
-                color={colors.warning}
+                color={colors.warning.primary}
               />
               <Text
                 style={[
                   styles.locationDataCountText,
-                  { color: colors.warning },
+                  { color: colors.warning.primary },
                 ]}
               >
                 {posts}

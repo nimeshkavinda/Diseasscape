@@ -59,6 +59,36 @@ const posts = [
       longitude: 80.09,
     },
   },
+  {
+    id: 4,
+    title: "Not very clean place",
+    description:
+      "Mosquitos might breed here in rainy season",
+    type: "dengue",
+    images: [
+      {
+        id: 1,
+        src: "https://caricom.org/wp-content/uploads/stagnant-water.jpg",
+      },
+      {
+        id: 2,
+        src: "https://loopnewslive.blob.core.windows.net/liveimage/sites/default/files/2020-07/uoLiGb39ZN.jpg",
+      },
+      {
+        id: 3,
+        src: "https://loopnewslive.blob.core.windows.net/liveimage/sites/default/files/2020-07/uoLiGb39ZN.jpg",
+      },
+      {
+        id: 4,
+        src: "https://us.biogents.com/wp-content/uploads/mosquito-breeding-site-vase.jpg",
+      },
+    ],
+    location: { name: "Padukka", vicinity: "Padukka" },
+    latLng: {
+      latitude: 6.829,
+      longitude: 80.080,
+    },
+  },
 ];
 
 export default posts;
