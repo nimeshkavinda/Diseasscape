@@ -5,6 +5,7 @@ const posts = [
     description:
       "Possible dengue breeding site and requires quick actions to clean this up as this could further worsen the situation",
     type: "dengue",
+    date: "Fri 18 March, 2022",
     images: [
       {
         id: 1,
@@ -28,6 +29,11 @@ const posts = [
       latitude: 6.824,
       longitude: 80.084,
     },
+    postedBy: {
+      id: 1,
+      fullName: "Nimesh Kavinda",
+      profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
+    },
   },
   {
     id: 2,
@@ -35,6 +41,7 @@ const posts = [
     description:
       "Lorem ipsum dolor sit amet conqe dolor lorem ipsum dolor sit amet",
     type: "dengue",
+    date: "Fri 18 March, 2022",
     images: [
       {
         id: 1,
@@ -58,13 +65,18 @@ const posts = [
       latitude: 6.835,
       longitude: 80.09,
     },
+    postedBy: {
+      id: 1,
+      fullName: "Nimesh Kavinda",
+      profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
+    },
   },
   {
     id: 4,
     title: "Not very clean place",
-    description:
-      "Mosquitos might breed here in rainy season",
+    description: "Mosquitos might breed here in rainy season",
     type: "dengue",
+    date: "Fri 18 March, 2022",
     images: [
       {
         id: 1,
@@ -86,7 +98,12 @@ const posts = [
     location: { name: "Padukka", vicinity: "Padukka" },
     latLng: {
       latitude: 6.829,
-      longitude: 80.080,
+      longitude: 80.08,
+    },
+    postedBy: {
+      id: 1,
+      fullName: "Nimesh Kavinda",
+      profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
     },
   },
 ];
