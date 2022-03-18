@@ -32,13 +32,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   type: { textTransform: "capitalize" },
-  flatListWrapper: { paddingVertical: 20, height: 250 },
-  imgFlatList: { height: 400, paddingHorizontal: 20 },
-  postImage: { width: 250, height: 200, borderRadius: 10, marginRight: 10 },
+  flatListWrapper: { paddingVertical: 20, height: 210 },
+  imgFlatList: { height: 360, paddingHorizontal: 20 },
+  postImage: { width: 250, height: 160, borderRadius: 10, marginRight: 10 },
   descriptionWrapper: { paddingHorizontal: 20 },
   descriptionTitle: { fontSize: 16, fontWeight: "bold", marginBottom: 10 },
   description: {
     fontSize: 16,
+  },
+  authorDetails: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  authorImg: { width: 30, height: 30, borderRadius: 30, marginRight: 10 },
+  authorText: { fontSize: 14, fontWeight: "bold" },
+  postedDate: { fontSize: 12 },
+  authorDetailsWrapper: {
+    flexDirection: "column",
   },
 });
 

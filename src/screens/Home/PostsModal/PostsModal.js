@@ -13,7 +13,7 @@ import { Entypo } from "@expo/vector-icons";
 
 const PostsModal = ({ visible, postId, post, isNearYou }) => {
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["25%", "74%"], []);
+  const snapPoints = useMemo(() => ["24%", "74%"], []);
   const handleClosePress = () => sheetRef.current.snapToPosition(-1);
   const openModal = () => sheetRef.current.snapToIndex(0);
 
@@ -74,6 +74,18 @@ const PostsModal = ({ visible, postId, post, isNearYou }) => {
                 </>
               )}
             </View>
+            <TouchableOpacity style={styles.authorDetails}>
+              <Image
+                style={styles.authorImg}
+                source={{ uri: post?.postedBy?.profileImg }}
+              />
+              <View style={styles.authorDetailsWrapper}>
+                <Text style={styles.authorText}>
+                  {post?.postedBy?.fullName}
+                </Text>
+                <Text style={styles.postedDate}>On {post?.date}</Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={handleClosePress}>
             <AntDesign
@@ -95,7 +107,9 @@ const PostsModal = ({ visible, postId, post, isNearYou }) => {
         </View>
         <View style={styles.descriptionWrapper}>
           <Text style={styles.descriptionTitle}>Description</Text>
-          <Text style={styles.description}>{post?.description}</Text>
+          <Text style={styles.description} numberOfLines={3}>
+            {post?.description}
+          </Text>
         </View>
       </BottomSheetView>
     </BottomSheet>
