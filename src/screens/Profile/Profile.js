@@ -1,5 +1,6 @@
 import { SafeAreaView, View, Image, TouchableOpacity } from "react-native";
 import { Text, BackButton } from "../../common";
+import { ScrollView } from "react-native-gesture-handler";
 import React from "react";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -20,6 +21,27 @@ const Profile = () => {
     Message(number);
   };
 
+  const StatItem = ({ item }) => {
+    return (
+      <View
+        style={[
+          styles.profileStatItem,
+          { backgroundColor: colors.warning.secondary },
+        ]}
+      >
+        <View style={styles.icon}>
+          <MaterialCommunityIcons
+            name="post"
+            size={24}
+            color={colors.warning.primary}
+          />
+        </View>
+        <Text style={styles.statTitle}>Posts created</Text>
+        <Text style={styles.statCount}>150</Text>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.headerNav}>
@@ -34,7 +56,7 @@ const Profile = () => {
           resizeMode="cover"
         />
         <Text style={styles.profileName}>Nimesh Kavinda</Text>
-        <Text style={styles.profileBio} numberOfLines={2}>
+        <Text style={styles.profileBio} numberOfLines={3}>
           Software engineer by profession, public health care volunteer by
           heart. I regularly organize environment cleanup events
         </Text>
@@ -69,7 +91,62 @@ const Profile = () => {
       </View>
       <View style={styles.profileSectionWrapper}>
         <Text style={styles.profileSectionHeading}>All time contribution</Text>
-        <View style={styles.profileStatItem}></View>
+        <View style={styles.postsScrollViewWrapper}>
+          <ScrollView
+            style={styles.scrollView}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+            <View
+              style={[
+                styles.profileStatItem,
+                { backgroundColor: colors.warning.secondary },
+              ]}
+            >
+              <View style={styles.icon}>
+                <MaterialCommunityIcons
+                  name="post"
+                  size={24}
+                  color={colors.warning.primary}
+                />
+              </View>
+              <Text style={styles.statTitle}>Posts created</Text>
+              <Text style={styles.statCount}>150</Text>
+            </View>
+            <View
+              style={[
+                styles.profileStatItem,
+                { backgroundColor: colors.secondary.bg },
+              ]}
+            >
+              <View style={styles.icon}>
+                <MaterialCommunityIcons
+                  name="calendar-blank"
+                  size={24}
+                  color={colors.primary.bg}
+                />
+              </View>
+              <Text style={styles.statTitle}>Events organized</Text>
+              <Text style={styles.statCount}>80</Text>
+            </View>
+            <View
+              style={[
+                styles.profileStatItem,
+                { backgroundColor: colors.success.secondary },
+              ]}
+            >
+              <View style={styles.icon}>
+                <MaterialCommunityIcons
+                  name="calendar-check"
+                  size={24}
+                  color={colors.success.primary}
+                />
+              </View>
+              <Text style={styles.statTitle}>Events participated</Text>
+              <Text style={styles.statCount}>30</Text>
+            </View>
+          </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );

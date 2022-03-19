@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileImg: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     borderRadius: 50,
     marginBottom: 16,
   },
@@ -77,13 +77,47 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 6,
   },
-  profileSectionWrapper: {},
   profileSectionHeading: {
     fontSize: 24,
     fontWeight: "bold",
     marginHorizontal: 20,
     marginVertical: 10,
   },
+  profileStatItem: {
+    height: 180,
+    width: 140,
+    borderRadius: 25,
+    padding: 20,
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginRight: 20,
+  },
+  icon: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    padding: 10,
+    width: 50,
+    height: 50,
+    borderRadius: 20,
+    elevation: 6,
+    shadowColor: colors.grey.dark,
+    shadowOpacity: 0.1,
+    shadowOffset: {
+      height: 6,
+    },
+    shadowRadius: 30,
+  },
+  statTitle: {
+    fontSize: 16,
+    fontWeight: "500",
+  },
+  statCount: {
+    fontSize: 21,
+    fontWeight: "bold",
+  },
+  postsScrollViewWrapper: { marginVertical: 20 },
+  scrollView: { paddingLeft: 20 },
 });
 
 export default styles;
