@@ -20,28 +20,7 @@ const PublicProfile = () => {
   const MessageUser = (number) => {
     Message(number);
   };
-
-  const StatItem = ({ item }) => {
-    return (
-      <View
-        style={[
-          styles.profileStatItem,
-          { backgroundColor: colors.warning.secondary },
-        ]}
-      >
-        <View style={styles.icon}>
-          <MaterialCommunityIcons
-            name="post"
-            size={24}
-            color={colors.warning.primary}
-          />
-        </View>
-        <Text style={styles.statTitle}>Posts created</Text>
-        <Text style={styles.statCount}>150</Text>
-      </View>
-    );
-  };
-
+  
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.headerNav}>
