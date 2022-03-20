@@ -10,6 +10,7 @@ import BottomSheet, {
 import { useRef, useMemo } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../theme/colors";
+import { Video } from "expo-av";
 
 const Post = () => {
   const navigation = useNavigation();
@@ -17,6 +18,17 @@ const Post = () => {
   const snapPoints = useMemo(() => ["32%"], []);
   return (
     <View style={styles.wrapper}>
+      <Video
+        style={styles.video}
+        source={{
+          uri: "https://firebasestorage.googleapis.com/v0/b/diseasscape.appspot.com/o/2.mp4?alt=media&token=d88374d3-afeb-4341-bf89-e53319a58f56",
+        }}
+        useNativeControls={false}
+        resizeMode="cover"
+        isLooping
+        isMuted
+        shouldPlay
+      />
       <BottomSheet
         ref={sheetRef}
         snapPoints={snapPoints}
