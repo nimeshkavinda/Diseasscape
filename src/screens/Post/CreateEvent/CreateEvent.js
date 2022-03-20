@@ -1,11 +1,13 @@
-import { View, Text } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 import React from "react";
+import { BackButton } from "../../../common";
 
 const CreateEvent = () => {
   return (
-    <View>
+    <SafeAreaView>
+      <BackButton />
       <Text>CreateEvent</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
