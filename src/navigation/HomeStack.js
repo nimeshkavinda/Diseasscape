@@ -4,7 +4,7 @@ import colors from "../theme/colors";
 import { Platform } from "react-native";
 import Home from "../screens/Home/Home";
 import Profile from "../screens/Profile/Profile";
-import Post from "../screens/Post/Post";
+import Create from "../screens/Create/Create";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,12 +17,8 @@ export default function HomeStack() {
           let iconName;
           if (route.name === "Home") {
             iconName = focused ? "home" : "home";
-          } else if (route.name === "Events") {
-            iconName = focused ? "calendar" : "calendar";
-          } else if (route.name === "Post") {
+          } else if (route.name === "Create") {
             iconName = focused ? "pluscircleo" : "pluscircleo";
-          } else if (route.name === "LeaderBoard") {
-            iconName = focused ? "Trophy" : "Trophy";
           } else if (route.name === "Profile") {
             iconName = focused ? "user" : "user";
           }
@@ -53,9 +49,9 @@ export default function HomeStack() {
         component={Home}
       />
       <Tab.Screen
-        name="Post"
+        name="Create"
         options={{ headerShown: false }}
-        component={Post}
+        component={Create}
       />
       <Tab.Screen
         name="Profile"
