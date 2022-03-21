@@ -1,5 +1,4 @@
 import { SafeAreaView, View } from "react-native";
-import { useState } from "react";
 import { BackButton } from "../../../common/";
 import styles from "./styles";
 import EventDetails from "./EventDetails/EventDetails";

@@ -32,7 +32,7 @@ const useLocation = () => {
           longitude,
           latitude,
         },
-        { useGoogleMaps: true }
+        { useGoogleMaps: false }
       );
 
       setLocation({
