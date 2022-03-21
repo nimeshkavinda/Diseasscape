@@ -14,11 +14,14 @@ let apiKey = Constants.manifest?.extra?.googleMapsApiKey;
 const latitudeDelta = 0.05;
 const longitudeDelta = 0.01;
 
-const EventLocation = ({ prevStep }) => {
+const EventLocation = ({ prevStep, eventData }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [userRegion, setUserRegion] = useState();
   const { coords, address, error } = useLocation();
   const [region, setRegion] = useState();
+
+  // event data final state obj
+  const [eventDataFinal, setEventDataFinal] = useState(eventData);
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -39,6 +42,19 @@ const EventLocation = ({ prevStep }) => {
         latitudeDelta: latitudeDelta,
         longitudeDelta: longitudeDelta,
       });
+      setEventDataFinal({
+        ...eventDataFinal,
+        latLng: {
+          ...eventDataFinal.latLng,
+          latitude: coords?.latitude,
+          longitude: coords?.longitude,
+        },
+        location: {
+          ...eventDataFinal.location,
+          name: address?.city,
+          vicinity: address?.city,
+        },
+      });
       setIsLoaded(true);
     }
     if (error !== null) {
@@ -58,6 +74,8 @@ const EventLocation = ({ prevStep }) => {
     }
   }, [coords, address, error]);
 
+  console.log("Event data final at component mount: ", eventDataFinal);
+
   const fetchPlaceData = (region) => {
     fetch(
       `https://maps.googleapis.com/maps/api/place/search/json?location=${region?.latitude},${region?.longitude}&radius=500&&sensor=false&key=${apiKey}`
@@ -73,12 +91,26 @@ const EventLocation = ({ prevStep }) => {
           latitudeDelta: latitudeDelta,
           longitudeDelta: longitudeDelta,
         });
+        setEventDataFinal({
+          ...eventDataFinal,
+          latLng: {
+            ...eventDataFinal.latLng,
+            latitude: region?.latitude,
+            longitude: region?.longitude,
+          },
+          location: {
+            ...eventDataFinal.location,
+            name: data?.results[0]?.name,
+            vicinity: data?.results[0]?.vicinity,
+          },
+        });
       });
   };
 
   const onRegionChange = (region) => {
     console.log("Region: ", region);
     fetchPlaceData(region);
+    console.log("Event data final at location change: ", eventDataFinal);
   };
 
   return (

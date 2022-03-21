@@ -20,8 +20,8 @@ const EventDetails = () => {
     defaultValues: {
       title: "",
       description: "",
-      date: date,
-      time: time,
+      date: "",
+      time: "",
       location: {
         name: "",
         vicinity: "",
@@ -39,12 +39,17 @@ const EventDetails = () => {
     },
   });
 
+  // data state obj
+  const [eventData, setEventData] = useState();
+
   // date time
   const [dateTime, setDateTime] = useState(new Date());
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [date, setDate] = useState(
+    moment(new Date()).utc().format("ddd Do MMMM YYYY")
+  );
+  const [time, setTime] = useState(moment(new Date()).utc().format("hh:mm A"));
 
-  const onChange = (event, selectedValue) => {
+  const onDateTimeChange = (event, selectedValue) => {
     console.log("DateTime changed: ", selectedValue);
     setDateTime(selectedValue);
     setDate(moment(selectedValue).utc().format("ddd Do MMMM YYYY"));
@@ -54,7 +59,27 @@ const EventDetails = () => {
   };
 
   const handleSubmitPress = (data) => {
-    console.log(data);
+    console.log("Even data step 1: ", data);
+    setEventData({
+      title: data?.title,
+      description: data?.description,
+      date: date,
+      time: time,
+      location: {
+        name: "",
+        vicinity: "",
+      },
+      latLng: {
+        latitude: "",
+        longitude: "",
+      },
+      organizer: {
+        id: 1,
+        fullName: "Nimesh Kavinda",
+        profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
+      },
+      participants: [{ id: 1, fullName: "John Doe" }],
+    });
     nextStep();
   };
 
@@ -66,7 +91,7 @@ const EventDetails = () => {
   };
 
   if (step === 2) {
-    return <EventLocation prevStep={prevStep} />;
+    return <EventLocation prevStep={prevStep} eventData={eventData} />;
   }
 
   return (
@@ -129,7 +154,7 @@ const EventDetails = () => {
                 value={dateTime}
                 mode={"date"}
                 is24Hour={true}
-                onChange={onChange}
+                onChange={onDateTimeChange}
                 style={styles.date}
               />
             </View>
@@ -144,7 +169,7 @@ const EventDetails = () => {
                 value={dateTime}
                 mode={"time"}
                 is24Hour={true}
-                onChange={onChange}
+                onChange={onDateTimeChange}
                 style={styles.time}
               />
             </View>
