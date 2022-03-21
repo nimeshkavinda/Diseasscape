@@ -1,0 +1,118 @@
+import { View } from "react-native";
+import { useState, useEffect } from "react";
+import styles from "../styles";
+import { Text, Button, Input } from "../../../../common";
+import MapView from "react-native-maps";
+import { Fontisto } from "@expo/vector-icons";
+import useLocation from "../../../../hooks/useLocation";
+import colors from "../../../../theme/colors";
+import Constants from "expo-constants";
+
+let apiKey = Constants.manifest?.extra?.googleMapsApiKey;
+
+const latitudeDelta = 0.025;
+const longitudeDelta = 0.025;
+
+const EventLocation = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [userRegion, setUserRegion] = useState();
+  const { coords, address, error } = useLocation();
+  const [region, setRegion] = useState();
+
+  useEffect(() => {
+    if (coords && address !== null) {
+      console.log("Coords: ", coords, "Address: ", address);
+      setUserRegion({
+        name: address?.city,
+        vicinity: address?.city,
+        latitude: coords?.latitude,
+        longitude: coords?.longitude,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta: longitudeDelta,
+      });
+      setRegion({
+        name: address?.city,
+        vicinity: address?.city,
+        latitude: coords?.latitude,
+        longitude: coords?.longitude,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta: longitudeDelta,
+      });
+      setIsLoaded(true);
+    }
+    if (error !== null) {
+      Alert.alert(
+        "Error",
+        "Failed to fetch current location",
+        [
+          {
+            text: "OK",
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+    }
+  }, [coords, address, error]);
+
+  const fetchPlaceData = (region) => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/place/search/json?location=${region?.latitude},${region?.longitude}&radius=500&&sensor=false&key=${apiKey}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Place: ", data);
+        setRegion({
+          name: data?.results[0]?.name,
+          vicinity: data?.results[0]?.vicinity,
+          latitude: region?.latitude,
+          longitude: region?.longitude,
+          latitudeDelta: latitudeDelta,
+          longitudeDelta: longitudeDelta,
+        });
+      });
+  };
+
+  const onRegionChange = (region) => {
+    console.log("Region: ", region);
+    fetchPlaceData(region);
+  };
+
+  return (
+    <View style={styles.wrapper}>
+      <View>
+        <View style={styles.headingWrapper}>
+          <Text style={styles.headingText}>Set meetup location</Text>
+        </View>
+      </View>
+      {isLoaded && (
+        <View style={styles.mapWrapper}>
+          <MapView
+            style={styles.map}
+            initialRegion={userRegion}
+            region={region}
+            onRegionChangeComplete={onRegionChange}
+          />
+          <View style={styles.markerFixed}>
+            <Fontisto
+              style={styles.marker}
+              name="map-marker"
+              size={32}
+              color={colors.primary.bg}
+            />
+          </View>
+        </View>
+      )}
+      <View style={styles.formWrapper}>
+        <Input value={`${region?.vicinity}`} style={styles.input} />
+      </View>
+      <View style={styles.buttonWrapper}>
+        <Button title="Create event" />
+      </View>
+    </View>
+  );
+};
+
+export default EventLocation;
