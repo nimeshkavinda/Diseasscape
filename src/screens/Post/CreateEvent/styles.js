@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   headingText: { fontSize: 28, fontWeight: "bold" },
   formWrapper: { marginHorizontal: 20 },
   input: { marginBottom: 14 },
-  textArea: { height: 180 },
+  textArea: { height: 280 },
   dateTimeWrapper: {
     borderRadius: 14,
     marginVertical: 20,

@@ -14,7 +14,7 @@ let apiKey = Constants.manifest?.extra?.googleMapsApiKey;
 const latitudeDelta = 0.05;
 const longitudeDelta = 0.01;
 
-const EventLocation = () => {
+const EventLocation = ({ prevStep }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [userRegion, setUserRegion] = useState();
   const { coords, address, error } = useLocation();
@@ -115,6 +115,7 @@ const EventLocation = () => {
             styles.button,
             { width: "48%", backgroundColor: colors.secondary.bg },
           ]}
+          onPress={prevStep}
         >
           <Ionicons name="md-caret-back" size={16} color={colors.primary.bg} />
           <Text style={[styles.buttonText, { color: colors.secondary.text }]}>

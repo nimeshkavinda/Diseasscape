@@ -6,8 +6,12 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../../../theme/colors";
 import { Ionicons } from "@expo/vector-icons";
+import EventLocation from "../EventLocation/EventLocation";
 
 const EventDetails = () => {
+  const [step, setStep] = useState(1);
+
+  // date time
   const [date, setDate] = useState(new Date(1598051730000));
   const [time, setTime] = useState();
 
@@ -16,6 +20,21 @@ const EventDetails = () => {
     setShow(false);
     setDate(currentDate);
   };
+
+  const handleSubmitPress = () => {
+    nextStep();
+  };
+
+  const nextStep = () => {
+    setStep(step + 1);
+  };
+  const prevStep = () => {
+    setStep(step - 1);
+  };
+
+  if (step === 2) {
+    return <EventLocation prevStep={prevStep} />;
+  }
 
   return (
     <View style={styles.wrapper}>
@@ -71,6 +90,7 @@ const EventDetails = () => {
             styles.button,
             { width: "100%", backgroundColor: colors.primary.bg },
           ]}
+          onPress={handleSubmitPress}
         >
           <Text style={[styles.buttonText, { color: colors.primary.text }]}>
             Meetup location
