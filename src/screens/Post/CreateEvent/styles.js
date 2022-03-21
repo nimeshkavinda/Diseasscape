@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   headingWrapper: { marginHorizontal: 20, marginBottom: 20 },
   headingText: { fontSize: 28, fontWeight: "bold" },
   formWrapper: { marginHorizontal: 20 },
-  input: { marginBottom: 14 },
+  input: { marginBottom: 12 },
   textArea: { height: 220, marginVertical: 14 },
   dateTimeWrapper: {
     borderRadius: 14,
