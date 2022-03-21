@@ -8,6 +8,7 @@ import colors from "../../../../theme/colors";
 import { Ionicons } from "@expo/vector-icons";
 import EventLocation from "../EventLocation/EventLocation";
 import { useForm, Controller } from "react-hook-form";
+import moment from "moment";
 
 const EventDetails = () => {
   const [step, setStep] = useState(1);
@@ -19,8 +20,8 @@ const EventDetails = () => {
     defaultValues: {
       title: "",
       description: "",
-      date: "",
-      time: "",
+      date: date,
+      time: time,
       location: {
         name: "",
         vicinity: "",
@@ -40,10 +41,16 @@ const EventDetails = () => {
 
   // date time
   const [dateTime, setDateTime] = useState(new Date());
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
   const onChange = (event, selectedValue) => {
-    console.log("Date changed: ", selectedValue);
+    console.log("DateTime changed: ", selectedValue);
     setDateTime(selectedValue);
+    setDate(moment(selectedValue).utc().format("ddd Do MMMM YYYY"));
+    setTime(moment(selectedValue).utc().format("hh:mm A"));
+    console.log("Date: ", date);
+    console.log("Time: ", time);
   };
 
   const handleSubmitPress = (data) => {
