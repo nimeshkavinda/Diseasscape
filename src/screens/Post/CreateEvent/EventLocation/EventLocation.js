@@ -10,8 +10,8 @@ import Constants from "expo-constants";
 
 let apiKey = Constants.manifest?.extra?.googleMapsApiKey;
 
-const latitudeDelta = 0.025;
-const longitudeDelta = 0.025;
+const latitudeDelta = 0.05;
+const longitudeDelta = 0.01;
 
 const EventLocation = () => {
   const [isLoaded, setIsLoaded] = useState(false);
