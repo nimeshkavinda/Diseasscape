@@ -1,12 +1,13 @@
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import styles from "../styles";
-import { Text, Button, Input } from "../../../../common";
+import { Text, Input } from "../../../../common";
 import MapView from "react-native-maps";
 import { Fontisto } from "@expo/vector-icons";
 import useLocation from "../../../../hooks/useLocation";
 import colors from "../../../../theme/colors";
 import Constants from "expo-constants";
+import { Ionicons } from "@expo/vector-icons";
 
 let apiKey = Constants.manifest?.extra?.googleMapsApiKey;
 
@@ -109,7 +110,27 @@ const EventLocation = () => {
         <Input value={`${region?.vicinity}`} style={styles.input} />
       </View>
       <View style={styles.buttonWrapper}>
-        <Button title="Create event" />
+        <TouchableOpacity
+          style={[
+            styles.button,
+            { width: "48%", backgroundColor: colors.secondary.bg },
+          ]}
+        >
+          <Ionicons name="md-caret-back" size={16} color={colors.primary.bg} />
+          <Text style={[styles.buttonText, { color: colors.secondary.text }]}>
+            Event details
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            { width: "48%", backgroundColor: colors.primary.bg },
+          ]}
+        >
+          <Text style={[styles.buttonText, { color: colors.primary.text }]}>
+            Create event
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

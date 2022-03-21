@@ -1,10 +1,11 @@
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import styles from "../styles";
-import { Input, Text, Button } from "../../../../common";
+import { Input, Text } from "../../../../common";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../../../theme/colors";
+import { Ionicons } from "@expo/vector-icons";
 
 const EventDetails = () => {
   const [date, setDate] = useState(new Date(1598051730000));
@@ -65,7 +66,21 @@ const EventDetails = () => {
         </View>
       </View>
       <View style={styles.buttonWrapper}>
-        <Button title="Next" />
+        <TouchableOpacity
+          style={[
+            styles.button,
+            { width: "100%", backgroundColor: colors.primary.bg },
+          ]}
+        >
+          <Text style={[styles.buttonText, { color: colors.primary.text }]}>
+            Meetup location
+          </Text>
+          <Ionicons
+            name="md-caret-forward"
+            size={16}
+            color={colors.primary.text}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
