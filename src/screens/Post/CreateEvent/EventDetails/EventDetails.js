@@ -1,27 +1,53 @@
 import { View, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import styles from "../styles";
-import { Input, Text } from "../../../../common";
+import { Input, Text, ValidationText } from "../../../../common";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../../../theme/colors";
 import { Ionicons } from "@expo/vector-icons";
 import EventLocation from "../EventLocation/EventLocation";
+import { useForm, Controller } from "react-hook-form";
 
 const EventDetails = () => {
   const [step, setStep] = useState(1);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: "",
+      description: "",
+      date: "",
+      time: "",
+      location: {
+        name: "",
+        vicinity: "",
+      },
+      latLng: {
+        latitude: "",
+        longitude: "",
+      },
+      organizer: {
+        id: 1,
+        fullName: "Nimesh Kavinda",
+        profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
+      },
+      participants: [{ id: 1, fullName: "John Doe" }],
+    },
+  });
 
   // date time
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [time, setTime] = useState();
+  const [dateTime, setDateTime] = useState(new Date());
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
+  const onChange = (event, selectedValue) => {
+    console.log("Date changed: ", selectedValue);
+    setDateTime(selectedValue);
   };
 
-  const handleSubmitPress = () => {
+  const handleSubmitPress = (data) => {
+    console.log(data);
     nextStep();
   };
 
@@ -43,12 +69,46 @@ const EventDetails = () => {
           <Text style={styles.headingText}>Create event</Text>
         </View>
         <View style={styles.formWrapper}>
-          <Input placeholder="Event title" style={styles.input} />
-          <Input
-            placeholder="Event description"
-            multiline={true}
-            style={styles.textArea}
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Event title"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                isError={errors.title ? true : false}
+              />
+            )}
+            name="title"
           />
+          {errors.title && <ValidationText>Title is required.</ValidationText>}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Event description"
+                multiline={true}
+                style={styles.textArea}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                isError={errors.description ? true : false}
+              />
+            )}
+            name="description"
+          />
+          {errors.description && (
+            <ValidationText>Description is required.</ValidationText>
+          )}
           <Text style={styles.sectionHeadingText}>When</Text>
           <View style={styles.dateTimeWrapper}>
             <View style={styles.dateWrapper}>
@@ -59,7 +119,7 @@ const EventDetails = () => {
               />
               <DateTimePicker
                 testID="dateTimePicker"
-                value={date}
+                value={dateTime}
                 mode={"date"}
                 is24Hour={true}
                 onChange={onChange}
@@ -74,7 +134,7 @@ const EventDetails = () => {
               />
               <DateTimePicker
                 testID="dateTimePicker"
-                value={date}
+                value={dateTime}
                 mode={"time"}
                 is24Hour={true}
                 onChange={onChange}
@@ -90,7 +150,7 @@ const EventDetails = () => {
             styles.button,
             { width: "100%", backgroundColor: colors.primary.bg },
           ]}
-          onPress={handleSubmitPress}
+          onPress={handleSubmit(handleSubmitPress)}
         >
           <Text style={[styles.buttonText, { color: colors.primary.text }]}>
             Meetup location
