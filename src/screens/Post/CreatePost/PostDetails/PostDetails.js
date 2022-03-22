@@ -68,7 +68,6 @@ const PostDetails = ({ navigation, route }) => {
   const cameraPermission = useCamera();
   const [showCameraView, setShowCameraView] = useState(false);
   const [camera, setCamera] = useState(null);
-  const [imageArray, setImageArray] = useState([]);
   const [images, setImages] = useState([]);
 
   const takePicture = async () => {
@@ -77,7 +76,6 @@ const PostDetails = ({ navigation, route }) => {
       const data = await camera.takePictureAsync({ base64: true });
       console.log("Captured image data", data);
       setImages([...images, { id: uuidv4(), src: data.base64 }]);
-      setImageArray([...imageArray, data.base64]);
       setShowCameraView(false);
     } else {
       console.log("Camera permission is required");
@@ -112,6 +110,21 @@ const PostDetails = ({ navigation, route }) => {
   };
 
   console.log("Post data state obj: ", postData);
+
+  const deleteImage = (img) => {
+    let imgToDelete = images.findIndex((item) => {
+      return item.id === img.id;
+    });
+
+    setImages(images.splice(imgToDelete, 1));
+
+    // for (let i = 0; i < images.length; i++) {
+    //   if (images[i].id === img.id) {
+    //     setImages(images.splice(i, 1));
+    //     break;
+    //   }
+    // }
+  };
 
   if (showCameraView) {
     return (
@@ -197,14 +210,14 @@ const PostDetails = ({ navigation, route }) => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       >
-        {imageArray.length > 0 &&
-          imageArray.map((item, index) => {
+        {images.length > 0 &&
+          images.map((img) => {
             return (
               <View style={styles.imagePreviewWrapper}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => deleteImage(img)}>
                   <Image
-                    key={index}
-                    source={{ uri: `data:image/jpg;base64,${item}` }}
+                    key={img?.id}
+                    source={{ uri: `data:image/jpg;base64,${img?.src}` }}
                     style={{
                       width: 160,
                       height: 160,
@@ -216,7 +229,7 @@ const PostDetails = ({ navigation, route }) => {
               </View>
             );
           })}
-        {imageArray.length < 5 && (
+        {images.length < 5 && (
           <TouchableOpacity
             style={styles.takePhotoButton}
             onPress={() => setShowCameraView(true)}
