@@ -4,7 +4,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  FlatList,
   Image,
   Modal,
 } from "react-native";
@@ -190,27 +189,15 @@ const PostDetails = ({ navigation, route }) => {
         )}
       </View>
       <Text style={styles.sectionHeadingText}>Photos</Text>
-      <View
-        style={styles.photoScrollView}
+      <ScrollView
+        contentContainerStyle={styles.photoScrollView}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       >
-        <TouchableOpacity
-          style={styles.takePhotoButton}
-          onPress={() => setShowCameraView(true)}
-        >
-          <MaterialIcons
-            name="add-a-photo"
-            size={24}
-            color={colors.grey.dark}
-          />
-          <Text style={styles.takePhotoButtonText}>Take photo</Text>
-        </TouchableOpacity>
-        {imageArray.length > 0 && (
-          <View>
-            <FlatList
-              data={imageArray}
-              renderItem={({ item, index }) => (
+        {imageArray.length > 0 &&
+          imageArray.map((item, index) => {
+            return (
+              <View style={styles.imagePreviewWrapper}>
                 <TouchableOpacity>
                   <Image
                     key={index}
@@ -223,15 +210,23 @@ const PostDetails = ({ navigation, route }) => {
                     }}
                   />
                 </TouchableOpacity>
-              )}
-              keyExtractor={(item) => item.id}
-              style={styles.photoFlatList}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
+              </View>
+            );
+          })}
+        {imageArray.length < 5 && (
+          <TouchableOpacity
+            style={styles.takePhotoButton}
+            onPress={() => setShowCameraView(true)}
+          >
+            <MaterialIcons
+              name="add-a-photo"
+              size={24}
+              color={colors.grey.dark}
             />
-          </View>
+            <Text style={styles.takePhotoButtonText}>Take photo</Text>
+          </TouchableOpacity>
         )}
-      </View>
+      </ScrollView>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
           style={[

@@ -51,10 +51,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   input: { marginBottom: 12 },
-  textArea: { height: 150, marginVertical: 14 },
+  textArea: { height: 140, marginVertical: 14 },
   sectionHeadingText: {
     marginHorizontal: 20,
-    marginTop: 10,
+    marginVertical: 10,
     fontSize: 24,
     fontWeight: "bold",
   },
@@ -72,7 +72,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonText: { fontSize: 16, fontWeight: "500" },
-  photoScrollView: { marginTop: 20, paddingLeft: 20, flexDirection: "row" },
+  photoScrollView: {
+    paddingLeft: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
   takePhotoButton: {
     width: 160,
     height: 160,
@@ -83,7 +87,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   takePhotoButtonText: { fontSize: 16, marginTop: 6, color: colors.grey.dark },
-  photoFlatList: {},
+  imagePreviewWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 6,
+  },
   cameraWrapper: {
     position: "absolute",
     width: Dimensions.get("window").width,
