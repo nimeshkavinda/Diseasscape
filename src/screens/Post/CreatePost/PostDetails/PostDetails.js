@@ -17,6 +17,7 @@ import moment from "moment";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import useCamera from "../../../../hooks/useCamera";
+import { v4 as uuidv4 } from "uuid";
 
 const PostDetails = ({ navigation, route }) => {
   const [userRegion, setUserRegion] = useState();
@@ -67,21 +68,23 @@ const PostDetails = ({ navigation, route }) => {
   const cameraPermission = useCamera();
   const [showCameraView, setShowCameraView] = useState(false);
   const [camera, setCamera] = useState(null);
-  const [imageUri, setImageUri] = useState([]);
   const [imageArray, setImageArray] = useState([]);
+  const [images, setImages] = useState([]);
 
   const takePicture = async () => {
     console.log("Camera permission: ", cameraPermission);
     if (cameraPermission) {
-      const data = await camera.takePictureAsync(null);
-      console.log(data.uri);
-      setImageUri(data.uri);
-      setImageArray([...imageArray, data.uri]);
+      const data = await camera.takePictureAsync({ base64: true });
+      console.log("Captured image data", data);
+      setImages([...images, { id: uuidv4(), src: data.base64 }]);
+      setImageArray([...imageArray, data.base64]);
       setShowCameraView(false);
     } else {
       console.log("Camera permission is required");
     }
   };
+
+  console.log("Images thus far: ", images);
 
   // post data state obj
   const [postData, setPostData] = useState();
@@ -94,7 +97,7 @@ const PostDetails = ({ navigation, route }) => {
       description: data?.description,
       type: route.params.type,
       date: date,
-      images: [],
+      images: images,
       location: { name: userRegion?.name, vicinity: userRegion?.vicinity },
       latLng: {
         latitude: userRegion?.latitude,
@@ -201,7 +204,7 @@ const PostDetails = ({ navigation, route }) => {
                 <TouchableOpacity>
                   <Image
                     key={index}
-                    source={{ uri: item }}
+                    source={{ uri: `data:image/jpg;base64,${item}` }}
                     style={{
                       width: 160,
                       height: 160,
