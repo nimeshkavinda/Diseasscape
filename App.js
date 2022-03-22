@@ -9,6 +9,7 @@ import rootReducer from "./src/redux/reducers";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 const store = createStore(
   rootReducer,
@@ -38,7 +39,9 @@ const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
-        <AppStack />
+        <BottomSheetModalProvider>
+          <AppStack />
+        </BottomSheetModalProvider>
       </Provider>
     </GestureHandlerRootView>
   );
