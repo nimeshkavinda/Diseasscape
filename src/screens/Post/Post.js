@@ -43,7 +43,7 @@ const Post = () => {
           <View style={styles.buttonWrapper}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate("CreatePost")}
+              onPress={() => navigation.navigate("CreatePostStack")}
             >
               <View style={styles.buttonIcon}>
                 <MaterialCommunityIcons
