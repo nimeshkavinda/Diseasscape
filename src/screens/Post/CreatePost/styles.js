@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: 16, fontWeight: "500" },
   photoScrollView: {
     paddingLeft: 20,
+    paddingRight: 10,
     flexDirection: "row",
     alignItems: "center",
   },
