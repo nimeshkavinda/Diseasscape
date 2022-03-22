@@ -4,6 +4,8 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  FlatList,
+  Image,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { BackButton, ValidationText, Input } from "../../../../common";
@@ -12,6 +14,8 @@ import { useForm, Controller } from "react-hook-form";
 import colors from "../../../../theme/colors";
 import useLocation from "../../../../hooks/useLocation";
 import moment from "moment";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Camera } from "expo-camera";
 
 const PostDetails = ({ navigation, route }) => {
   const [userRegion, setUserRegion] = useState();
@@ -58,6 +62,37 @@ const PostDetails = ({ navigation, route }) => {
     }
   }, [coords, address, error]);
 
+  // camera
+  const [cameraPermission, setCameraPermission] = useState(null);
+
+  const [camera, setCamera] = useState(null);
+  const [imageUri, setImageUri] = useState([]);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [imageArray, setImageArray] = useState([]);
+
+  const getPermission = async () => {
+    const cameraPermission = await Camera.requestCameraPermissionsAsync();
+
+    setCameraPermission(cameraPermission.status === "granted");
+
+    if (cameraPermission.status !== "granted") {
+      alert("Permission for camera access needed.");
+    }
+  };
+
+  useEffect(() => {
+    getPermission();
+  }, []);
+
+  const takePicture = async () => {
+    if (camera) {
+      const data = await camera.takePictureAsync(null);
+      console.log(data.uri);
+      setImageUri(data.uri);
+      setImageArray([...imageArray, data.uri]);
+    }
+  };
+
   // post data state obj
   const [postData, setPostData] = useState();
 
@@ -87,6 +122,11 @@ const PostDetails = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
+      <Camera
+        ref={(ref) => setCamera(ref)}
+        style={styles.fixedRatio}
+        type={type}
+      />
       <View style={styles.headerNav}>
         <BackButton />
       </View>
@@ -136,13 +176,45 @@ const PostDetails = ({ navigation, route }) => {
         )}
       </View>
       <Text style={styles.sectionHeadingText}>Photos</Text>
-      <View style={styles.photoWrapper}>
-        <ScrollView
-          contentContainerStyle={styles.photoScrollView}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        ></ScrollView>
-      </View>
+      <ScrollView
+        style={styles.photoScrollView}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      >
+        <TouchableOpacity style={styles.takePhotoButton} onPress={takePicture}>
+          <MaterialIcons
+            name="add-a-photo"
+            size={24}
+            color={colors.grey.dark}
+          />
+          <Text style={styles.takePhotoButtonText}>Take photo</Text>
+        </TouchableOpacity>
+        {imageArray.length > 0 && (
+          <View>
+            <FlatList
+              data={imageArray}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity>
+                  <Image
+                    key={index}
+                    source={{ uri: item }}
+                    style={{
+                      width: 160,
+                      height: 160,
+                      borderRadius: 10,
+                      marginRight: 10,
+                    }}
+                  />
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.id}
+              style={styles.photoFlatList}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+        )}
+      </ScrollView>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
           style={[
