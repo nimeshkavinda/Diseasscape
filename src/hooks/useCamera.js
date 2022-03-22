@@ -12,6 +12,7 @@ const useCamera = () => {
     //   .catch((error) => {
     //     console.log("Permission for camera access needed.", error.message);
     //   });
+
     const cameraPermission = await Camera.requestCameraPermissionsAsync();
 
     setPermission(cameraPermission.status === "granted");

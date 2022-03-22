@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, StatusBar } from "react-native";
+import { StyleSheet, Platform, StatusBar, Dimensions } from "react-native";
 import colors from "../../../theme/colors";
 
 const styles = StyleSheet.create({
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonText: { fontSize: 16, fontWeight: "500" },
-  photoScrollView: { marginTop: 20, paddingLeft: 20 },
+  photoScrollView: { marginTop: 20, paddingLeft: 20, flexDirection: "row" },
   takePhotoButton: {
     width: 160,
     height: 160,
@@ -84,6 +84,23 @@ const styles = StyleSheet.create({
   },
   takePhotoButtonText: { fontSize: 16, marginTop: 6, color: colors.grey.dark },
   photoFlatList: {},
+  cameraWrapper: {
+    position: "absolute",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+  },
+  camera: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  snapButtonWrapper: { alignItems: "center", marginBottom: 40 },
+  snapButton: {
+    padding: 1,
+    borderRadius: 50,
+    backgroundColor: colors.grey.light,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default styles;

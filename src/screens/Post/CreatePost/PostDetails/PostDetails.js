@@ -6,6 +6,7 @@ import {
   ScrollView,
   FlatList,
   Image,
+  Modal,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { BackButton, ValidationText, Input } from "../../../../common";
@@ -16,6 +17,7 @@ import useLocation from "../../../../hooks/useLocation";
 import moment from "moment";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
+import useCamera from "../../../../hooks/useCamera";
 
 const PostDetails = ({ navigation, route }) => {
   const [userRegion, setUserRegion] = useState();
@@ -63,33 +65,22 @@ const PostDetails = ({ navigation, route }) => {
   }, [coords, address, error]);
 
   // camera
-  const [cameraPermission, setCameraPermission] = useState(null);
-
+  const cameraPermission = useCamera();
+  const [showCameraView, setShowCameraView] = useState(false);
   const [camera, setCamera] = useState(null);
   const [imageUri, setImageUri] = useState([]);
-  const [type, setType] = useState(Camera.Constants.Type.back);
   const [imageArray, setImageArray] = useState([]);
 
-  const getPermission = async () => {
-    const cameraPermission = await Camera.requestCameraPermissionsAsync();
-
-    setCameraPermission(cameraPermission.status === "granted");
-
-    if (cameraPermission.status !== "granted") {
-      alert("Permission for camera access needed.");
-    }
-  };
-
-  useEffect(() => {
-    getPermission();
-  }, []);
-
   const takePicture = async () => {
-    if (camera) {
+    console.log("Camera permission: ", cameraPermission);
+    if (cameraPermission) {
       const data = await camera.takePictureAsync(null);
       console.log(data.uri);
       setImageUri(data.uri);
       setImageArray([...imageArray, data.uri]);
+      setShowCameraView(false);
+    } else {
+      console.log("Camera permission is required");
     }
   };
 
@@ -120,13 +111,36 @@ const PostDetails = ({ navigation, route }) => {
 
   console.log("Post data state obj: ", postData);
 
+  if (showCameraView) {
+    return (
+      <Modal
+        animationType="none"
+        transparent={false}
+        visible={showCameraView}
+        style={styles.cameraWrapper}
+      >
+        <Camera
+          ref={(ref) => setCamera(ref)}
+          style={styles.camera}
+          type={Camera.Constants.Type.back}
+        >
+          <View style={styles.snapButtonWrapper}>
+            <TouchableOpacity
+              style={styles.snapButton}
+              onPress={() => {
+                takePicture();
+              }}
+            >
+              <MaterialIcons name="lens" size={72} color="#fff" />
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      </Modal>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.wrapper}>
-      <Camera
-        ref={(ref) => setCamera(ref)}
-        style={styles.fixedRatio}
-        type={type}
-      />
       <View style={styles.headerNav}>
         <BackButton />
       </View>
@@ -176,12 +190,15 @@ const PostDetails = ({ navigation, route }) => {
         )}
       </View>
       <Text style={styles.sectionHeadingText}>Photos</Text>
-      <ScrollView
+      <View
         style={styles.photoScrollView}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       >
-        <TouchableOpacity style={styles.takePhotoButton} onPress={takePicture}>
+        <TouchableOpacity
+          style={styles.takePhotoButton}
+          onPress={() => setShowCameraView(true)}
+        >
           <MaterialIcons
             name="add-a-photo"
             size={24}
@@ -214,7 +231,7 @@ const PostDetails = ({ navigation, route }) => {
             />
           </View>
         )}
-      </ScrollView>
+      </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
           style={[
