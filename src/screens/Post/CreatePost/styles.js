@@ -4,7 +4,7 @@ import colors from "../../../theme/colors";
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     backgroundColor: "#fff",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 20,
   },
-  scrollView: {
+  typeScrollView: {
+    height: 760,
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap: "wrap",
@@ -49,6 +50,29 @@ const styles = StyleSheet.create({
     width: "50%",
     fontSize: 16,
   },
+  input: { marginBottom: 12 },
+  textArea: { height: 180, marginVertical: 14 },
+  sectionHeadingText: {
+    marginHorizontal: 20,
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  buttonWrapper: {
+    marginHorizontal: 20,
+    marginVertical: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  button: {
+    height: 60,
+    borderRadius: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: { fontSize: 16, fontWeight: "500" },
+  photoWrapper: { height: 180 },
+  photoScrollView: {},
 });
 
 export default styles;

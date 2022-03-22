@@ -10,8 +10,11 @@ import { BackButton } from "../../../common";
 import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../../theme/colors";
+import { useNavigation } from "@react-navigation/native";
 
 const CreatePost = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.headerNav}>
@@ -21,12 +24,20 @@ const CreatePost = () => {
         <Text style={styles.headingText}>Select post type</Text>
       </View>
       <View style={styles.typeWrapper}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
+        <ScrollView
+          contentContainerStyle={styles.typeScrollView}
+          showsVerticalScrollIndicator={false}
+        >
           <TouchableOpacity
             style={[
               styles.typeButton,
               { backgroundColor: colors.secondary.bg },
             ]}
+            onPress={() =>
+              navigation.navigate("PostDetails", {
+                type: "dengue",
+              })
+            }
           >
             <Ionicons
               name="arrow-forward-circle"

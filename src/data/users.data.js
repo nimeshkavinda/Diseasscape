@@ -3,7 +3,7 @@ const users = [
     id: 1,
     fullName: "Nimesh Kavinda",
     status:
-      "Software engineer by profession, public health care volunteer by heart. I regularly organize environment cleanup events",
+      "Software engineer and a public volunteer dedicated to ensuring public well being. I regularly organize environment cleanup events",
     address: {
       number: "148/A",
       street: "Horana road",
