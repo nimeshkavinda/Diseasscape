@@ -11,6 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
   const sheetRef = useRef(null);
@@ -18,6 +19,7 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
   const handleClosePress = () => sheetRef.current.snapToPosition(-1);
   const openModal = () => sheetRef.current.snapToIndex(0);
   const [postsInVicinity, setPostsInVicinity] = useState();
+  const navigation = useNavigation();
 
   const filteredPosts = posts.filter(function (post) {
     return post.location.vicinity === event?.location?.vicinity;
@@ -173,7 +175,10 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
           </View>
         </View>
         <View style={styles.footerWrapper}>
-          <TouchableOpacity style={styles.organizerDetails}>
+          <TouchableOpacity
+            style={styles.organizerDetails}
+            onPress={() => navigation.navigate("PublicProfile")}
+          >
             <Image
               style={styles.organizerProfileImage}
               source={{

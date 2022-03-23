@@ -34,7 +34,7 @@ const Profile = () => {
           }}
           resizeMode="cover"
         />
-        <Text style={styles.profileName}>Nimesh Kavinda</Text>
+        <Text style={styles.profileName}>Me</Text>
         <Text style={styles.profileBio} numberOfLines={3}>
           Software engineer by profession, public health care volunteer by
           heart. I regularly organize environment cleanup events

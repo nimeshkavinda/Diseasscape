@@ -1,11 +1,11 @@
 import { SafeAreaView, View, Image, TouchableOpacity } from "react-native";
-import { Text, BackButton } from "../../common";
+import { Text, BackButton } from "../../../common";
 import { ScrollView } from "react-native-gesture-handler";
 import React from "react";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import colors from "../../theme/colors";
+import colors from "../../../theme/colors";
 import call from "react-native-phone-call";
 import { Text as Message } from "react-native-openanything";
 
@@ -20,7 +20,7 @@ const PublicProfile = () => {
   const MessageUser = (number) => {
     Message(number);
   };
-  
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.headerNav}>

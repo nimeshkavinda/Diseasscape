@@ -1,5 +1,5 @@
 import { StyleSheet, Platform, StatusBar } from "react-native";
-import colors from "../../theme/colors";
+import colors from "../../../theme/colors";
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../theme/colors";
 import { Platform } from "react-native";
-import Home from "../screens/Home/Home";
+import MainStack from "./MainStack";
 import Profile from "../screens/Profile/Profile";
 import PostStack from "./PostStack";
 
@@ -46,7 +46,7 @@ export default function HomeStack() {
       <Tab.Screen
         name="Home"
         options={{ headerShown: false }}
-        component={Home}
+        component={MainStack}
       />
       <Tab.Screen
         name="PostStack"

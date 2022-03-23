@@ -10,12 +10,14 @@ import colors from "../../../theme/colors";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const PostsModal = ({ visible, postId, post, isNearYou }) => {
   const sheetRef = useRef(null);
   const snapPoints = useMemo(() => ["24%", "74%"], []);
   const handleClosePress = () => sheetRef.current.snapToPosition(-1);
   const openModal = () => sheetRef.current.snapToIndex(0);
+  const navigation = useNavigation();
 
   useEffect(() => {
     openModal();
@@ -74,7 +76,10 @@ const PostsModal = ({ visible, postId, post, isNearYou }) => {
                 </>
               )}
             </View>
-            <TouchableOpacity style={styles.authorDetails}>
+            <TouchableOpacity
+              style={styles.authorDetails}
+              onPress={() => navigation.navigate("PublicProfile")}
+            >
               <Image
                 style={styles.authorImg}
                 source={{ uri: post?.postedBy?.profileImg }}
