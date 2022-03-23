@@ -3,7 +3,7 @@ import { AntDesign } from "@expo/vector-icons";
 import colors from "../theme/colors";
 import { Platform } from "react-native";
 import MainStack from "./MainStack";
-import Profile from "../screens/Profile/Profile";
+import ProfileStack from "./ProfileStack";
 import PostStack from "./PostStack";
 
 const Tab = createBottomTabNavigator();
@@ -15,11 +15,11 @@ export default function HomeStack() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === "Home") {
+          if (route.name === "MainStack") {
             iconName = focused ? "home" : "home";
           } else if (route.name === "PostStack") {
             iconName = focused ? "pluscircleo" : "pluscircleo";
-          } else if (route.name === "Profile") {
+          } else if (route.name === "ProfileStack") {
             iconName = focused ? "user" : "user";
           }
 
@@ -44,7 +44,7 @@ export default function HomeStack() {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="MainStack"
         options={{ headerShown: false }}
         component={MainStack}
       />
@@ -54,9 +54,9 @@ export default function HomeStack() {
         component={PostStack}
       />
       <Tab.Screen
-        name="Profile"
+        name="ProfileStack"
         options={{ headerShown: false }}
-        component={Profile}
+        component={ProfileStack}
       />
     </Tab.Navigator>
   );

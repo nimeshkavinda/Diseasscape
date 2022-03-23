@@ -6,10 +6,10 @@ const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
   return (
-    <Stack.Navigator initialRouteName="Main">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Main"
+        name="Home"
         component={Home}
       />
       <Stack.Screen
