@@ -16,7 +16,12 @@ const styles = StyleSheet.create({
   headerNavText: { fontSize: 21, fontWeight: "bold", marginRight: 40 },
   headingWrapper: { marginHorizontal: 20, marginBottom: 20 },
   headingText: { fontSize: 28, fontWeight: "bold" },
-  sectionHeading: { fontSize: 18, fontWeight: "500", marginHorizontal: 20 },
+  sectionHeading: {
+    fontSize: 18,
+    fontWeight: "500",
+    marginHorizontal: 20,
+    marginVertical: 6,
+  },
   buttonWrapper: {
     borderTopColor: colors.grey.medium,
     borderTopWidth: 5,
@@ -33,8 +38,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   buttonText: { fontSize: 16, fontWeight: "500" },
-  input: { marginHorizontal: 20, marginVertical: 10 },
-  textArea: { marginHorizontal: 20, marginVertical: 10, height: 140 },
+  input: { marginVertical: 10 },
+  textArea: { marginVertical: 10, height: 140 },
   profileImgWrapper: { alignItems: "center", marginVertical: 30 },
   profileImg: {
     width: 140,
@@ -53,6 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
   },
+  formWrapper: { marginHorizontal: 20 },
 });
 
 export default styles;
