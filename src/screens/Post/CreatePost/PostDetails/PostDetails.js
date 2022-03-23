@@ -17,6 +17,7 @@ import moment from "moment";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import useCamera from "../../../../hooks/useCamera";
+import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 
 const PostDetails = ({ navigation, route }) => {
