@@ -2,8 +2,9 @@ const users = [
   {
     id: 1,
     fullName: "Nimesh Kavinda",
-    status:
-      "Software engineer and a public volunteer dedicated to ensuring public well being. I regularly organize environment cleanup events",
+    bio: "Software engineer and a public volunteer dedicated to ensuring public well being. I regularly organize environment cleanup events",
+    status: "healthy",
+    disease: "",
     address: {
       number: "148/A",
       street: "Horana road",

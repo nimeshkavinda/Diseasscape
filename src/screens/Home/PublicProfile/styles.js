@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   profileImg: {
     width: 120,
     height: 120,
-    borderRadius: 50,
+    borderRadius: 60,
     marginBottom: 16,
   },
   profileName: { fontSize: 24, fontWeight: "bold" },
