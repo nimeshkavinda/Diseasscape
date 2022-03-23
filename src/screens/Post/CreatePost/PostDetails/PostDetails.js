@@ -212,9 +212,9 @@ const PostDetails = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         {images.length > 0 &&
-          images.map((img) => {
+          images.map((img, index) => {
             return (
-              <View style={styles.imagePreviewWrapper}>
+              <View style={styles.imagePreviewWrapper} key={index}>
                 <TouchableOpacity onPress={() => deleteImage(img)}>
                   <Image
                     key={img?.id}
