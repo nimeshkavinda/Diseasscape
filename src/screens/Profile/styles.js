@@ -7,7 +7,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
-  headerNav: { marginVertical: 20 },
+  headerNav: {
+    marginVertical: 20,
+    alignItems: "center",
+  },
+  headerTitle: { fontSize: 21, fontWeight: "bold" },
   profileWrapper: {
     alignItems: "center",
   },
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   profileInfoText: { fontSize: 12, marginLeft: 4, color: colors.grey.dark },
-  contactsWrapper: {
+  optionsWrapper: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -45,23 +49,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     paddingHorizontal: 20,
   },
-  callButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.success.secondary,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    width: 160,
-  },
-  callText: {
-    color: colors.success.primary,
-    fontWeight: "bold",
-    fontSize: 16,
-    marginLeft: 6,
-  },
-  msgButton: {
+  statusButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -71,8 +59,24 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 160,
   },
-  msgText: {
-    color: colors.primary.bg,
+  statusText: {
+    color: colors.secondary.text,
+    fontWeight: "bold",
+    fontSize: 16,
+    marginLeft: 6,
+  },
+  settingsButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.grey.light,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    width: 160,
+  },
+  settingsText: {
+    color: colors.grey.dark,
     fontWeight: "bold",
     fontSize: 16,
     marginLeft: 6,
