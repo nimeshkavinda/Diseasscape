@@ -6,8 +6,10 @@ import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../theme/colors";
+import { useNavigation } from "@react-navigation/native";
 
 const Profile = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.headerNav}>
@@ -45,7 +47,10 @@ const Profile = () => {
           </View>
         </View>
         <View style={styles.optionsWrapper}>
-          <TouchableOpacity style={styles.statusButton}>
+          <TouchableOpacity
+            style={styles.statusButton}
+            onPress={() => navigation.navigate("SetStatus")}
+          >
             <MaterialCommunityIcons
               name="hospital-box"
               size={24}
@@ -53,7 +58,10 @@ const Profile = () => {
             />
             <Text style={styles.statusText}>Set status</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingsButton}>
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={() => navigation.navigate("EditProfile")}
+          >
             <Ionicons name="settings" size={24} color={colors.grey.dark} />
             <Text style={styles.settingsText}>Edit profile</Text>
           </TouchableOpacity>

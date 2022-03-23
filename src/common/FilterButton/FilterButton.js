@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     shadowOffset: {
       height: 6,
     },
-    shadowRadius: 30,
+    shadowRadius: 10,
   },
   filterOptionTitle: { fontSize: 14, fontWeight: "500" },
 });

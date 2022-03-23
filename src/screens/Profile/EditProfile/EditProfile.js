@@ -1,11 +1,17 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View, SafeAreaView } from "react-native";
+import { Text, BackButton } from "../../../common";
+import styles from "./styles";
 
 const EditProfile = () => {
   return (
-    <View>
-      <Text>EditProfile</Text>
-    </View>
+    <SafeAreaView style={styles.wrapper}>
+      <View style={styles.headerNav}>
+        <BackButton />
+      </View>
+      <View style={styles.headingWrapper}>
+        <Text style={styles.headingText}>Edit Profile</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 
