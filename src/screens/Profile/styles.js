@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileImg: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     borderRadius: 50,
     marginBottom: 16,
   },
@@ -122,6 +122,14 @@ const styles = StyleSheet.create({
   },
   postsScrollViewWrapper: { marginVertical: 20 },
   scrollView: { paddingLeft: 20 },
+  myStatusWrapper: {
+    marginTop: 6,
+    textAlign: "center",
+    paddingVertical: 1,
+    paddingHorizontal: 6,
+    borderRadius: 6,
+  },
+  myStatusText: { fontSize: 16, fontWeight: "500" },
 });
 
 export default styles;

@@ -24,6 +24,18 @@ const Profile = () => {
           resizeMode="cover"
         />
         <Text style={styles.profileName}>Nimesh Kavinda</Text>
+        <View
+          style={[
+            styles.myStatusWrapper,
+            { backgroundColor: colors.success.secondary },
+          ]}
+        >
+          <Text
+            style={[styles.myStatusText, { color: colors.success.primary }]}
+          >
+            Healthy
+          </Text>
+        </View>
         <Text style={styles.profileBio} numberOfLines={3}>
           Software engineer and a volunteer dedicated to ensuring public well
           being. I regularly organize environment cleanup events
