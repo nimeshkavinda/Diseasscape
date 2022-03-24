@@ -5,6 +5,8 @@ import Signup from "../screens/Signup/Signup";
 import ForgotPassword from "../screens/ForgotPassword/ForgotPassword";
 import EnterOTP from "../screens/EnterOTP/EnterOTP";
 import ResetPassword from "../screens/ResetPassword/ResetPassword";
+import CompleteProfile from "../screens/CompleteProfile/CompleteProfile";
+import SetProfilePhoto from "../screens/SetProfilePhoto/SetProfilePhoto";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,16 @@ export default function AuthStack() {
         options={{ headerShown: false }}
         name="Signup"
         component={Signup}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="SetProfilePhoto"
+        component={SetProfilePhoto}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="CompleteProfile"
+        component={CompleteProfile}
       />
       <Stack.Screen
         options={{ headerShown: false }}

@@ -38,6 +38,7 @@ export default function Signup() {
     function () {
       if (signUp.data) {
         console.log("Signup success data: ", signUp.data);
+        navigation.navigate("SetProfilePhoto");
       }
       if (signUp.error) {
         Alert.alert(
