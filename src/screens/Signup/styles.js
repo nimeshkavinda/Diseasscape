@@ -17,6 +17,11 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     padding: 20,
   },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 20,
+  },
   title: {
     fontSize: 38,
     fontWeight: "700",

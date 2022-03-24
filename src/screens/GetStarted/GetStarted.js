@@ -27,9 +27,7 @@ export default function GetStarted() {
           <Text style={styles.title}>
             The groundwork of all happiness is health.
           </Text>
-          <Text style={styles.subtitle}>
-            It's a responsibility we all share
-          </Text>
+          <Text style={styles.subtitle}>You can make a difference</Text>
         </View>
         <View style={styles.buttonWrapper}>
           <Button

@@ -5,6 +5,9 @@ const types = {
     signIn: {
       ...generateActionTypes("user.signIn"),
     },
+    signUp: {
+      ...generateActionTypes("user.signUp"),
+    },
   },
 };
 

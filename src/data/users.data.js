@@ -1,6 +1,6 @@
 const users = [
   {
-    id: 1,
+    uid: 1,
     fullName: "Nimesh Kavinda",
     bio: "Software engineer and a public volunteer dedicated to ensuring public well being. I regularly organize environment cleanup events",
     status: "healthy",
