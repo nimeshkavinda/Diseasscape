@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Alert } from "react-native";
 import React, { useEffect } from "react";
 import styles from "./styles";
 import { Button, Input, BackButton, Text, ValidationText } from "../../common";
@@ -11,7 +11,7 @@ import ac from "../../redux/actions";
 export default function Signup() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { register, getValues } = useForm();
+  // const { register, getValues } = useForm();
   const {
     control,
     handleSubmit,

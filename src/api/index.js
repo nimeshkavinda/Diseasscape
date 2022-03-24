@@ -1,8 +1,8 @@
-import { signIn } from "./user";
+import { createUser } from "./user";
 
 const api = {
   user: {
-    signIn,
+    createUser,
   },
 };
 

@@ -8,6 +8,9 @@ const types = {
     signUp: {
       ...generateActionTypes("user.signUp"),
     },
+    createUser: {
+      ...generateActionTypes("user.createUser"),
+    },
   },
 };
 

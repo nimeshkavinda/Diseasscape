@@ -1,5 +1,4 @@
 import { StyleSheet, Platform, StatusBar } from "react-native";
-import colors from "../../theme/colors";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -23,18 +22,12 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
   button: {
-    height: 60,
-    borderRadius: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     marginHorizontal: 20,
-    marginVertical: 20,
   },
   buttonText: { fontSize: 16, fontWeight: "500" },
   input: { marginVertical: 10 },
   textArea: { marginVertical: 10, height: 140 },
-  formWrapper: { marginHorizontal: 20 },
+  formWrapper: { marginHorizontal: 20, marginBottom: 20 },
 });
 
 export default styles;

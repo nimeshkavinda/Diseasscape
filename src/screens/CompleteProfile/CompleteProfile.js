@@ -1,16 +1,11 @@
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from "react-native";
-import { Text, BackButton, Input, ValidationText } from "../../common";
+import { View, SafeAreaView, ScrollView } from "react-native";
+import { Text, BackButton, Input, ValidationText, Button } from "../../common";
 import colors from "../../theme/colors";
 import styles from "./styles";
 import { useForm, Controller } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { useSelector, dispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import ac from "../../redux/actions";
 
 const CompleteProfile = ({ navigation, route }) => {
   const {
@@ -42,6 +37,13 @@ const CompleteProfile = ({ navigation, route }) => {
   // updated user data
   const [userProfileData, setUserProfileData] = useState();
   const signUp = useSelector(({ signUp }) => signUp);
+  const dispatch = useDispatch();
+
+  const createUser = useSelector(({ createUser }) => createUser);
+
+  const fetching = useSelector(({ createUser: { fetching } }) => {
+    return fetching;
+  });
 
   useEffect(() => {
     setUserProfileData({
@@ -79,9 +81,34 @@ const CompleteProfile = ({ navigation, route }) => {
       },
       phone: data?.mobile,
     });
+    console.log("Profile data before api request: ", userProfileData);
+    dispatch(ac.createUser(userProfileData));
   };
 
-  console.log("Profile data state obj: ", userProfileData);
+  useEffect(
+    function () {
+      if (createUser.data) {
+        console.log("Create user success data: ", createUser.data);
+        // navigation.navigate("Login");
+      }
+      if (createUser.error) {
+        Alert.alert(
+          "Failed to create profile",
+          createUser.error,
+          [
+            {
+              text: "OK",
+              style: "default",
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+      }
+    },
+    [createUser]
+  );
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -240,14 +267,12 @@ const CompleteProfile = ({ navigation, route }) => {
             <ValidationText>Province is required.</ValidationText>
           )}
         </View>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: colors.primary.bg }]}
+        <Button
+          title="Create profile"
           onPress={handleSubmit(onCreateProfile)}
-        >
-          <Text style={[styles.buttonText, { color: colors.primary.text }]}>
-            Create profile
-          </Text>
-        </TouchableOpacity>
+          isLoading={fetching}
+          style={styles.button}
+        />
       </ScrollView>
     </SafeAreaView>
   );
