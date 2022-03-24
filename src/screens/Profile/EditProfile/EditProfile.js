@@ -134,7 +134,7 @@ const EditProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.mobile ? true : false}
               />
             )}
             name="mobile"
@@ -157,7 +157,7 @@ const EditProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.number ? true : false}
               />
             )}
             name="number"
@@ -177,7 +177,7 @@ const EditProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.street ? true : false}
               />
             )}
             name="street"
@@ -197,7 +197,7 @@ const EditProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.city ? true : false}
               />
             )}
             name="city"
@@ -215,7 +215,7 @@ const EditProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.district ? true : false}
               />
             )}
             name="district"
@@ -235,7 +235,7 @@ const EditProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.province ? true : false}
               />
             )}
             name="province"

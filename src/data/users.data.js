@@ -5,6 +5,7 @@ const users = [
     bio: "Software engineer and a public volunteer dedicated to ensuring public well being. I regularly organize environment cleanup events",
     status: "healthy",
     disease: "",
+    profilePhoto: "",
     address: {
       number: "148/A",
       street: "Horana road",

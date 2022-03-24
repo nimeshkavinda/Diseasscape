@@ -8,11 +8,11 @@ import {
 import { Text, BackButton, Input, ValidationText } from "../../common";
 import colors from "../../theme/colors";
 import styles from "./styles";
-import { Feather } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { useState, useEffect } from "react";
+import { useSelector, dispatch } from "react-redux";
 
-const CompleteProfile = () => {
+const CompleteProfile = ({ navigation, route }) => {
   const {
     control,
     handleSubmit,
@@ -21,6 +21,7 @@ const CompleteProfile = () => {
     defaultValues: {
       uid: "",
       fullName: "",
+      profilePhoto: "",
       bio: "",
       status: "",
       disease: "",
@@ -32,18 +33,23 @@ const CompleteProfile = () => {
         province: "",
       },
       phone: "",
+      posts: [],
+      events: [],
+      going: [],
     },
   });
 
   // updated user data
   const [userProfileData, setUserProfileData] = useState();
+  const signUp = useSelector(({ signUp }) => signUp);
 
   useEffect(() => {
     setUserProfileData({
-      uid: "",
+      uid: signUp?.data?.uid,
       fullName: "",
-      bio: "",
-      status: "",
+      profilePhoto: route.params.profilePhoto.base64,
+      bio: "Hey there, I'm using Diseasscape",
+      status: "healthy",
       disease: "",
       address: {
         number: "",
@@ -53,14 +59,17 @@ const CompleteProfile = () => {
         province: "",
       },
       phone: "",
+      posts: [],
+      events: [],
+      going: [],
     });
   }, []);
 
-  const onUpdateProfile = (data) => {
+  const onCreateProfile = (data) => {
     console.log("Profile data: ", data);
     setUserProfileData({
       ...userProfileData,
-      bio: data?.bio,
+      fullName: data?.fullName,
       address: {
         number: data?.number,
         street: data?.street,
@@ -78,27 +87,36 @@ const CompleteProfile = () => {
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.headerNav}>
         <BackButton />
-        <Text style={styles.headerNavText}>Complete Profile</Text>
-        <Text></Text>
+      </View>
+      <View style={styles.headingWrapper}>
+        <Text style={styles.headingText}>Complete profile</Text>
       </View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.profileImgWrapper}>
-          <Image
-            style={styles.profileImg}
-            source={{
-              uri: "https://avatars.githubusercontent.com/u/44240093?v=4",
-            }}
-            resizeMode="cover"
-          />
-          <TouchableOpacity style={styles.editProfileImgIco}>
-            <Feather name="edit" size={16} color={colors.secondary.text} />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.sectionHeading}>Contact</Text>
+        <Text style={styles.sectionHeading}>Personal</Text>
         <View style={styles.formWrapper}>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Full name"
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                isError={errors.fullName ? true : false}
+              />
+            )}
+            name="fullName"
+          />
+          {errors.fullName && (
+            <ValidationText>Full name is required.</ValidationText>
+          )}
           <Controller
             control={control}
             rules={{
@@ -112,7 +130,7 @@ const CompleteProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.mobile ? true : false}
               />
             )}
             name="mobile"
@@ -135,12 +153,12 @@ const CompleteProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.number ? true : false}
               />
             )}
             name="number"
           />
-          {errors.mobile && (
+          {errors.number && (
             <ValidationText>Apt/ House No is required.</ValidationText>
           )}
           <Controller
@@ -155,7 +173,7 @@ const CompleteProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.street ? true : false}
               />
             )}
             name="street"
@@ -175,7 +193,7 @@ const CompleteProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.city ? true : false}
               />
             )}
             name="city"
@@ -193,7 +211,7 @@ const CompleteProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.district ? true : false}
               />
             )}
             name="district"
@@ -213,7 +231,7 @@ const CompleteProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.bio ? true : false}
+                isError={errors.province ? true : false}
               />
             )}
             name="province"
@@ -224,7 +242,7 @@ const CompleteProfile = () => {
         </View>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: colors.primary.bg }]}
-          onPress={handleSubmit(onUpdateProfile)}
+          onPress={handleSubmit(onCreateProfile)}
         >
           <Text style={[styles.buttonText, { color: colors.primary.text }]}>
             Create profile

@@ -34,24 +34,6 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: 16, fontWeight: "500" },
   input: { marginVertical: 10 },
   textArea: { marginVertical: 10, height: 140 },
-  profileImgWrapper: { alignItems: "center", marginVertical: 30 },
-  profileImg: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    marginBottom: 16,
-  },
-  editProfileImgIco: {
-    position: "absolute",
-    bottom: 0,
-    width: 36,
-    height: 36,
-    borderRadius: 40,
-    backgroundColor: colors.secondary.bg,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-  },
   formWrapper: { marginHorizontal: 20 },
 });
 
