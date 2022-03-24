@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./styles";
 import { Button, Input, BackButton, Text, ValidationText } from "../../common";
 import { useNavigation } from "@react-navigation/native";
@@ -33,6 +33,30 @@ export default function Signup() {
     console.log("Sign up data: ", data);
     dispatch(ac.signUp(data.email, data.password));
   };
+
+  useEffect(
+    function () {
+      if (signUp.data) {
+        console.log("Signup success data: ", signUp.data);
+      }
+      if (signUp.error) {
+        Alert.alert(
+          "Failed to sign up",
+          signUp.error.code,
+          [
+            {
+              text: "OK",
+              style: "default",
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+      }
+    },
+    [signUp]
+  );
 
   return (
     <View style={styles.wrapper}>
@@ -103,7 +127,7 @@ export default function Signup() {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.password ? true : false}
+                isError={errors.conPassword ? true : false}
                 // {...register("conPassword", {
                 //   validate: (value) =>
                 //     value === getValues("password") || "Passwords don't match",
