@@ -129,7 +129,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     borderRadius: 6,
   },
-  myStatusText: { fontSize: 16, fontWeight: "500" },
+  myStatusText: {
+    fontSize: 16,
+    fontWeight: "500",
+    textTransform: "capitalize",
+  },
 });
 
 export default styles;

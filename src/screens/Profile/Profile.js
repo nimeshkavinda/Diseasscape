@@ -1,15 +1,28 @@
 import { SafeAreaView, View, Image, TouchableOpacity } from "react-native";
 import { Text } from "../../common";
 import { ScrollView } from "react-native-gesture-handler";
-import React from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../theme/colors";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 const Profile = () => {
   const navigation = useNavigation();
+  const [profile, setProfile] = useState({});
+
+  const loggedInUser = useSelector(({ getLoggedInUser }) =>
+    getLoggedInUser.data ? getLoggedInUser.data[0] : {}
+  );
+
+  useEffect(() => {
+    setProfile(loggedInUser);
+    console.log("Profile: ", loggedInUser);
+  }, [loggedInUser]);
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.headerNav}>
@@ -19,11 +32,11 @@ const Profile = () => {
         <Image
           style={styles.profileImg}
           source={{
-            uri: "https://avatars.githubusercontent.com/u/44240093?v=4",
+            uri: `data:image/jpg;base64,${profile.profilePhoto}`,
           }}
           resizeMode="cover"
         />
-        <Text style={styles.profileName}>Nimesh Kavinda</Text>
+        <Text style={styles.profileName}>{profile.fullName}</Text>
         <View
           style={[
             styles.myStatusWrapper,
@@ -33,12 +46,11 @@ const Profile = () => {
           <Text
             style={[styles.myStatusText, { color: colors.success.primary }]}
           >
-            Healthy
+            {profile.status}
           </Text>
         </View>
         <Text style={styles.profileBio} numberOfLines={3}>
-          Software engineer and a volunteer dedicated to ensuring public well
-          being. I regularly organize environment cleanup events
+          {profile.bio}
         </Text>
         <View style={styles.profileInfoRow}>
           <View style={styles.profileInfo}>
@@ -47,7 +59,9 @@ const Profile = () => {
               size={18}
               color={colors.grey.dark}
             />
-            <Text style={styles.profileInfoText}>Lives in Padukka</Text>
+            <Text style={styles.profileInfoText}>
+              Lives in {profile.address?.city}
+            </Text>
           </View>
           <View style={styles.profileInfo}>
             <MaterialCommunityIcons
@@ -55,7 +69,9 @@ const Profile = () => {
               size={18}
               color={colors.grey.dark}
             />
-            <Text style={styles.profileInfoText}>Joined on 18 March 2022</Text>
+            <Text style={styles.profileInfoText}>
+              Joined on {moment(profile?.created).format("Do MMMM YYYY")}
+            </Text>
           </View>
         </View>
         <View style={styles.optionsWrapper}>
@@ -102,7 +118,9 @@ const Profile = () => {
                   />
                 </View>
                 <Text style={styles.statTitle}>Posts created</Text>
-                <Text style={styles.statCount}>150</Text>
+                <Text style={styles.statCount}>
+                  {profile.posts && Object.keys(profile.posts).length}
+                </Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity>
@@ -120,7 +138,9 @@ const Profile = () => {
                   />
                 </View>
                 <Text style={styles.statTitle}>Events organized</Text>
-                <Text style={styles.statCount}>80</Text>
+                <Text style={styles.statCount}>
+                  {profile.events && Object.keys(profile.events).length}
+                </Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity>
@@ -138,7 +158,9 @@ const Profile = () => {
                   />
                 </View>
                 <Text style={styles.statTitle}>Events participated</Text>
-                <Text style={styles.statCount}>30</Text>
+                <Text style={styles.statCount}>
+                  {profile.going && Object.keys(profile.going).length}
+                </Text>
               </View>
             </TouchableOpacity>
           </ScrollView>

@@ -60,27 +60,27 @@ const CompleteProfile = ({ navigation, route }) => {
     return fetching;
   });
 
-  // useEffect(() => {
-  //   setUserProfileData({
-  //     uid: signUp?.data?.uid,
-  //     fullName: "",
-  //     profilePhoto: route.params.profilePhoto.base64,
-  //     bio: "Hey there, I'm using Diseasscape",
-  //     status: "healthy",
-  //     disease: "",
-  //     address: {
-  //       number: "",
-  //       street: "",
-  //       city: "",
-  //       district: "",
-  //       province: "",
-  //     },
-  //     phone: "",
-  //     posts: [],
-  //     events: [],
-  //     going: [],
-  //   });
-  // }, []);
+  useEffect(() => {
+    setUserProfileData({
+      uid: signUp?.data?.uid,
+      fullName: "",
+      profilePhoto: route.params.profilePhoto.base64,
+      bio: "Hey there, I'm using Diseasscape",
+      status: "healthy",
+      disease: "",
+      address: {
+        number: "",
+        street: "",
+        city: "",
+        district: "",
+        province: "",
+      },
+      phone: "",
+      posts: [],
+      events: [],
+      going: [],
+    });
+  }, []);
 
   const onCreateProfile = (data) => {
     console.log("Profile data received on submit press: ", data);
@@ -107,7 +107,7 @@ const CompleteProfile = ({ navigation, route }) => {
 
   useEffect(
     function () {
-      if (createUser.data.status === "success") {
+      if (createUser.data?.status === "success") {
         console.log(
           "Create user updated state data from redux: ",
           createUser.data
