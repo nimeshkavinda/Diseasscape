@@ -1,6 +1,5 @@
-import { View, SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView, Alert } from "react-native";
 import { Text, BackButton, Input, ValidationText, Button } from "../../common";
-import colors from "../../theme/colors";
 import styles from "./styles";
 import { useForm, Controller } from "react-hook-form";
 import { useState, useEffect } from "react";
@@ -8,6 +7,27 @@ import { useSelector, useDispatch } from "react-redux";
 import ac from "../../redux/actions";
 
 const CompleteProfile = ({ navigation, route }) => {
+  const signUp = useSelector(({ signUp }) => signUp);
+  const dispatch = useDispatch();
+  const [userProfileData, setUserProfileData] = useState({
+    uid: signUp?.data?.uid,
+    fullName: "",
+    profilePhoto: route.params.profilePhoto.base64,
+    bio: "Hey there, I'm using Diseasscape",
+    status: "healthy",
+    disease: "",
+    address: {
+      number: "",
+      street: "",
+      city: "",
+      district: "",
+      province: "",
+    },
+    phone: "",
+    posts: [],
+    events: [],
+    going: [],
+  });
   const {
     control,
     handleSubmit,
@@ -34,41 +54,36 @@ const CompleteProfile = ({ navigation, route }) => {
     },
   });
 
-  // updated user data
-  const [userProfileData, setUserProfileData] = useState();
-  const signUp = useSelector(({ signUp }) => signUp);
-  const dispatch = useDispatch();
-
   const createUser = useSelector(({ createUser }) => createUser);
 
   const fetching = useSelector(({ createUser: { fetching } }) => {
     return fetching;
   });
 
-  useEffect(() => {
-    setUserProfileData({
-      uid: signUp?.data?.uid,
-      fullName: "",
-      profilePhoto: route.params.profilePhoto.base64,
-      bio: "Hey there, I'm using Diseasscape",
-      status: "healthy",
-      disease: "",
-      address: {
-        number: "",
-        street: "",
-        city: "",
-        district: "",
-        province: "",
-      },
-      phone: "",
-      posts: [],
-      events: [],
-      going: [],
-    });
-  }, []);
+  // useEffect(() => {
+  //   setUserProfileData({
+  //     uid: signUp?.data?.uid,
+  //     fullName: "",
+  //     profilePhoto: route.params.profilePhoto.base64,
+  //     bio: "Hey there, I'm using Diseasscape",
+  //     status: "healthy",
+  //     disease: "",
+  //     address: {
+  //       number: "",
+  //       street: "",
+  //       city: "",
+  //       district: "",
+  //       province: "",
+  //     },
+  //     phone: "",
+  //     posts: [],
+  //     events: [],
+  //     going: [],
+  //   });
+  // }, []);
 
   const onCreateProfile = (data) => {
-    console.log("Profile data: ", data);
+    console.log("Profile data received on submit press: ", data);
     setUserProfileData({
       ...userProfileData,
       fullName: data?.fullName,
@@ -81,20 +96,28 @@ const CompleteProfile = ({ navigation, route }) => {
       },
       phone: data?.mobile,
     });
-    console.log("Profile data before api request: ", userProfileData);
-    dispatch(ac.createUser(userProfileData));
   };
+
+  useEffect(() => {
+    if (userProfileData?.fullName !== "" && userProfileData?.mobile !== "") {
+      console.log("Profile data before dispatch: ", userProfileData);
+      dispatch(ac.createUser(userProfileData));
+    }
+  }, [userProfileData]);
 
   useEffect(
     function () {
       if (createUser.data) {
-        console.log("Create user success data: ", createUser.data);
+        console.log(
+          "Create user updated state data from redux: ",
+          createUser.data
+        );
         // navigation.navigate("Login");
       }
       if (createUser.error) {
         Alert.alert(
-          "Failed to create profile",
-          createUser.error,
+          "Error",
+          "Failed to create user profile",
           [
             {
               text: "OK",
