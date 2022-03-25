@@ -171,6 +171,9 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
               style={styles.postCardFlatList}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
+              ListEmptyComponent={
+                <Text style={{ marginBottom: 10 }}>No nearby risk sites</Text>
+              }
             />
           </View>
         </View>
