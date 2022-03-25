@@ -1,7 +1,6 @@
 import { SafeAreaView, View, Image, TouchableOpacity } from "react-native";
 import { Text } from "../../common";
 import { ScrollView } from "react-native-gesture-handler";
-import { useEffect, useState } from "react";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,16 +11,10 @@ import moment from "moment";
 
 const Profile = () => {
   const navigation = useNavigation();
-  const [profile, setProfile] = useState({});
 
   const loggedInUser = useSelector(({ getLoggedInUser }) =>
     getLoggedInUser.data ? getLoggedInUser.data[0] : {}
   );
-
-  useEffect(() => {
-    setProfile(loggedInUser);
-    console.log("Profile: ", loggedInUser);
-  }, [loggedInUser]);
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -32,11 +25,11 @@ const Profile = () => {
         <Image
           style={styles.profileImg}
           source={{
-            uri: `data:image/jpg;base64,${profile.profilePhoto}`,
+            uri: `data:image/jpg;base64,${loggedInUser?.profilePhoto}`,
           }}
           resizeMode="cover"
         />
-        <Text style={styles.profileName}>{profile.fullName}</Text>
+        <Text style={styles.profileName}>{loggedInUser?.fullName}</Text>
         <View
           style={[
             styles.myStatusWrapper,
@@ -46,11 +39,11 @@ const Profile = () => {
           <Text
             style={[styles.myStatusText, { color: colors.success.primary }]}
           >
-            {profile.status}
+            {loggedInUser?.status}
           </Text>
         </View>
         <Text style={styles.profileBio} numberOfLines={3}>
-          {profile.bio}
+          {loggedInUser?.bio}
         </Text>
         <View style={styles.profileInfoRow}>
           <View style={styles.profileInfo}>
@@ -60,7 +53,7 @@ const Profile = () => {
               color={colors.grey.dark}
             />
             <Text style={styles.profileInfoText}>
-              Lives in {profile.address?.city}
+              Lives in {loggedInUser?.address?.city}
             </Text>
           </View>
           <View style={styles.profileInfo}>
@@ -70,7 +63,7 @@ const Profile = () => {
               color={colors.grey.dark}
             />
             <Text style={styles.profileInfoText}>
-              Joined on {moment(profile?.created).format("Do MMMM YYYY")}
+              Joined on {moment(loggedInUser?.created).format("Do MMMM YYYY")}
             </Text>
           </View>
         </View>
@@ -119,7 +112,8 @@ const Profile = () => {
                 </View>
                 <Text style={styles.statTitle}>Posts created</Text>
                 <Text style={styles.statCount}>
-                  {profile.posts && Object.keys(profile.posts).length}
+                  {loggedInUser?.posts &&
+                    Object.keys(loggedInUser?.posts).length}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -139,7 +133,8 @@ const Profile = () => {
                 </View>
                 <Text style={styles.statTitle}>Events organized</Text>
                 <Text style={styles.statCount}>
-                  {profile.events && Object.keys(profile.events).length}
+                  {loggedInUser?.events &&
+                    Object.keys(loggedInUser?.events).length}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -159,7 +154,8 @@ const Profile = () => {
                 </View>
                 <Text style={styles.statTitle}>Events participated</Text>
                 <Text style={styles.statCount}>
-                  {profile.going && Object.keys(profile.going).length}
+                  {loggedInUser?.going &&
+                    Object.keys(loggedInUser?.going).length}
                 </Text>
               </View>
             </TouchableOpacity>
