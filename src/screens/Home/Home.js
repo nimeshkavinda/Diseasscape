@@ -31,6 +31,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(ac.getPatients());
     dispatch(ac.getPosts());
+    dispatch(ac.getEvents());
   }, []);
 
   // all stats
@@ -56,6 +57,10 @@ const Home = () => {
   //events
   const [eventModalVisibility, setEventModalVisibility] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState();
+  const eventsState = useSelector(({ getEvents }) => getEvents);
+  const eventsFetching = useSelector(({ getEvents: { fetching } }) => {
+    return fetching;
+  });
 
   const getPatientsInVicinity = patients.filter((patient) => {
     return patient?.location?.vicinity === region?.vicinity;
