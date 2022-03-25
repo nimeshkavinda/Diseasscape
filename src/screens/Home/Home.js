@@ -15,9 +15,6 @@ import EventsModal from "./EventsModal/EventsModal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import ac from "../../redux/actions";
-// import patients from "../../data/patients.data";
-// import posts from "../../data/posts.data";
-// import events from "../../data/events.data";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -39,34 +36,46 @@ const Home = () => {
   const [allStats, setAllStats] = useState();
 
   // patients
+  const [patientsArray, setPatientsArray] = useState([]);
   const [patientModalVisibility, setPatientModalVisibility] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState();
   const patients = useSelector(({ getPatients }) =>
     getPatients.data ? getPatients.data : {}
   );
-  const patientsArray = Object.keys(patients).map((key) => {
-    return patients[key];
-  });
+  useEffect(() => {
+    let patientsArr = Object.keys(patients).map((key) => {
+      return patients[key];
+    });
+    setPatientsArray(patientsArr);
+  }, [patients]);
 
   // posts
+  const [postsArray, setPostsArray] = useState([]);
   const [postModalVisibility, setPostModalVisibility] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
   const posts = useSelector(({ getPosts }) =>
     getPosts.data ? getPosts.data : {}
   );
-  const postsArray = Object.keys(posts).map((key) => {
-    return posts[key];
-  });
+  useEffect(() => {
+    let postsArr = Object.keys(posts).map((key) => {
+      return posts[key];
+    });
+    setPostsArray(postsArr);
+  }, [posts]);
 
   //events
+  const [eventsArray, setEventsArray] = useState([]);
   const [eventModalVisibility, setEventModalVisibility] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState();
   const events = useSelector(({ getEvents }) =>
     getEvents.data ? getEvents.data : {}
   );
-  const eventsArray = Object.keys(events).map((key) => {
-    return events[key];
-  });
+  useEffect(() => {
+    let eventsArr = Object.keys(events).map((key) => {
+      return events[key];
+    });
+    setEventsArray(eventsArr);
+  }, [events]);
 
   const getPatientsInVicinity = patientsArray.filter((patient) => {
     return patient?.location?.vicinity === region?.vicinity;
@@ -177,7 +186,7 @@ const Home = () => {
       return (
         <PatientModal
           visible={patientModalVisibility}
-          patientId={selectedPatient?.id}
+          patientId={selectedPatient?.uid}
           patient={selectedPatient}
           isNearYou={
             userRegion?.vicinity === selectedPatient?.location?.vicinity
@@ -223,7 +232,7 @@ const Home = () => {
         <>
           {patientsArray.map((patient) => (
             <Marker
-              key={patient.id}
+              key={patient.uid}
               coordinate={patient.latLng}
               pinColor="red"
               // onPress={() => onPatientSelect(patient)}
@@ -270,7 +279,7 @@ const Home = () => {
         <>
           {patientsArray.map((patient) => (
             <Marker
-              key={patient.id}
+              key={patient.uid}
               coordinate={patient.latLng}
               onPress={() => onPatientSelect(patient)}
             >
