@@ -29,7 +29,7 @@ const Home = () => {
     dispatch(ac.getPatients());
     dispatch(ac.getPosts());
     dispatch(ac.getEvents());
-  }, []);
+  }, [patients, posts, events]);
 
   // all stats
   const [statsModalVisibility, setStatsModalVisibility] = useState(true);

@@ -28,7 +28,7 @@ const PostsModal = ({ visible, postId, post, isNearYou }) => {
       <TouchableOpacity>
         <Image
           style={styles.postImage}
-          source={{ uri: item.src }}
+          source={{ uri: `data:image/jpg;base64,${item?.src}` }}
           resizeMode="cover"
         />
       </TouchableOpacity>
@@ -82,7 +82,9 @@ const PostsModal = ({ visible, postId, post, isNearYou }) => {
             >
               <Image
                 style={styles.authorImg}
-                source={{ uri: post?.postedBy?.profileImg }}
+                source={{
+                  uri: `data:image/jpg;base64,${post?.postedBy?.profileImg}`,
+                }}
               />
               <View style={styles.authorDetailsWrapper}>
                 <Text style={styles.authorText}>
