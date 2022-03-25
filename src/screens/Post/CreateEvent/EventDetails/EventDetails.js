@@ -9,6 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import EventLocation from "../EventLocation/EventLocation";
 import { useForm, Controller } from "react-hook-form";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 const EventDetails = () => {
   const [step, setStep] = useState(1);
@@ -31,11 +32,11 @@ const EventDetails = () => {
         longitude: "",
       },
       organizer: {
-        id: 1,
-        fullName: "Nimesh Kavinda",
-        profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
+        uid: "",
+        fullName: "",
+        profileImg: "",
       },
-      participants: [{ id: 1, fullName: "John Doe" }],
+      participants: [{ uid: "", fullName: "" }],
     },
   });
 
@@ -48,6 +49,10 @@ const EventDetails = () => {
     moment(new Date()).utc().format("ddd Do MMMM YYYY")
   );
   const [time, setTime] = useState(moment(new Date()).utc().format("hh:mm A"));
+
+  const loggedInUser = useSelector(({ getLoggedInUser }) =>
+    getLoggedInUser.data ? getLoggedInUser.data[0] : {}
+  );
 
   const onDateTimeChange = (event, selectedValue) => {
     console.log("DateTime changed: ", selectedValue);
@@ -74,11 +79,13 @@ const EventDetails = () => {
         longitude: "",
       },
       organizer: {
-        id: 1,
-        fullName: "Nimesh Kavinda",
-        profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
+        uid: loggedInUser?.uid,
+        fullName: loggedInUser?.fullName,
+        profileImg: loggedInUser?.profilePhoto,
       },
-      participants: [{ id: 1, fullName: "John Doe" }],
+      participants: [
+        { uid: loggedInUser?.uid, fullName: loggedInUser?.fullName },
+      ],
     });
     nextStep();
   };

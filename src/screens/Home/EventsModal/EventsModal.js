@@ -38,7 +38,7 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
         <Image
           style={styles.postCardImg}
           source={{
-            uri: item?.images[0].src,
+            uri: `data:image/jpg;base64,${item?.images[0].src}`,
           }}
           resizeMode="cover"
         />

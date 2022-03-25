@@ -8,6 +8,9 @@ import useLocation from "../../../../hooks/useLocation";
 import colors from "../../../../theme/colors";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import ac from "../../../../redux/actions";
+import { useNavigation } from "@react-navigation/native";
 
 let apiKey = Constants.manifest?.extra?.googleMapsApiKey;
 
@@ -15,6 +18,8 @@ const latitudeDelta = 0.05;
 const longitudeDelta = 0.01;
 
 const EventLocation = ({ prevStep, eventData }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [userRegion, setUserRegion] = useState();
   const { coords, address, error } = useLocation();
@@ -113,6 +118,28 @@ const EventLocation = ({ prevStep, eventData }) => {
     console.log("Event data final at location change: ", eventDataFinal);
   };
 
+  const createEventSubmit = () => {
+    console.log("Event data before submit: ", eventDataFinal);
+    dispatch(ac.createEvent(eventDataFinal));
+    if (createEvent) {
+      navigation.navigate("Home");
+    }
+  };
+
+  const createEvent = useSelector(({ createEvent }) =>
+    createEvent.data ? createEvent.data : {}
+  );
+
+  const createEventFetching = useSelector(({ createEvent: { fetching } }) => {
+    return fetching;
+  });
+
+  // useEffect(() => {
+  //   if (createEvent) {
+  //     navigation.navigate("Home");
+  //   }
+  // }, [createEvent]);
+
   return (
     <View style={styles.wrapper}>
       <View>
@@ -154,11 +181,25 @@ const EventLocation = ({ prevStep, eventData }) => {
             Event details
           </Text>
         </TouchableOpacity>
+        {createEventFetching && (
+          <TouchableOpacity
+            style={[
+              styles.button,
+              { width: "48%", backgroundColor: colors.primary.bg },
+            ]}
+            disabled={true}
+          >
+            <Text style={[styles.buttonText, { color: colors.primary.text }]}>
+              Create event
+            </Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={[
             styles.button,
             { width: "48%", backgroundColor: colors.primary.bg },
           ]}
+          onPress={createEventSubmit}
         >
           <Text style={[styles.buttonText, { color: colors.primary.text }]}>
             Create event
