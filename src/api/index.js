@@ -1,8 +1,9 @@
-import { createUser } from "./user";
+import { createUser, getLoggedInUser } from "./user";
 
 const api = {
   user: {
     createUser,
+    getLoggedInUser,
   },
 };
 

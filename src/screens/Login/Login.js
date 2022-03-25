@@ -28,65 +28,30 @@ export default function Login() {
     return fetching;
   });
 
+  const getLoggedInUser = useSelector(({ getLoggedInUser }) => getLoggedInUser);
+
+  const fetchingLoggedInUser = useSelector(
+    ({ getLoggedInUser: { fetching } }) => {
+      return fetchingLoggedInUser;
+    }
+  );
+
   const onSubmit = (data) => {
     dispatch(ac.signIn(data.email, data.password));
-  };
-
-  const removeKeys = async () => {
-    const keys = ["@userToken", "userToken"];
-    try {
-      await AsyncStorage.multiRemove(keys);
-    } catch (e) {
-      // remove error
-    }
-  };
-
-  const getAllKeys = async () => {
-    let keys = [];
-    try {
-      keys = await AsyncStorage.getAllKeys();
-      console.log("Async storage keys: ", keys);
-    } catch (e) {
-      // read key error
-    }
-  };
-
-  const getKey = async (key) => {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        // value previously stored
-        console.log(`Async storage item: ${key}`, value);
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
-
-  const setAuthToken = async (user) => {
-    try {
-      const jsonUser = JSON.stringify(user);
-      await AsyncStorage.setItem("userToken", jsonUser);
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   useEffect(
     function () {
       if (signIn.data) {
-        // setAuthToken(signIn.data);
-        navigation.navigate("HomeStack");
-        // removeKeys();
-        getKey(
-          "firebase:authUser:AIzaSyCuCI4SPT1UVPVg-MuKE36YxLcTjzp4xnE:[DEFAULT]"
-        );
-        getAllKeys();
-      }
-      if (signIn.error) {
+        dispatch(ac.getLoggedInUser(signIn.data.uid));
+        if (getLoggedInUser.data) {
+          console.log("Logged in user: ", getLoggedInUser.data);
+          // navigation.navigate("HomeStack");
+        }
+      } else if (signIn.error || getLoggedInUser.error) {
         Alert.alert(
           "Failed to login",
-          signIn.error.code,
+          signIn.error.code || getLoggedInUser.error,
           [
             {
               text: "OK",

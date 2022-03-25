@@ -11,6 +11,9 @@ const types = {
     createUser: {
       ...generateActionTypes("user.createUser"),
     },
+    getLoggedInUser: {
+      ...generateActionTypes("user.getLoggedInUser"),
+    },
   },
 };
 

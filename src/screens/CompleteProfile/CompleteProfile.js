@@ -107,12 +107,12 @@ const CompleteProfile = ({ navigation, route }) => {
 
   useEffect(
     function () {
-      if (createUser.data) {
+      if (createUser.data.status === "success") {
         console.log(
           "Create user updated state data from redux: ",
           createUser.data
         );
-        // navigation.navigate("Login");
+        navigation.navigate("Login");
       }
       if (createUser.error) {
         Alert.alert(
