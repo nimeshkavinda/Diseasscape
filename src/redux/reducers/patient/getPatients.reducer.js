@@ -5,13 +5,13 @@ export const getPatients = (
   action
 ) => {
   switch (action.type) {
-    case types.user.getPatients.started:
+    case types.patient.getPatients.started:
       return Object.assign({}, { fetching: true });
 
-    case types.user.getPatients.success:
+    case types.patient.getPatients.success:
       return Object.assign({}, { fetching: false, data: { ...action.data } });
 
-    case types.user.getPatients.failed:
+    case types.patient.getPatients.failed:
       return Object.assign({}, { fetching: false, error: { ...action.data } });
 
     default:

@@ -32,7 +32,7 @@ export default function Login() {
 
   const fetchingLoggedInUser = useSelector(
     ({ getLoggedInUser: { fetching } }) => {
-      return fetchingLoggedInUser;
+      return fetching;
     }
   );
 
@@ -131,7 +131,7 @@ export default function Login() {
           />
           <Button
             title="Login"
-            isLoading={fetching}
+            isLoading={fetching || fetchingLoggedInUser}
             onPress={handleSubmit(onSubmit)}
           />
         </View>

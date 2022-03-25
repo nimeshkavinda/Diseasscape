@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ac from "../../redux/actions";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [userRegion, setUserRegion] = useState();
   const { coords, address, error } = useLocation();
@@ -27,7 +28,9 @@ const Home = () => {
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedFilterId, setSelectedFilterId] = useState(1);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(ac.getPatients());
+  }, []);
 
   // all stats
   const [statsModalVisibility, setStatsModalVisibility] = useState(true);
@@ -36,6 +39,10 @@ const Home = () => {
   // patients
   const [patientModalVisibility, setPatientModalVisibility] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState();
+  const patientsState = useSelector(({ getPatients }) => getPatients);
+  const patientsFetching = useSelector(({ getPatients: { fetching } }) => {
+    return fetching;
+  });
 
   // posts
   const [postModalVisibility, setPostModalVisibility] = useState(false);
