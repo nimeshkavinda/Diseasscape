@@ -185,7 +185,7 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
             <Image
               style={styles.organizerProfileImage}
               source={{
-                uri: "https://avatars.githubusercontent.com/u/44240093?v=4",
+                uri: `data:image/jpg;base64,${event?.organizer?.profileImg}`,
               }}
             />
             <View>
