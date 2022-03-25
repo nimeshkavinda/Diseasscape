@@ -8,9 +8,6 @@ import MapView, { Marker } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Constants from "expo-constants";
 import filterItems from "../../data/filterItems.data";
-import patients from "../../data/patients.data";
-import posts from "../../data/posts.data";
-import events from "../../data/events.data";
 import AllStatsModal from "./AllStatsModal/AllStatsModal";
 import PatientModal from "./PatientModal/PatientModal";
 import PostsModal from "./PostsModal/PostsModal";
@@ -18,6 +15,9 @@ import EventsModal from "./EventsModal/EventsModal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import ac from "../../redux/actions";
+// import patients from "../../data/patients.data";
+// import posts from "../../data/posts.data";
+// import events from "../../data/events.data";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -41,36 +41,42 @@ const Home = () => {
   // patients
   const [patientModalVisibility, setPatientModalVisibility] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState();
-  const patientsState = useSelector(({ getPatients }) => getPatients);
-  const patientsFetching = useSelector(({ getPatients: { fetching } }) => {
-    return fetching;
+  const patients = useSelector(({ getPatients }) =>
+    getPatients.data ? getPatients.data : {}
+  );
+  const patientsArray = Object.keys(patients).map((key) => {
+    return patients[key];
   });
 
   // posts
   const [postModalVisibility, setPostModalVisibility] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
-  const postsState = useSelector(({ getPosts }) => getPosts);
-  const postsFetching = useSelector(({ getPosts: { fetching } }) => {
-    return fetching;
+  const posts = useSelector(({ getPosts }) =>
+    getPosts.data ? getPosts.data : {}
+  );
+  const postsArray = Object.keys(posts).map((key) => {
+    return posts[key];
   });
 
   //events
   const [eventModalVisibility, setEventModalVisibility] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState();
-  const eventsState = useSelector(({ getEvents }) => getEvents);
-  const eventsFetching = useSelector(({ getEvents: { fetching } }) => {
-    return fetching;
+  const events = useSelector(({ getEvents }) =>
+    getEvents.data ? getEvents.data : {}
+  );
+  const eventsArray = Object.keys(events).map((key) => {
+    return events[key];
   });
 
-  const getPatientsInVicinity = patients.filter((patient) => {
+  const getPatientsInVicinity = patientsArray.filter((patient) => {
     return patient?.location?.vicinity === region?.vicinity;
   });
 
-  const getPostsInVicinity = posts.filter((post) => {
+  const getPostsInVicinity = postsArray.filter((post) => {
     return post?.location?.vicinity === region?.vicinity;
   });
 
-  const getEventsInVicinity = events.filter((event) => {
+  const getEventsInVicinity = eventsArray.filter((event) => {
     return event?.location?.vicinity === region?.vicinity;
   });
 
@@ -199,7 +205,7 @@ const Home = () => {
           visible={eventModalVisibility}
           eventId={selectedEvent?.id}
           event={selectedEvent}
-          posts={posts}
+          posts={postsArray}
           isNearYou={
             userRegion?.vicinity === selectedEvent?.location?.vicinity
               ? true
@@ -215,7 +221,7 @@ const Home = () => {
     if (selectedFilterId === 1) {
       return (
         <>
-          {patients.map((patient) => (
+          {patientsArray.map((patient) => (
             <Marker
               key={patient.id}
               coordinate={patient.latLng}
@@ -229,7 +235,7 @@ const Home = () => {
               />
             </Marker>
           ))}
-          {posts.map((post) => (
+          {postsArray.map((post) => (
             <Marker
               key={post.id}
               coordinate={post.latLng}
@@ -243,7 +249,7 @@ const Home = () => {
               />
             </Marker>
           ))}
-          {events.map((event) => (
+          {eventsArray.map((event) => (
             <Marker
               key={event.id}
               coordinate={event.latLng}
@@ -262,7 +268,7 @@ const Home = () => {
     } else if (selectedFilterId === 2) {
       return (
         <>
-          {patients.map((patient) => (
+          {patientsArray.map((patient) => (
             <Marker
               key={patient.id}
               coordinate={patient.latLng}
@@ -288,7 +294,7 @@ const Home = () => {
     } else if (selectedFilterId === 3) {
       return (
         <>
-          {posts.map((post) => (
+          {postsArray.map((post) => (
             <Marker
               key={post.id}
               coordinate={post.latLng}
@@ -314,7 +320,7 @@ const Home = () => {
     } else if (selectedFilterId === 4) {
       return (
         <>
-          {events.map((event) => (
+          {eventsArray.map((event) => (
             <Marker
               key={event.id}
               coordinate={event.latLng}
