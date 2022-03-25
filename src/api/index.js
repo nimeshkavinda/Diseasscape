@@ -1,7 +1,7 @@
 import { createUser, getLoggedInUser } from "./user";
 import { getPatients } from "./patient";
 import { getPosts, createPost } from "./post";
-import { getEvents } from "./event";
+import { getEvents, createEvent } from "./event";
 
 const api = {
   user: {
@@ -17,6 +17,7 @@ const api = {
   },
   event: {
     getEvents,
+    createEvent,
   },
 };
 
