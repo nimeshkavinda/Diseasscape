@@ -42,7 +42,7 @@ const Profile = () => {
             {loggedInUser?.status}
           </Text>
         </View>
-        <Text style={styles.profileBio} numberOfLines={3}>
+        <Text style={styles.profileBio} numberOfLines={2}>
           {loggedInUser?.bio}
         </Text>
         <View style={styles.profileInfoRow}>

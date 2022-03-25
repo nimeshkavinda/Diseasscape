@@ -35,7 +35,7 @@ const PublicProfile = () => {
           resizeMode="cover"
         />
         <Text style={styles.profileName}>Nimesh Kavinda</Text>
-        <Text style={styles.profileBio} numberOfLines={3}>
+        <Text style={styles.profileBio} numberOfLines={2}>
           Software engineer and a public volunteer dedicated to ensuring public
           well being. I regularly organize environment cleanup events
         </Text>

@@ -16,9 +16,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileImg: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginTop: 10,
     marginBottom: 16,
   },
   profileName: { fontSize: 24, fontWeight: "bold" },
