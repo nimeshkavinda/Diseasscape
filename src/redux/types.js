@@ -15,6 +15,11 @@ const types = {
       ...generateActionTypes("user.getLoggedInUser"),
     },
   },
+  patient: {
+    getPatients: {
+      ...generateActionTypes("patient.getPatients"),
+    },
+  },
 };
 
 export default types;

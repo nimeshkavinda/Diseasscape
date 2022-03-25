@@ -46,7 +46,7 @@ export default function Login() {
         dispatch(ac.getLoggedInUser(signIn.data.uid));
         if (getLoggedInUser.data) {
           console.log("Logged in user: ", getLoggedInUser.data);
-          // navigation.navigate("HomeStack");
+          navigation.navigate("HomeStack");
         }
       } else if (signIn.error || getLoggedInUser.error) {
         Alert.alert(

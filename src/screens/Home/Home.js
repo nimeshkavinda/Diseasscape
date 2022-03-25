@@ -16,6 +16,8 @@ import PatientModal from "./PatientModal/PatientModal";
 import PostsModal from "./PostsModal/PostsModal";
 import EventsModal from "./EventsModal/EventsModal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import ac from "../../redux/actions";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,6 +26,8 @@ const Home = () => {
   const [region, setRegion] = useState();
   const [searchFocus, setSearchFocus] = useState(false);
   const [selectedFilterId, setSelectedFilterId] = useState(1);
+
+  useEffect(() => {}, []);
 
   // all stats
   const [statsModalVisibility, setStatsModalVisibility] = useState(true);
