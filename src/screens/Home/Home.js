@@ -30,6 +30,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(ac.getPatients());
+    dispatch(ac.getPosts());
   }, []);
 
   // all stats
@@ -47,6 +48,10 @@ const Home = () => {
   // posts
   const [postModalVisibility, setPostModalVisibility] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
+  const postsState = useSelector(({ getPosts }) => getPosts);
+  const postsFetching = useSelector(({ getPosts: { fetching } }) => {
+    return fetching;
+  });
 
   //events
   const [eventModalVisibility, setEventModalVisibility] = useState(false);
