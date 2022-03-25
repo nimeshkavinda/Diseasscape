@@ -24,10 +24,16 @@ const types = {
     getPosts: {
       ...generateActionTypes("post.getPosts"),
     },
+    createPost: {
+      ...generateActionTypes("post.createPost"),
+    },
   },
   event: {
     getEvents: {
       ...generateActionTypes("event.getEvents"),
+    },
+    createEvent: {
+      ...generateActionTypes("event.createEvent"),
     },
   },
 };

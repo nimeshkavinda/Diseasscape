@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { signIn, signUp, createUser, getLoggedInUser } from "./user";
 import { getPatients } from "./patient";
-import { getPosts } from "./post";
+import { getPosts, createPost } from "./post";
 import { getEvents } from "./event";
 
 const rootReducer = combineReducers({
@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
   getPatients,
   getPosts,
   getEvents,
+  createPost,
 });
 
 export default rootReducer;

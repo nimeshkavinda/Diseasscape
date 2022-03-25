@@ -8,7 +8,7 @@ import {
   Modal,
 } from "react-native";
 import { useState, useEffect } from "react";
-import { BackButton, ValidationText, Input } from "../../../../common";
+import { BackButton, ValidationText, Input, Button } from "../../../../common";
 import styles from "../styles";
 import { useForm, Controller } from "react-hook-form";
 import colors from "../../../../theme/colors";
@@ -19,8 +19,11 @@ import { Camera } from "expo-camera";
 import useCamera from "../../../../hooks/useCamera";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
+import { useSelector, useDispatch } from "react-redux";
+import ac from "../../../../redux/actions";
 
 const PostDetails = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const [userRegion, setUserRegion] = useState();
   const [date, setDate] = useState(
     moment(new Date()).utc().format("ddd Do MMMM YYYY")
@@ -43,9 +46,9 @@ const PostDetails = ({ navigation, route }) => {
         longitude: "",
       },
       postedBy: {
-        id: 1,
-        fullName: "Nimesh Kavinda",
-        profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
+        uid: "",
+        fullName: "",
+        profileImg: "",
       },
     },
   });
@@ -64,6 +67,10 @@ const PostDetails = ({ navigation, route }) => {
       console.log("Failed to get user location");
     }
   }, [coords, address, error]);
+
+  const loggedInUser = useSelector(({ getLoggedInUser }) =>
+    getLoggedInUser.data ? getLoggedInUser.data[0] : {}
+  );
 
   // camera
   const cameraPermission = useCamera();
@@ -103,14 +110,33 @@ const PostDetails = ({ navigation, route }) => {
         longitude: userRegion?.longitude,
       },
       postedBy: {
-        id: 1,
-        fullName: "Nimesh Kavinda",
-        profileImg: "https://avatars.githubusercontent.com/u/44240093?v=4",
+        uid: loggedInUser?.uid,
+        fullName: loggedInUser?.fullName,
+        profileImg: loggedInUser?.profilePhoto,
       },
     });
   };
 
-  console.log("Post data state obj: ", postData);
+  useEffect(() => {
+    if (postData !== undefined || "" || null) {
+      console.log("Post data state obj before submit: ", postData);
+      dispatch(ac.createPost(postData));
+    }
+  }, [postData]);
+
+  const createPost = useSelector(({ createPost }) =>
+    createPost.data ? createPost.data : {}
+  );
+
+  const createPostFetching = useSelector(({ createPost: { fetching } }) => {
+    return fetching;
+  });
+
+  useEffect(() => {
+    if (createPost) {
+      navigation.navigate("Home");
+    }
+  }, [createPost]);
 
   const deleteImage = (img) => {
     let imgToDelete = images.findIndex((item) => {
@@ -245,17 +271,12 @@ const PostDetails = ({ navigation, route }) => {
         )}
       </ScrollView>
       <View style={styles.buttonWrapper}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            { width: "100%", backgroundColor: colors.primary.bg },
-          ]}
+        <Button
+          style={styles.button}
+          title="Create post"
+          isLoading={createPostFetching}
           onPress={handleSubmit(handleSubmitPress)}
-        >
-          <Text style={[styles.buttonText, { color: colors.primary.text }]}>
-            Create post
-          </Text>
-        </TouchableOpacity>
+        />
       </View>
     </SafeAreaView>
   );

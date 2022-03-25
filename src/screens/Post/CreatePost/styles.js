@@ -65,11 +65,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    height: 60,
-    borderRadius: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",
+    textAlign: "center",
   },
   buttonText: { fontSize: 16, fontWeight: "500" },
   photoScrollView: {
