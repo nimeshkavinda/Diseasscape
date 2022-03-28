@@ -4,6 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Modal,
 } from "react-native";
 import { Text, BackButton, Input, ValidationText } from "../../../common";
 import colors from "../../../theme/colors";
@@ -11,55 +12,55 @@ import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Camera } from "expo-camera";
+import useCamera from "../../../hooks/useCamera";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const EditProfile = () => {
+  const cameraPermission = useCamera();
+  const [showCameraView, setShowCameraView] = useState(false);
+  const [camera, setCamera] = useState(null);
+
+  const loggedInUser = useSelector(({ getLoggedInUser }) =>
+    getLoggedInUser.data ? getLoggedInUser.data[0] : {}
+  );
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      id: "",
-      fullName: "",
-      bio: "",
-      status: "",
-      disease: "",
-      address: {
-        number: "",
-        street: "",
-        city: "",
-        district: "",
-        province: "",
-      },
-      phone: "",
+      bio: loggedInUser?.bio,
+      number: loggedInUser?.address?.number,
+      street: loggedInUser?.address?.street,
+      city: loggedInUser?.address?.city,
+      district: loggedInUser?.address?.district,
+      province: loggedInUser?.address?.province,
+      phone: loggedInUser?.phone,
     },
   });
 
   // updated user data
-  const [userProfileData, setUserProfileData] = useState();
-
-  useEffect(() => {
-    setUserProfileData({
-      id: "",
-      fullName: "",
-      bio: "",
-      status: "",
-      disease: "",
-      address: {
-        number: "",
-        street: "",
-        city: "",
-        district: "",
-        province: "",
-      },
-      phone: "",
-    });
-  }, []);
+  const [userProfileData, setUserProfileData] = useState({
+    profilePhoto: loggedInUser?.profilePhoto,
+    bio: loggedInUser?.bio,
+    address: {
+      number: loggedInUser?.address?.number,
+      street: loggedInUser?.address?.street,
+      city: loggedInUser?.address?.city,
+      district: loggedInUser?.address?.district,
+      province: loggedInUser?.address?.province,
+    },
+    phone: loggedInUser?.phone,
+  });
 
   const onUpdateProfile = (data) => {
     console.log("Profile data: ", data);
     setUserProfileData({
       ...userProfileData,
+      profilePhoto: userProfileData?.profilePhoto,
       bio: data?.bio,
       address: {
         number: data?.number,
@@ -68,9 +69,52 @@ const EditProfile = () => {
         district: data?.district,
         province: data?.province,
       },
-      phone: data?.mobile,
+      phone: data?.phone,
     });
   };
+
+  const takePicture = async () => {
+    console.log("Camera permission: ", cameraPermission);
+    if (cameraPermission) {
+      const data = await camera.takePictureAsync({ base64: true });
+      console.log("Captured image data", data);
+      setUserProfileData({
+        ...userProfileData,
+        profilePhoto: data.base64,
+      });
+      setShowCameraView(false);
+    } else {
+      console.log("Camera permission is required");
+    }
+  };
+
+  if (showCameraView) {
+    return (
+      <Modal
+        animationType="none"
+        transparent={false}
+        visible={showCameraView}
+        style={styles.cameraWrapper}
+      >
+        <Camera
+          ref={(ref) => setCamera(ref)}
+          style={styles.camera}
+          type={Camera.Constants.Type.front}
+        >
+          <View style={styles.snapButtonWrapper}>
+            <TouchableOpacity
+              style={styles.snapButton}
+              onPress={() => {
+                takePicture();
+              }}
+            >
+              <MaterialIcons name="lens" size={72} color="#fff" />
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      </Modal>
+    );
+  }
 
   console.log("Profile data state obj: ", userProfileData);
 
@@ -89,11 +133,14 @@ const EditProfile = () => {
           <Image
             style={styles.profileImg}
             source={{
-              uri: "https://avatars.githubusercontent.com/u/44240093?v=4",
+              uri: `data:image/jpg;base64,${userProfileData.profilePhoto}`,
             }}
             resizeMode="cover"
           />
-          <TouchableOpacity style={styles.editProfileImgIco}>
+          <TouchableOpacity
+            style={styles.editProfileImgIco}
+            onPress={() => setShowCameraView(true)}
+          >
             <Feather name="edit" size={16} color={colors.secondary.text} />
           </TouchableOpacity>
         </View>
@@ -134,12 +181,12 @@ const EditProfile = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                isError={errors.mobile ? true : false}
+                isError={errors.phone ? true : false}
               />
             )}
-            name="mobile"
+            name="phone"
           />
-          {errors.mobile && (
+          {errors.phone && (
             <ValidationText>Mobile number is required.</ValidationText>
           )}
         </View>
@@ -162,7 +209,7 @@ const EditProfile = () => {
             )}
             name="number"
           />
-          {errors.mobile && (
+          {errors.number && (
             <ValidationText>Apt/ House No is required.</ValidationText>
           )}
           <Controller
@@ -202,7 +249,7 @@ const EditProfile = () => {
             )}
             name="city"
           />
-          {errors.street && <ValidationText>City is required.</ValidationText>}
+          {errors.city && <ValidationText>City is required.</ValidationText>}
           <Controller
             control={control}
             rules={{
@@ -220,7 +267,7 @@ const EditProfile = () => {
             )}
             name="district"
           />
-          {errors.street && (
+          {errors.district && (
             <ValidationText>District is required.</ValidationText>
           )}
           <Controller
@@ -240,7 +287,7 @@ const EditProfile = () => {
             )}
             name="province"
           />
-          {errors.street && (
+          {errors.province && (
             <ValidationText>Province is required.</ValidationText>
           )}
         </View>

@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, StatusBar } from "react-native";
+import { StyleSheet, Platform, StatusBar, Dimensions } from "react-native";
 import colors from "../../../theme/colors";
 
 const styles = StyleSheet.create({
@@ -59,6 +59,23 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   formWrapper: { marginHorizontal: 20 },
+  cameraWrapper: {
+    position: "absolute",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+  },
+  camera: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  snapButtonWrapper: { alignItems: "center", marginBottom: 40 },
+  snapButton: {
+    padding: 1,
+    borderRadius: 50,
+    backgroundColor: colors.grey.light,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default styles;
