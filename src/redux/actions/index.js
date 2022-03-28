@@ -4,6 +4,7 @@ import {
   createUser,
   getLoggedInUser,
   getUserByUid,
+  updateUser,
 } from "./user";
 import { getPatients } from "./patient";
 import { getPosts, createPost } from "./post";
@@ -20,6 +21,7 @@ const actions = {
   createPost,
   createEvent,
   getUserByUid,
+  updateUser,
 };
 
 export default actions;

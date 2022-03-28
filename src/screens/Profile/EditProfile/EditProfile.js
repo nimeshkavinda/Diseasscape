@@ -6,7 +6,13 @@ import {
   Image,
   Modal,
 } from "react-native";
-import { Text, BackButton, Input, ValidationText } from "../../../common";
+import {
+  Text,
+  BackButton,
+  Input,
+  ValidationText,
+  Button,
+} from "../../../common";
 import colors from "../../../theme/colors";
 import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
@@ -16,15 +22,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { Camera } from "expo-camera";
 import useCamera from "../../../hooks/useCamera";
 import { MaterialIcons } from "@expo/vector-icons";
+import ac from "../../../redux/actions";
 
 const EditProfile = () => {
   const cameraPermission = useCamera();
   const [showCameraView, setShowCameraView] = useState(false);
   const [camera, setCamera] = useState(null);
+  const dispatch = useDispatch();
 
   const loggedInUser = useSelector(({ getLoggedInUser }) =>
     getLoggedInUser.data ? getLoggedInUser.data[0] : {}
   );
+
+  const updateUserFetching = useSelector(({ updateUser: { fetching } }) => {
+    return fetching;
+  });
 
   const {
     control,
@@ -71,6 +83,12 @@ const EditProfile = () => {
       },
       phone: data?.phone,
     });
+    handleProfileUpdate();
+  };
+
+  const handleProfileUpdate = () => {
+    console.log("Profile data state obj: ", userProfileData);
+    dispatch(ac.updateUser(loggedInUser?.uid));
   };
 
   const takePicture = async () => {
@@ -115,8 +133,6 @@ const EditProfile = () => {
       </Modal>
     );
   }
-
-  console.log("Profile data state obj: ", userProfileData);
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -278,7 +294,7 @@ const EditProfile = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 placeholder="Province"
-                style={styles.input}
+                style={[styles.input, { marginBottom: 20 }]}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -291,14 +307,12 @@ const EditProfile = () => {
             <ValidationText>Province is required.</ValidationText>
           )}
         </View>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: colors.primary.bg }]}
+        <Button
+          title="Update profile"
+          style={styles.button}
           onPress={handleSubmit(onUpdateProfile)}
-        >
-          <Text style={[styles.buttonText, { color: colors.primary.text }]}>
-            Update profile
-          </Text>
-        </TouchableOpacity>
+          isLoading={updateUserFetching}
+        />
         <View style={styles.buttonWrapper}>
           <TouchableOpacity style={styles.linkButton}>
             <Text style={[styles.buttonText, { color: colors.error.primary }]}>

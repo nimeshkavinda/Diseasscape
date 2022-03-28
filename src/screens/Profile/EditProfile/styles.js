@@ -29,13 +29,7 @@ const styles = StyleSheet.create({
   },
   linkButton: { marginHorizontal: 20, marginTop: 20 },
   button: {
-    height: 60,
-    borderRadius: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     marginHorizontal: 20,
-    marginVertical: 20,
   },
   buttonText: { fontSize: 16, fontWeight: "500" },
   input: { marginVertical: 10 },

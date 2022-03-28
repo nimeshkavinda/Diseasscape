@@ -17,6 +17,9 @@ const types = {
     getUserByUid: {
       ...generateActionTypes("user.getUserByUid"),
     },
+    updateUser: {
+      ...generateActionTypes("user.updateUser"),
+    },
   },
   patient: {
     getPatients: {
