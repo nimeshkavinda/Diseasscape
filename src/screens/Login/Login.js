@@ -40,10 +40,23 @@ export default function Login() {
     dispatch(ac.signIn(data.email, data.password));
   };
 
+  useEffect(() => {
+    if (!fetching && signIn.data) {
+      console.log("signed in uid: ", signIn.data.uid);
+      dispatch(ac.getLoggedInUser(signIn.data.uid));
+    }
+  }, [dispatch, fetching, signIn]);
+
   useEffect(
     function () {
-      if (signIn.data) {
-        dispatch(ac.getLoggedInUser(signIn.data.uid));
+      if (
+        signIn.data &&
+        !fetching &&
+        !fetchingLoggedInUser &&
+        getLoggedInUser.data
+      ) {
+        console.log("logged in user: ", getLoggedInUser.data);
+        navigation.navigate("HomeStack");
       } else if (signIn.error || getLoggedInUser.error) {
         Alert.alert(
           "Failed to login",
@@ -60,15 +73,8 @@ export default function Login() {
         );
       }
     },
-    [signIn]
+    [signIn, fetching, getLoggedInUser, fetchingLoggedInUser, dispatch]
   );
-
-  useEffect(() => {
-    if (getLoggedInUser.data) {
-      console.log("Logged in user: ", getLoggedInUser.data);
-      navigation.navigate("HomeStack");
-    }
-  }, [getLoggedInUser]);
 
   const navigation = useNavigation();
   return (

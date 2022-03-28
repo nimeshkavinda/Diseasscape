@@ -1,4 +1,4 @@
-import { createUser, getLoggedInUser } from "./user";
+import { createUser, getLoggedInUser, getUserByUid } from "./user";
 import { getPatients } from "./patient";
 import { getPosts, createPost } from "./post";
 import { getEvents, createEvent } from "./event";
@@ -7,6 +7,7 @@ const api = {
   user: {
     createUser,
     getLoggedInUser,
+    getUserByUid,
   },
   patient: {
     getPatients,

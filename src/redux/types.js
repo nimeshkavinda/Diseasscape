@@ -14,6 +14,9 @@ const types = {
     getLoggedInUser: {
       ...generateActionTypes("user.getLoggedInUser"),
     },
+    getUserByUid: {
+      ...generateActionTypes("user.getUserByUid"),
+    },
   },
   patient: {
     getPatients: {

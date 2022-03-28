@@ -1,5 +1,11 @@
 import { combineReducers } from "redux";
-import { signIn, signUp, createUser, getLoggedInUser } from "./user";
+import {
+  signIn,
+  signUp,
+  createUser,
+  getLoggedInUser,
+  getUserByUid,
+} from "./user";
 import { getPatients } from "./patient";
 import { getPosts, createPost } from "./post";
 import { getEvents, createEvent } from "./event";
@@ -14,6 +20,7 @@ const rootReducer = combineReducers({
   getEvents,
   createPost,
   createEvent,
+  getUserByUid,
 });
 
 export default rootReducer;

@@ -180,7 +180,11 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
         <View style={styles.footerWrapper}>
           <TouchableOpacity
             style={styles.organizerDetails}
-            onPress={() => navigation.navigate("PublicProfile")}
+            onPress={() =>
+              navigation.navigate("PublicProfile", {
+                uid: event?.organizer?.uid,
+              })
+            }
           >
             <Image
               style={styles.organizerProfileImage}
