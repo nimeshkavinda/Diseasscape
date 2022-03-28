@@ -24,21 +24,12 @@ import useCamera from "../../../hooks/useCamera";
 import { MaterialIcons } from "@expo/vector-icons";
 import ac from "../../../redux/actions";
 import { updateUser } from "../../../redux/actions/user";
-import { useNavigation } from "@react-navigation/native";
 
-const EditProfile = () => {
+const EditProfile = ({ navigation, route }) => {
   const cameraPermission = useCamera();
   const [showCameraView, setShowCameraView] = useState(false);
   const [camera, setCamera] = useState(null);
   const dispatch = useDispatch();
-
-  const loggedInUser = useSelector(({ getLoggedInUser }) =>
-    getLoggedInUser.data ? getLoggedInUser.data[0] : {}
-  );
-
-  const updateUserFetching = useSelector(({ updateUser: { fetching } }) => {
-    return fetching;
-  });
 
   const {
     control,
@@ -46,28 +37,28 @@ const EditProfile = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      bio: loggedInUser?.bio,
-      number: loggedInUser?.address?.number,
-      street: loggedInUser?.address?.street,
-      city: loggedInUser?.address?.city,
-      district: loggedInUser?.address?.district,
-      province: loggedInUser?.address?.province,
-      phone: loggedInUser?.phone,
+      bio: route.params.user?.bio,
+      number: route.params.user?.address?.number,
+      street: route.params.user?.address?.street,
+      city: route.params.user?.address?.city,
+      district: route.params.user?.address?.district,
+      province: route.params.user?.address?.province,
+      phone: route.params.user?.phone,
     },
   });
 
   // updated user data
   const [userProfileData, setUserProfileData] = useState({
-    profilePhoto: loggedInUser?.profilePhoto,
-    bio: loggedInUser?.bio,
+    profilePhoto: route.params.user?.profilePhoto,
+    bio: route.params.user?.bio,
     address: {
-      number: loggedInUser?.address?.number,
-      street: loggedInUser?.address?.street,
-      city: loggedInUser?.address?.city,
-      district: loggedInUser?.address?.district,
-      province: loggedInUser?.address?.province,
+      number: route.params.user?.address?.number,
+      street: route.params.user?.address?.street,
+      city: route.params.user?.address?.city,
+      district: route.params.user?.address?.district,
+      province: route.params.user?.address?.province,
     },
-    phone: loggedInUser?.phone,
+    phone: route.params.user?.phone,
   });
 
   const onUpdateProfile = (data) => {
@@ -84,8 +75,9 @@ const EditProfile = () => {
       },
       phone: data?.phone,
     });
+
     dispatch(
-      ac.updateUser(loggedInUser?.uid, {
+      ac.updateUser(route.params.user?.uid, {
         ...userProfileData,
         bio: data?.bio,
         address: {
@@ -99,11 +91,18 @@ const EditProfile = () => {
       })
     );
   };
+
   console.log("Profile data state obj: ", userProfileData);
 
+  const updateUserFetching = useSelector(({ updateUser: { fetching } }) => {
+    return fetching;
+  });
+
   useEffect(() => {
-    dispatch(ac.getLoggedInUser(loggedInUser?.uid));
-  }, [dispatch, updateUser]);
+    if (!updateUserFetching) {
+      dispatch(ac.getLoggedInUser(route.params.user?.uid));
+    }
+  }, [dispatch, updateUserFetching]);
 
   const takePicture = async () => {
     console.log("Camera permission: ", cameraPermission);

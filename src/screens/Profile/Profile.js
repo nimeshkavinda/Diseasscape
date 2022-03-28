@@ -70,7 +70,9 @@ const Profile = () => {
         <View style={styles.optionsWrapper}>
           <TouchableOpacity
             style={styles.statusButton}
-            onPress={() => navigation.navigate("SetStatus")}
+            onPress={() =>
+              navigation.navigate("SetStatus", { user: loggedInUser })
+            }
           >
             <MaterialCommunityIcons
               name="hospital-box"
@@ -81,7 +83,9 @@ const Profile = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.settingsButton}
-            onPress={() => navigation.navigate("EditProfile")}
+            onPress={() =>
+              navigation.navigate("EditProfile", { user: loggedInUser })
+            }
           >
             <Ionicons name="settings" size={24} color={colors.grey.dark} />
             <Text style={styles.settingsText}>Edit profile</Text>
