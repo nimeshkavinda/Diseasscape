@@ -18,7 +18,7 @@ import ac from "../../redux/actions";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState({ location: false, markers: false });
   const [userRegion, setUserRegion] = useState();
   const { coords, address, error } = useLocation();
   const [region, setRegion] = useState();
@@ -29,7 +29,7 @@ const Home = () => {
     dispatch(ac.getPatients());
     dispatch(ac.getPosts());
     dispatch(ac.getEvents());
-  }, [patients, posts, events]);
+  }, []);
 
   // all stats
   const [statsModalVisibility, setStatsModalVisibility] = useState(true);
@@ -39,43 +39,54 @@ const Home = () => {
   const [patientsArray, setPatientsArray] = useState([]);
   const [patientModalVisibility, setPatientModalVisibility] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState();
+  const patientsFetching = useSelector(({ getPatients: { fetching } }) => {
+    return fetching;
+  });
   const patients = useSelector(({ getPatients }) =>
     getPatients.data ? getPatients.data : {}
   );
-  useEffect(() => {
-    let patientsArr = Object.keys(patients).map((key) => {
-      return patients[key];
-    });
-    setPatientsArray(patientsArr);
-  }, [patients]);
 
   // posts
   const [postsArray, setPostsArray] = useState([]);
   const [postModalVisibility, setPostModalVisibility] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
+  const postsFetching = useSelector(({ getPosts: { fetching } }) => {
+    return fetching;
+  });
   const posts = useSelector(({ getPosts }) =>
     getPosts.data ? getPosts.data : {}
   );
-  useEffect(() => {
-    let postsArr = Object.keys(posts).map((key) => {
-      return posts[key];
-    });
-    setPostsArray(postsArr);
-  }, [posts]);
 
   //events
   const [eventsArray, setEventsArray] = useState([]);
   const [eventModalVisibility, setEventModalVisibility] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState();
+  const eventsFetching = useSelector(({ getEvents: { fetching } }) => {
+    return fetching;
+  });
   const events = useSelector(({ getEvents }) =>
     getEvents.data ? getEvents.data : {}
   );
+
   useEffect(() => {
-    let eventsArr = Object.keys(events).map((key) => {
-      return events[key];
-    });
-    setEventsArray(eventsArr);
-  }, [events]);
+    if (!postsFetching && !patientsFetching && !eventsFetching) {
+      let patientsArr = Object.keys(patients).map((key) => {
+        return patients[key];
+      });
+      setPatientsArray(patientsArr);
+
+      let postsArr = Object.keys(posts).map((key) => {
+        return posts[key];
+      });
+      setPostsArray(postsArr);
+
+      let eventsArr = Object.keys(events).map((key) => {
+        return events[key];
+      });
+      setEventsArray(eventsArr);
+      setIsLoaded({ ...isLoaded, markers: true });
+    }
+  }, [patientsFetching, postsFetching, eventsFetching]);
 
   const getPatientsInVicinity = patientsArray.filter((patient) => {
     return patient?.location?.vicinity === region?.vicinity;
@@ -88,14 +99,6 @@ const Home = () => {
   const getEventsInVicinity = eventsArray.filter((event) => {
     return event?.location?.vicinity === region?.vicinity;
   });
-
-  const userLocation = {
-    description: "Current Location",
-    geometry: {
-      location: { lat: userRegion?.latitude, lng: userRegion?.longitude },
-    },
-    address: { name: address?.city, vicinity: address?.city },
-  };
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -116,12 +119,7 @@ const Home = () => {
         latitudeDelta: 0.05,
         longitudeDelta: 0.01,
       });
-      setAllStats({
-        patients: getPatientsInVicinity,
-        posts: getPostsInVicinity,
-        events: getEventsInVicinity,
-      });
-      setIsLoaded(true);
+      setIsLoaded({ ...isLoaded, location: true });
     }
     if (error !== null) {
       Alert.alert(
@@ -139,6 +137,24 @@ const Home = () => {
       );
     }
   }, [coords, address, error]);
+
+  useEffect(() => {
+    if (isLoaded.markers && isLoaded.location) {
+      setAllStats({
+        patients: getPatientsInVicinity,
+        posts: getPostsInVicinity,
+        events: getEventsInVicinity,
+      });
+    }
+  }, [isLoaded]);
+
+  const userLocation = {
+    description: "Current Location",
+    geometry: {
+      location: { lat: userRegion?.latitude, lng: userRegion?.longitude },
+    },
+    address: { name: address?.city, vicinity: address?.city },
+  };
 
   useEffect(() => {
     setAllStats({
@@ -463,9 +479,9 @@ const Home = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      {isLoaded && (
+      {isLoaded.location && (
         <MapView style={styles.map} initialRegion={userRegion} region={region}>
-          <MapMarkers />
+          {isLoaded.markers && <MapMarkers />}
         </MapView>
       )}
       <BottomSheet />

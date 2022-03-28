@@ -76,7 +76,7 @@ export default function Login() {
       <View>
         <BackButton />
         <View style={styles.headingWrapper}>
-          <Text style={styles.title}>Welcome back</Text>
+          <Text style={styles.title}>Welcome to Diseasscape</Text>
           <Text style={styles.subtitle}>Let's sign you in</Text>
         </View>
         <View style={styles.formWrapper}>
