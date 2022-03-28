@@ -23,6 +23,8 @@ import { Camera } from "expo-camera";
 import useCamera from "../../../hooks/useCamera";
 import { MaterialIcons } from "@expo/vector-icons";
 import ac from "../../../redux/actions";
+import { updateUser } from "../../../redux/actions/user";
+import { useNavigation } from "@react-navigation/native";
 
 const EditProfile = () => {
   const cameraPermission = useCamera();
@@ -72,7 +74,6 @@ const EditProfile = () => {
     console.log("Profile data: ", data);
     setUserProfileData({
       ...userProfileData,
-      profilePhoto: userProfileData?.profilePhoto,
       bio: data?.bio,
       address: {
         number: data?.number,
@@ -83,13 +84,26 @@ const EditProfile = () => {
       },
       phone: data?.phone,
     });
-    handleProfileUpdate();
+    dispatch(
+      ac.updateUser(loggedInUser?.uid, {
+        ...userProfileData,
+        bio: data?.bio,
+        address: {
+          number: data?.number,
+          street: data?.street,
+          city: data?.city,
+          district: data?.district,
+          province: data?.province,
+        },
+        phone: data?.phone,
+      })
+    );
   };
+  console.log("Profile data state obj: ", userProfileData);
 
-  const handleProfileUpdate = () => {
-    console.log("Profile data state obj: ", userProfileData);
-    dispatch(ac.updateUser(loggedInUser?.uid));
-  };
+  useEffect(() => {
+    dispatch(ac.getLoggedInUser(loggedInUser?.uid));
+  }, [dispatch, updateUser]);
 
   const takePicture = async () => {
     console.log("Camera permission: ", cameraPermission);
