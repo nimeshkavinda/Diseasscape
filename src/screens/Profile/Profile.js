@@ -33,13 +33,34 @@ const Profile = () => {
         <View
           style={[
             styles.myStatusWrapper,
-            { backgroundColor: colors.success.secondary },
+            {
+              backgroundColor:
+                loggedInUser?.status === "healthy"
+                  ? colors.success.secondary
+                  : loggedInUser?.status === "symptoms"
+                  ? colors.error.secondary
+                  : loggedInUser?.status === "positive"
+                  ? colors.error.primary
+                  : colors.grey.light,
+            },
           ]}
         >
           <Text
-            style={[styles.myStatusText, { color: colors.success.primary }]}
+            style={[
+              styles.myStatusText,
+              {
+                color:
+                  loggedInUser?.status === "healthy"
+                    ? colors.success.primary
+                    : loggedInUser?.status === "symptoms"
+                    ? colors.error.primary
+                    : loggedInUser?.status === "positive"
+                    ? "#fff"
+                    : colors.grey.medium,
+              },
+            ]}
           >
-            {loggedInUser?.status}
+            {loggedInUser?.disease} {loggedInUser?.status}
           </Text>
         </View>
         <Text style={styles.profileBio} numberOfLines={2}>

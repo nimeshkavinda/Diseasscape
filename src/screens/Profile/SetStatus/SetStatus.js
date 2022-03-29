@@ -6,23 +6,71 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useState } from "react";
-import { Text, BackButton, StatusButton } from "../../../common";
+import { useState, useEffect } from "react";
+import { Text, BackButton, StatusButton, Button } from "../../../common";
 import styles from "./styles";
 import colors from "../../../theme/colors";
 import { status, diseases } from "../../../data/statusItems.data";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import ac from "../../../redux/actions";
 
-const SetStatus = () => {
-  const [selectedStatus, setSelectedStatus] = useState(status[0]);
+const SetStatus = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const [selectedStatus, setSelectedStatus] = useState();
   const [selectedDisease, setSelectedDisease] = useState();
   const [updatedStatus, setUpdatedStatus] = useState({
-    status: "healthy",
+    status: "",
     disease: "",
   });
 
-  const updateStatus = () => {
-    if (selectedDisease === undefined) {
+  useEffect(() => {
+    switch (route.params?.user?.status) {
+      case "healthy":
+        setSelectedStatus(status[0]);
+        break;
+      case "symptoms":
+        setSelectedStatus(status[1]);
+        break;
+      case "positive":
+        setSelectedStatus(status[2]);
+        break;
+      default:
+        setSelectedStatus(status[0]);
+        break;
+    }
+
+    switch (route.params?.user?.disease) {
+      case "dengue":
+        setSelectedDisease(diseases[0]);
+        break;
+      case "yellowFever":
+        setSelectedDisease(diseases[1]);
+        break;
+      case "chikungunya":
+        setSelectedDisease(diseases[2]);
+        break;
+      case "zika":
+        setSelectedDisease(diseases[3]);
+        break;
+      case "cholera":
+        setSelectedDisease(diseases[4]);
+        break;
+      case "leptospirosis":
+        setSelectedDisease(diseases[5]);
+        break;
+      case "covid":
+        setSelectedDisease(diseases[6]);
+        break;
+      default:
+        setSelectedDisease("");
+        break;
+    }
+  }, []);
+
+  const updateStatusSubmit = () => {
+    console.log("selected status/disease: ", selectedStatus, selectedDisease);
+    if (selectedDisease === "") {
       Alert.alert(
         "Select a disease",
         "Please select the disease you are diagnosed/ having symptoms for",
@@ -36,15 +84,89 @@ const SetStatus = () => {
           cancelable: true,
         }
       );
-    } else {
+    } else if (
+      selectedStatus?.value !== route.params?.user?.status ||
+      selectedDisease?.value !== route.params?.user?.disease
+    ) {
       setUpdatedStatus({
         status: selectedStatus?.value,
         disease: selectedDisease?.value,
       });
+      dispatch(
+        ac.updateUser(route.params.user?.uid, {
+          status: selectedStatus?.value,
+          disease: selectedDisease?.value,
+        })
+      );
     }
   };
 
   console.log("Updated status: ", updatedStatus);
+
+  const updateUserFetching = useSelector(({ updateUser: { fetching } }) => {
+    return fetching;
+  });
+
+  const updateUser = useSelector(({ updateUser }) => updateUser);
+
+  const fetchingLoggedInUser = useSelector(
+    ({ getLoggedInUser: { fetching } }) => {
+      return fetching;
+    }
+  );
+
+  const getLoggedInUserSuccess = useSelector(
+    ({ getLoggedInUser: { success } }) => {
+      return success;
+    }
+  );
+
+  useEffect(() => {
+    if (updateUser.data?.status === "success" && !updateUserFetching) {
+      Alert.alert(
+        "Status changed",
+        "Your status has been updated",
+        [
+          {
+            text: "OK",
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+      dispatch(ac.getLoggedInUser(route.params.user?.uid));
+    }
+  }, [updateUser]);
+
+  useEffect(
+    function () {
+      if (getLoggedInUserSuccess && updateUser.data?.status === "success") {
+        console.log("Update user state data from redux: ", updateUser.data);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Profile" }],
+        });
+      }
+      if (updateUser.error || !getLoggedInUserSuccess) {
+        Alert.alert(
+          "Error",
+          "Failed to update status",
+          [
+            {
+              text: "OK",
+              style: "default",
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+      }
+    },
+    [updateUser, getLoggedInUserSuccess]
+  );
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -126,19 +248,11 @@ const SetStatus = () => {
                 })}
             </ScrollView>
             <View style={styles.buttonWrapper}>
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  { width: "100%", backgroundColor: colors.primary.bg },
-                ]}
-                onPress={updateStatus}
-              >
-                <Text
-                  style={[styles.buttonText, { color: colors.primary.text }]}
-                >
-                  Update status
-                </Text>
-              </TouchableOpacity>
+              <Button
+                title="Update status"
+                onPress={updateStatusSubmit}
+                isLoading={updateUserFetching || fetchingLoggedInUser}
+              />
             </View>
           </View>
         )}

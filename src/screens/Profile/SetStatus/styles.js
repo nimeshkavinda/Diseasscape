@@ -52,15 +52,6 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     marginHorizontal: 20,
     marginVertical: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  button: {
-    height: 60,
-    borderRadius: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
   },
   buttonText: { fontSize: 16, fontWeight: "500" },
 });
