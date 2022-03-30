@@ -14,11 +14,30 @@ import { status, diseases } from "../../../data/statusItems.data";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import ac from "../../../redux/actions";
+import moment from "moment";
+import useLocation from "../../../hooks/useLocation";
 
 const SetStatus = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState();
   const [selectedDisease, setSelectedDisease] = useState();
+  const [userRegion, setUserRegion] = useState();
+  const { coords, address, error } = useLocation();
+
+  useEffect(() => {
+    if (coords && address !== null) {
+      console.log("Coords: ", coords, "Address: ", address);
+      setUserRegion({
+        name: address?.city,
+        vicinity: address?.city,
+        latitude: coords?.latitude,
+        longitude: coords?.longitude,
+      });
+    }
+    if (error !== null) {
+      console.log("Failed to get user location");
+    }
+  }, [coords, address, error]);
 
   useEffect(() => {
     switch (route.params?.user?.status) {
@@ -118,6 +137,21 @@ const SetStatus = ({ navigation, route }) => {
         ac.updateUser(route.params.user?.uid, {
           status: selectedStatus?.value,
           disease: selectedDisease?.value,
+        })
+      );
+      dispatch(
+        ac.createPatient(route.params.user?.uid, {
+          date: moment(new Date()).utc().format("ddd Do MMMM YYYY"),
+          status: selectedStatus?.value,
+          disease: selectedDisease?.value,
+          location: {
+            name: userRegion?.name,
+            vicinity: userRegion?.vicinity,
+          },
+          latLng: {
+            latitude: userRegion?.latitude,
+            longitude: userRegion?.longitude,
+          },
         })
       );
       if (!updateUserFetching && updateUser.data?.status === "success") {
