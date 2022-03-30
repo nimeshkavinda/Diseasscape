@@ -25,6 +25,9 @@ const types = {
     getPatients: {
       ...generateActionTypes("patient.getPatients"),
     },
+    createPatient: {
+      ...generateActionTypes("patient.createPatient"),
+    },
   },
   post: {
     getPosts: {

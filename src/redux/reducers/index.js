@@ -7,7 +7,7 @@ import {
   getUserByUid,
   updateUser,
 } from "./user";
-import { getPatients } from "./patient";
+import { getPatients, createPatient } from "./patient";
 import { getPosts, createPost } from "./post";
 import { getEvents, createEvent } from "./event";
 
@@ -23,6 +23,7 @@ const rootReducer = combineReducers({
   createEvent,
   getUserByUid,
   updateUser,
+  createPatient,
 });
 
 export default rootReducer;
