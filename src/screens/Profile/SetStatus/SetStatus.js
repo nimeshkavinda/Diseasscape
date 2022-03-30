@@ -106,6 +106,8 @@ const SetStatus = ({ navigation, route }) => {
           disease: "",
         })
       );
+      dispatch(ac.deletePatient(route.params.user?.uid));
+      dispatch(ac.getPatients());
     }
   };
 
@@ -154,6 +156,7 @@ const SetStatus = ({ navigation, route }) => {
           },
         })
       );
+      dispatch(ac.getPatients());
       if (!updateUserFetching && updateUser.data?.status === "success") {
         Alert.alert(
           "Status changed",

@@ -11,7 +11,7 @@ export default function GetStarted() {
   const navigation = useNavigation();
   return (
     <View style={styles.wrapper}>
-      <Video
+      {/* <Video
         style={styles.video}
         source={{
           uri: "https://firebasestorage.googleapis.com/v0/b/diseasscape.appspot.com/o/1.mp4?alt=media&token=0390b605-5de8-4fe3-8f44-05ff6be43718",
@@ -21,7 +21,7 @@ export default function GetStarted() {
         isLooping
         isMuted
         shouldPlay
-      />
+      /> */}
       <BlurView intensity={100} tint="light" style={styles.blurViewWrapper}>
         <View style={styles.headingWrapper}>
           <Text style={styles.title}>
