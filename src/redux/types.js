@@ -28,6 +28,9 @@ const types = {
     createPatient: {
       ...generateActionTypes("patient.createPatient"),
     },
+    deletePatient: {
+      ...generateActionTypes("patient.deletePatient"),
+    },
   },
   post: {
     getPosts: {
