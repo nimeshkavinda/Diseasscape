@@ -68,6 +68,20 @@ const SetStatus = ({ navigation, route }) => {
     }
   }, []);
 
+  const updateUserFetching = useSelector(({ updateUser: { fetching } }) => {
+    return fetching;
+  });
+
+  const updateUser = useSelector(({ updateUser }) => updateUser);
+
+  const fetchingLoggedInUser = useSelector(
+    ({ getLoggedInUser: { fetching } }) => {
+      return fetching;
+    }
+  );
+
+  const loggedInUser = useSelector(({ getLoggedInUser }) => getLoggedInUser);
+
   const updateStatusSubmit = () => {
     console.log("selected status/disease: ", selectedStatus, selectedDisease);
     if (selectedDisease === "") {
@@ -88,71 +102,20 @@ const SetStatus = ({ navigation, route }) => {
       selectedStatus?.value !== route.params?.user?.status ||
       selectedDisease?.value !== route.params?.user?.disease
     ) {
-      setUpdatedStatus({
-        status: selectedStatus?.value,
-        disease: selectedDisease?.value,
-      });
       dispatch(
         ac.updateUser(route.params.user?.uid, {
           status: selectedStatus?.value,
           disease: selectedDisease?.value,
         })
       );
-    }
-  };
-
-  console.log("Updated status: ", updatedStatus);
-
-  const updateUserFetching = useSelector(({ updateUser: { fetching } }) => {
-    return fetching;
-  });
-
-  const updateUser = useSelector(({ updateUser }) => updateUser);
-
-  const fetchingLoggedInUser = useSelector(
-    ({ getLoggedInUser: { fetching } }) => {
-      return fetching;
-    }
-  );
-
-  const getLoggedInUserSuccess = useSelector(
-    ({ getLoggedInUser: { success } }) => {
-      return success;
-    }
-  );
-
-  useEffect(() => {
-    if (updateUser.data?.status === "success" && !updateUserFetching) {
-      Alert.alert(
-        "Status changed",
-        "Your status has been updated",
-        [
-          {
-            text: "OK",
-            style: "default",
-          },
-        ],
-        {
-          cancelable: true,
-        }
-      );
-      dispatch(ac.getLoggedInUser(route.params.user?.uid));
-    }
-  }, [updateUser]);
-
-  useEffect(
-    function () {
-      if (getLoggedInUserSuccess && updateUser.data?.status === "success") {
-        console.log("Update user state data from redux: ", updateUser.data);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Profile" }],
-        });
-      }
-      if (updateUser.error || !getLoggedInUserSuccess) {
+      setUpdatedStatus({
+        status: selectedStatus?.value,
+        disease: selectedDisease?.value,
+      });
+      if (!updateUserFetching && updateUser.data?.status === "success") {
         Alert.alert(
-          "Error",
-          "Failed to update status",
+          "Status changed",
+          "Your status has been updated",
           [
             {
               text: "OK",
@@ -164,9 +127,14 @@ const SetStatus = ({ navigation, route }) => {
           }
         );
       }
-    },
-    [updateUser, getLoggedInUserSuccess]
-  );
+    }
+  };
+
+  useEffect(() => {
+    if (!updateUserFetching && updateUser.data?.status === "success") {
+      dispatch(ac.getLoggedInUser(route.params.user?.uid));
+    }
+  }, [dispatch, updateUser, updateUserFetching]);
 
   return (
     <SafeAreaView style={styles.wrapper}>

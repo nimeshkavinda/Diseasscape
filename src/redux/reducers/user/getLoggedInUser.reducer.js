@@ -9,10 +9,7 @@ export const getLoggedInUser = (
       return Object.assign({}, { fetching: true });
 
     case types.user.getLoggedInUser.success:
-      return Object.assign(
-        {},
-        { fetching: false, success: true, data: { ...action.data } }
-      );
+      return Object.assign({}, { fetching: false, data: { ...action.data } });
 
     case types.user.getLoggedInUser.failed:
       return Object.assign({}, { fetching: false, error: { ...action.data } });
