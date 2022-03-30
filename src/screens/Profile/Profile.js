@@ -60,7 +60,9 @@ const Profile = () => {
               },
             ]}
           >
-            {loggedInUser?.disease} {loggedInUser?.status}
+            {loggedInUser?.status === "healthy"
+              ? loggedInUser?.status
+              : `${loggedInUser?.disease} ${loggedInUser?.status}`}
           </Text>
         </View>
         <Text style={styles.profileBio} numberOfLines={2}>

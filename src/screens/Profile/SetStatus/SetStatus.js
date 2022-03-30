@@ -19,10 +19,6 @@ const SetStatus = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState();
   const [selectedDisease, setSelectedDisease] = useState();
-  const [updatedStatus, setUpdatedStatus] = useState({
-    status: "",
-    disease: "",
-  });
 
   useEffect(() => {
     switch (route.params?.user?.status) {
@@ -80,7 +76,23 @@ const SetStatus = ({ navigation, route }) => {
     }
   );
 
-  const loggedInUser = useSelector(({ getLoggedInUser }) => getLoggedInUser);
+  const setStatusHealthy = () => {
+    if (
+      selectedStatus?.id === 1 &&
+      selectedStatus?.value !== route.params?.user?.status
+    ) {
+      dispatch(
+        ac.updateUser(route.params.user?.uid, {
+          status: selectedStatus?.value,
+          disease: "",
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    setStatusHealthy();
+  }, [selectedStatus]);
 
   const updateStatusSubmit = () => {
     console.log("selected status/disease: ", selectedStatus, selectedDisease);
@@ -108,10 +120,6 @@ const SetStatus = ({ navigation, route }) => {
           disease: selectedDisease?.value,
         })
       );
-      setUpdatedStatus({
-        status: selectedStatus?.value,
-        disease: selectedDisease?.value,
-      });
       if (!updateUserFetching && updateUser.data?.status === "success") {
         Alert.alert(
           "Status changed",
