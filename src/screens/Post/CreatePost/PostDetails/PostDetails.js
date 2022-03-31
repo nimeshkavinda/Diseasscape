@@ -130,17 +130,18 @@ const PostDetails = ({ navigation, route }) => {
     if (postData !== undefined || "" || null) {
       console.log("Post data state obj before submit: ", postData);
       dispatch(ac.createPost(postData));
-    }
-  }, [dispatch, postData]);
-
-  useEffect(() => {
-    if (!createPostFetching && createPost.data?.status === "success") {
       Alert.alert(
         "Success",
         "Your post has been created",
         [
           {
             text: "OK",
+            onPress: () => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "HomeStack" }],
+              });
+            },
             style: "default",
           },
         ],
@@ -149,7 +150,7 @@ const PostDetails = ({ navigation, route }) => {
         }
       );
     }
-  }, [dispatch, createPost]);
+  }, [dispatch, postData]);
 
   const deleteImage = (img) => {
     let imgToDelete = images.findIndex((item) => {
