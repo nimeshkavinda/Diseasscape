@@ -107,12 +107,12 @@ const SetStatus = ({ navigation, route }) => {
         })
       );
       dispatch(ac.deletePatient(route.params.user?.uid));
-      dispatch(ac.getPatients());
     }
   };
 
   useEffect(() => {
     setStatusHealthy();
+    dispatch(ac.getLoggedInUser(route.params.user?.uid));
   }, [selectedStatus]);
 
   const updateStatusSubmit = () => {
@@ -156,30 +156,27 @@ const SetStatus = ({ navigation, route }) => {
           },
         })
       );
-      dispatch(ac.getPatients());
-      if (!updateUserFetching && updateUser.data?.status === "success") {
-        Alert.alert(
-          "Status changed",
-          "Your status has been updated",
-          [
-            {
-              text: "OK",
-              style: "default",
-            },
-          ],
+      Alert.alert(
+        "Status changed",
+        "Your status has been updated",
+        [
           {
-            cancelable: true,
-          }
-        );
-      }
+            text: "OK",
+            onPress: () => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "ProfileStack" }],
+              });
+            },
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
     }
   };
-
-  useEffect(() => {
-    if (!updateUserFetching && updateUser.data?.status === "success") {
-      dispatch(ac.getLoggedInUser(route.params.user?.uid));
-    }
-  }, [dispatch, updateUser, updateUserFetching]);
 
   return (
     <SafeAreaView style={styles.wrapper}>
