@@ -53,5 +53,8 @@
     "@babel/core": "^7.12.9",
     "redux-logger": "^3.0.6"
   },
+  "resolutions": {
+    "react-devtools-core": "4.14.0"
+  },
   "private": true
 }
