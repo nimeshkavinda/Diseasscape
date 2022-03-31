@@ -18,17 +18,15 @@ const Post = () => {
   const snapPoints = useMemo(() => ["32%"], []);
   return (
     <View style={styles.wrapper}>
-      {/* <Video
+      <Video
         style={styles.video}
-        source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/diseasscape.appspot.com/o/2.mp4?alt=media&token=d88374d3-afeb-4341-bf89-e53319a58f56",
-        }}
+        source={require("../../../assets/video/volunteer_vid.mp4")}
         useNativeControls={false}
         resizeMode="cover"
         isLooping
         isMuted
         shouldPlay
-      /> */}
+      />
       <BottomSheet
         ref={sheetRef}
         snapPoints={snapPoints}
