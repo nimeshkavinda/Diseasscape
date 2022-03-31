@@ -1,7 +1,7 @@
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Alert } from "react-native";
 import { useState, useEffect } from "react";
 import styles from "../styles";
-import { Text, Input } from "../../../../common";
+import { Text, Input, Button } from "../../../../common";
 import MapView, { Marker } from "react-native-maps";
 import { Fontisto } from "@expo/vector-icons";
 import useLocation from "../../../../hooks/useLocation";
@@ -139,8 +139,26 @@ const EventLocation = ({ prevStep, eventData }) => {
   const createEventSubmit = () => {
     console.log("Event data before submit: ", eventDataFinal);
     dispatch(ac.createEvent(eventDataFinal));
-    if (createEvent) {
-      navigation.navigate("Home");
+    if (!createEventFetching && createEvent?.status === "success") {
+      Alert.alert(
+        "Success",
+        "Event has been created",
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "HomeStack" }],
+              });
+            },
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
     }
   };
 
@@ -151,12 +169,6 @@ const EventLocation = ({ prevStep, eventData }) => {
   const createEventFetching = useSelector(({ createEvent: { fetching } }) => {
     return fetching;
   });
-
-  // useEffect(() => {
-  //   if (createEvent) {
-  //     navigation.navigate("Home");
-  //   }
-  // }, [createEvent]);
 
   return (
     <View style={styles.wrapper}>
@@ -209,7 +221,7 @@ const EventLocation = ({ prevStep, eventData }) => {
             Event details
           </Text>
         </TouchableOpacity>
-        {createEventFetching && (
+        {/* {createEventFetching && (
           <TouchableOpacity
             style={[
               styles.button,
@@ -221,18 +233,15 @@ const EventLocation = ({ prevStep, eventData }) => {
               Create event
             </Text>
           </TouchableOpacity>
-        )}
-        <TouchableOpacity
-          style={[
-            styles.button,
-            { width: "48%", backgroundColor: colors.primary.bg },
-          ]}
-          onPress={createEventSubmit}
-        >
-          <Text style={[styles.buttonText, { color: colors.primary.text }]}>
-            Create event
-          </Text>
-        </TouchableOpacity>
+        )} */}
+        <View style={styles.buttonSubmitWrapper}>
+          <Button
+            title="Create event"
+            onPress={createEventSubmit}
+            isLoading={createEventFetching}
+            style={{ fontSize: 16 }}
+          />
+        </View>
       </View>
     </View>
   );

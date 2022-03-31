@@ -78,7 +78,11 @@ const PostsModal = ({ visible, postId, post, isNearYou }) => {
             </View>
             <TouchableOpacity
               style={styles.authorDetails}
-              onPress={() => navigation.navigate("PublicProfile")}
+              onPress={() =>
+                navigation.navigate("PublicProfile", {
+                  uid: post?.organizer?.uid,
+                })
+              }
             >
               <Image
                 style={styles.authorImg}

@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "50%",
   },
+  buttonSubmitWrapper: {
+    width: "48%",
+  },
 });
 
 export default styles;
