@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   Modal,
+  Alert,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { BackButton, ValidationText, Input, Button } from "../../../../common";
@@ -117,13 +118,6 @@ const PostDetails = ({ navigation, route }) => {
     });
   };
 
-  useEffect(() => {
-    if (postData !== undefined || "" || null) {
-      console.log("Post data state obj before submit: ", postData);
-      dispatch(ac.createPost(postData));
-    }
-  }, [postData]);
-
   const createPost = useSelector(({ createPost }) =>
     createPost.data ? createPost.data : {}
   );
@@ -133,10 +127,29 @@ const PostDetails = ({ navigation, route }) => {
   });
 
   useEffect(() => {
-    if (createPost) {
-      navigation.navigate("Home");
+    if (postData !== undefined || "" || null) {
+      console.log("Post data state obj before submit: ", postData);
+      dispatch(ac.createPost(postData));
     }
-  }, [createPost]);
+  }, [dispatch, postData]);
+
+  useEffect(() => {
+    if (!createPostFetching && createPost.data?.status === "success") {
+      Alert.alert(
+        "Success",
+        "Your post has been created",
+        [
+          {
+            text: "OK",
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+    }
+  }, [dispatch, createPost]);
 
   const deleteImage = (img) => {
     let imgToDelete = images.findIndex((item) => {
@@ -270,9 +283,8 @@ const PostDetails = ({ navigation, route }) => {
           </TouchableOpacity>
         )}
       </ScrollView>
-      <View style={styles.buttonWrapper}>
+      <View style={styles.buttonSubmitWrapper}>
         <Button
-          style={styles.button}
           title="Create post"
           isLoading={createPostFetching}
           onPress={handleSubmit(handleSubmitPress)}

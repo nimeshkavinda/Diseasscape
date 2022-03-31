@@ -21,7 +21,12 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     color: "#fff",
   },
-  name: { fontSize: 32, fontWeight: "bold", marginVertical: 8 },
+  name: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginVertical: 8,
+    textTransform: "capitalize",
+  },
   locationDetails: { flexDirection: "row", alignItems: "center" },
   locationText: {
     fontSize: 16,

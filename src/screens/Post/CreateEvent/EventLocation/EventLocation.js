@@ -2,7 +2,7 @@ import { View, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import styles from "../styles";
 import { Text, Input } from "../../../../common";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { Fontisto } from "@expo/vector-icons";
 import useLocation from "../../../../hooks/useLocation";
 import colors from "../../../../theme/colors";
@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import ac from "../../../../redux/actions";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 let apiKey = Constants.manifest?.extra?.googleMapsApiKey;
 
@@ -24,9 +25,26 @@ const EventLocation = ({ prevStep, eventData }) => {
   const [userRegion, setUserRegion] = useState();
   const { coords, address, error } = useLocation();
   const [region, setRegion] = useState();
+  const [postsArray, setPostsArray] = useState([]);
 
   // event data final state obj
   const [eventDataFinal, setEventDataFinal] = useState(eventData);
+
+  const posts = useSelector(({ getPosts }) =>
+    getPosts.data ? getPosts.data : {}
+  );
+  const postsFetching = useSelector(({ getPosts: { fetching } }) => {
+    return fetching;
+  });
+
+  useEffect(() => {
+    if (!postsFetching) {
+      let postsArr = Object.keys(posts).map((key) => {
+        return posts[key];
+      });
+      setPostsArray(postsArr);
+    }
+  }, [postsFetching]);
 
   useEffect(() => {
     if (coords && address !== null) {
@@ -154,7 +172,17 @@ const EventLocation = ({ prevStep, eventData }) => {
             initialRegion={userRegion}
             region={region}
             onRegionChangeComplete={onRegionChange}
-          />
+          >
+            {postsArray.map((post) => (
+              <Marker key={post.id} coordinate={post.latLng}>
+                <MaterialCommunityIcons
+                  name="map-marker-radius"
+                  size={26}
+                  color={colors.warning.primary}
+                />
+              </Marker>
+            ))}
+          </MapView>
           <View style={styles.markerFixed}>
             <Fontisto
               style={styles.marker}

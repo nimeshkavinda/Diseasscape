@@ -64,8 +64,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  buttonSubmitWrapper: {
+    marginHorizontal: 20,
+    marginVertical: 20,
+  },
   button: {
-    width: "100%",
     textAlign: "center",
   },
   buttonText: { fontSize: 16, fontWeight: "500" },
