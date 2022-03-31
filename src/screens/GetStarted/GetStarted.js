@@ -1,48 +1,47 @@
-import { View } from "react-native";
-import React from "react";
+import { View, Image, Platform } from "react-native";
 import styles from "./styles";
 import { Button, Text } from "../../common";
-import { Video } from "expo-av";
-import { BlurView } from "expo-blur";
-import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
 
 export default function GetStarted() {
   const navigation = useNavigation();
   return (
     <View style={styles.wrapper}>
-      {/* <Video
-        style={styles.video}
-        source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/diseasscape.appspot.com/o/1.mp4?alt=media&token=0390b605-5de8-4fe3-8f44-05ff6be43718",
-        }}
-        useNativeControls={false}
+      <Image
+        style={styles.image}
+        source={require("../../../assets/images/getstarted.jpg")}
         resizeMode="cover"
-        isLooping
-        isMuted
-        shouldPlay
-      /> */}
-      <BlurView intensity={100} tint="light" style={styles.blurViewWrapper}>
-        <View style={styles.headingWrapper}>
-          <Text style={styles.title}>
-            The groundwork of all happiness is health.
-          </Text>
-          <Text style={styles.subtitle}>You can make a difference</Text>
-        </View>
-        <View style={styles.buttonWrapper}>
-          <Button
-            title="Get Started"
-            onPress={() => navigation.navigate("Signup")}
-          />
-          <Button
-            title="I already have an account"
-            variant="link"
-            style={styles.linkButton}
-            onPress={() => navigation.navigate("Login")}
-          />
-        </View>
-      </BlurView>
-      {/* <StatusBar style="light" /> */}
+      />
+      <LinearGradient
+        colors={[
+          "transparent",
+          "rgba(0, 0, 0, 0.75)",
+          "rgba(0, 0, 0, 0.8)",
+          "rgba(0, 0, 0, 0.95)",
+        ]}
+        style={styles.gradient}
+      />
+      <View style={styles.headingWrapper}>
+        <Text style={styles.title}>
+          It's one's responsibility to take care of loved ones.
+        </Text>
+        <Text style={styles.subtitle}>See how you can do you part</Text>
+      </View>
+      <View style={styles.buttonWrapper}>
+        <Button
+          title="Get Started"
+          onPress={() => navigation.navigate("Signup")}
+        />
+        <Button
+          title="I already have an account"
+          variant="link"
+          style={styles.linkButton}
+          onPress={() => navigation.navigate("Login")}
+        />
+      </View>
+      {Platform.OS === "ios" && <StatusBar style="light" />}
     </View>
   );
 }

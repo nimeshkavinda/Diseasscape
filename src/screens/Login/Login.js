@@ -8,6 +8,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import ac from "../../redux/actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "expo-status-bar";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -164,6 +165,7 @@ export default function Login() {
           />
         </View>
       </View>
+      <StatusBar style="dark" />
     </View>
   );
 }
