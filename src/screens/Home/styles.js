@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   loading: {
+    zIndex: 99999,
     position: "absolute",
     left: 0,
     right: 0,
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#ffffff80",
   },
 });
 

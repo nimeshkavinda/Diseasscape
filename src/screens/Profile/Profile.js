@@ -36,16 +36,11 @@ const Profile = () => {
     }
   );
 
-  if (fetchingLoggedInUser) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color={colors.primary.bg} />
-      </View>
-    );
-  }
-
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView
+      style={styles.wrapper}
+      pointerEvents={fetchingLoggedInUser ? "none" : ""}
+    >
       <View style={styles.headerNav}>
         <Text style={styles.headerTitle}>My profile</Text>
       </View>
@@ -217,6 +212,11 @@ const Profile = () => {
           </ScrollView>
         </View>
       </View>
+      {fetchingLoggedInUser && (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color={colors.primary.bg} />
+        </View>
+      )}
     </SafeAreaView>
   );
 };

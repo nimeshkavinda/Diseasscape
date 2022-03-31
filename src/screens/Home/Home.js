@@ -396,16 +396,13 @@ const Home = () => {
     setEventModalVisibility(true);
   };
 
-  if (patientsFetching || postsFetching || eventsFetching) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color={colors.primary.bg} />
-      </View>
-    );
-  }
-
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView
+      style={styles.wrapper}
+      pointerEvents={
+        patientsFetching || postsFetching || eventsFetching ? "none" : ""
+      }
+    >
       <View
         style={[
           styles.headerWrapper,
@@ -499,6 +496,19 @@ const Home = () => {
         </MapView>
       )}
       <BottomSheet />
+      {patientsFetching ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color={colors.primary.bg} />
+        </View>
+      ) : postsFetching ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color={colors.primary.bg} />
+        </View>
+      ) : eventsFetching ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color={colors.primary.bg} />
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };
