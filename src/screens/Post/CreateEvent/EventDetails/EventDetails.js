@@ -163,6 +163,7 @@ const EventDetails = () => {
                 is24Hour={true}
                 onChange={onDateTimeChange}
                 style={styles.date}
+                minimumDate={new Date()}
               />
             </View>
             <View style={styles.timeWrapper}>
