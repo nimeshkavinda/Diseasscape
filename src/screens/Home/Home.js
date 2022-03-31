@@ -1,4 +1,10 @@
-import { View, SafeAreaView, FlatList, Dimensions } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  FlatList,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { FilterButton } from "../../common";
 import styles from "./styles";
@@ -389,6 +395,14 @@ const Home = () => {
     setSelectedEvent(event);
     setEventModalVisibility(true);
   };
+
+  if (patientsFetching || postsFetching || eventsFetching) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color={colors.primary.bg} />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.wrapper}>

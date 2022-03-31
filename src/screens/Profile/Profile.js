@@ -1,4 +1,10 @@
-import { SafeAreaView, View, Image, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { Text } from "../../common";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./styles";
@@ -16,13 +22,27 @@ const Profile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(ac.getLoggedInUser(loggedInUser.uid));
+  }, []);
+
   const loggedInUser = useSelector(({ getLoggedInUser }) =>
     getLoggedInUser.data ? getLoggedInUser.data[0] : {}
   );
 
-  useEffect(() => {
-    dispatch(ac.getLoggedInUser(loggedInUser.uid));
-  }, []);
+  const fetchingLoggedInUser = useSelector(
+    ({ getLoggedInUser: { fetching } }) => {
+      return fetching;
+    }
+  );
+
+  if (fetchingLoggedInUser) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color={colors.primary.bg} />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.wrapper}>
