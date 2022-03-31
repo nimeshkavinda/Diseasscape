@@ -139,27 +139,25 @@ const EventLocation = ({ prevStep, eventData }) => {
   const createEventSubmit = () => {
     console.log("Event data before submit: ", eventDataFinal);
     dispatch(ac.createEvent(eventDataFinal));
-    if (!createEventFetching && createEvent?.status === "success") {
-      Alert.alert(
-        "Success",
-        "Your event has been created",
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "HomeStack" }],
-              });
-            },
-            style: "default",
-          },
-        ],
+    Alert.alert(
+      "Success",
+      "Your event has been created",
+      [
         {
-          cancelable: true,
-        }
-      );
-    }
+          text: "OK",
+          onPress: () => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "HomeStack" }],
+            });
+          },
+          style: "default",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
   };
 
   const createEvent = useSelector(({ createEvent }) =>
