@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  Alert,
 } from "react-native";
 import {
   Text,
@@ -90,6 +91,26 @@ const EditProfile = ({ navigation, route }) => {
         phone: data?.phone,
       })
     );
+    // dispatch(ac.getLoggedInUser(route.params.user?.uid));
+    Alert.alert(
+      "Success",
+      "Your profile has been updated",
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "ProfileStack" }],
+            });
+          },
+          style: "default",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
   };
 
   console.log("Profile data state obj: ", userProfileData);
@@ -97,12 +118,6 @@ const EditProfile = ({ navigation, route }) => {
   const updateUserFetching = useSelector(({ updateUser: { fetching } }) => {
     return fetching;
   });
-
-  useEffect(() => {
-    if (!updateUserFetching) {
-      dispatch(ac.getLoggedInUser(route.params.user?.uid));
-    }
-  }, [dispatch, updateUserFetching]);
 
   const takePicture = async () => {
     console.log("Camera permission: ", cameraPermission);

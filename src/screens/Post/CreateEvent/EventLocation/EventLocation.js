@@ -142,7 +142,7 @@ const EventLocation = ({ prevStep, eventData }) => {
     if (!createEventFetching && createEvent?.status === "success") {
       Alert.alert(
         "Success",
-        "Event has been created",
+        "Your event has been created",
         [
           {
             text: "OK",

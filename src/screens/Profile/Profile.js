@@ -8,13 +8,21 @@ import colors from "../../theme/colors";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import ac from "../../redux/actions";
 
 const Profile = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const loggedInUser = useSelector(({ getLoggedInUser }) =>
     getLoggedInUser.data ? getLoggedInUser.data[0] : {}
   );
+
+  useEffect(() => {
+    dispatch(ac.getLoggedInUser(loggedInUser.uid));
+  }, []);
 
   return (
     <SafeAreaView style={styles.wrapper}>
