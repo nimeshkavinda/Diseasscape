@@ -400,7 +400,7 @@ const Home = () => {
     <SafeAreaView
       style={styles.wrapper}
       pointerEvents={
-        patientsFetching || postsFetching || eventsFetching ? "none" : ""
+        patientsFetching || postsFetching || eventsFetching ? "none" : "auto"
       }
     >
       <View

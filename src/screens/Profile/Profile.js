@@ -22,8 +22,10 @@ const Profile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const signIn = useSelector(({ signIn }) => signIn);
+
   useEffect(() => {
-    dispatch(ac.getLoggedInUser(loggedInUser.uid));
+    dispatch(ac.getLoggedInUser(signIn.data?.uid));
   }, []);
 
   const loggedInUser = useSelector(({ getLoggedInUser }) =>
@@ -39,7 +41,7 @@ const Profile = () => {
   return (
     <SafeAreaView
       style={styles.wrapper}
-      pointerEvents={fetchingLoggedInUser ? "none" : ""}
+      pointerEvents={fetchingLoggedInUser ? "none" : "auto"}
     >
       <View style={styles.headerNav}>
         <Text style={styles.headerTitle}>My profile</Text>
