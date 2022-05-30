@@ -9,7 +9,7 @@ import {
 } from "./user";
 import { getPatients, createPatient, deletePatient } from "./patient";
 import { getPosts, createPost } from "./post";
-import { getEvents, createEvent } from "./event";
+import { getEvents, createEvent, updateEvent } from "./event";
 
 const rootReducer = combineReducers({
   signIn,
@@ -25,6 +25,7 @@ const rootReducer = combineReducers({
   updateUser,
   createPatient,
   deletePatient,
+  updateEvent,
 });
 
 export default rootReducer;

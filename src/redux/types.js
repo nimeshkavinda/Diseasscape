@@ -47,6 +47,9 @@ const types = {
     createEvent: {
       ...generateActionTypes("event.createEvent"),
     },
+    updateEvent: {
+      ...generateActionTypes("event.updateEvent"),
+    },
   },
 };
 
