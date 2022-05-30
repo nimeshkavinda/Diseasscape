@@ -12,6 +12,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import ac from "../../../redux/actions";
+import { Button } from "../../../common";
 
 const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
   const sheetRef = useRef(null);
@@ -20,9 +23,23 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
   const openModal = () => sheetRef.current.snapToIndex(0);
   const [postsInVicinity, setPostsInVicinity] = useState();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [goingStatus, setGoingStatus] = useState(false);
 
   const filteredPosts = posts.filter(function (post) {
     return post.location.vicinity === event?.location?.vicinity;
+  });
+
+  const loggedInUser = useSelector(({ getLoggedInUser }) =>
+    getLoggedInUser.data ? getLoggedInUser.data[0] : {}
+  );
+
+  const updateEvent = useSelector(({ updateEvent }) =>
+    updateEvent.data ? updateEvent.data : {}
+  );
+
+  const updateEventFetching = useSelector(({ updateEvent: { fetching } }) => {
+    return fetching;
   });
 
   useEffect(() => {
@@ -31,6 +48,64 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
   }, [eventId]);
 
   console.log("Posts in vicinity", postsInVicinity);
+
+  const handleMarkAsGoing = () => {
+    dispatch(
+      ac.updateEvent(eventId, {
+        ...event,
+        participants: [
+          ...event.participants,
+          {
+            uid: loggedInUser?.uid,
+            fullName: loggedInUser?.fullName,
+          },
+        ],
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (updateEvent.status === "success") {
+      let isFound = updateEvent.data.participants.some((participant) => {
+        if (participant.uid === loggedInUser?.uid) {
+          return true;
+        }
+        return false;
+      });
+      if (isFound) {
+        setGoingStatus(true);
+      } else {
+        Alert.alert(
+          "Error",
+          "Failed to mark as going",
+          [
+            {
+              text: "OK",
+              style: "default",
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+      }
+    }
+    if (updateEvent.error) {
+      Alert.alert(
+        "Error",
+        "Failed to mark as going",
+        [
+          {
+            text: "OK",
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+    }
+  }, [updateEvent]);
 
   const PostCard = ({ item }) => {
     return (
@@ -199,9 +274,17 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
               <Text style={styles.organizerText}>Organizer</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          {/* <TouchableOpacity style={styles.button} onPress={handleMarkAsGoing}>
             <Text style={styles.buttonText}>Mark as going</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <Button
+            title={goingStatus ? "Already going" : "Mark as going"}
+            disabled={goingStatus}
+            variant="secondary"
+            onPress={handleMarkAsGoing}
+            isLoading={updateEventFetching}
+            style={goingStatus ? styles.disabledButton : styles.button}
+          />
         </View>
       </BottomSheetView>
     </BottomSheet>

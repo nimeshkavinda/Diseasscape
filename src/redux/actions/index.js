@@ -8,7 +8,7 @@ import {
 } from "./user";
 import { getPatients, createPatient, deletePatient } from "./patient";
 import { getPosts, createPost } from "./post";
-import { getEvents, createEvent } from "./event";
+import { getEvents, createEvent, updateEvent } from "./event";
 
 const actions = {
   signIn,
@@ -24,6 +24,7 @@ const actions = {
   updateUser,
   createPatient,
   deletePatient,
+  updateEvent,
 };
 
 export default actions;

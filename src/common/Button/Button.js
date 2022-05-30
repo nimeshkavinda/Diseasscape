@@ -59,13 +59,14 @@ export default function Button({
   style,
   isLoading = false,
   variant = "primary",
+  disabled,
 }) {
   return (
     <ButtonContainer
       variant={variant}
       style={style}
       onPress={onPress}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {isLoading ? (
         <LoadingView>
@@ -93,4 +94,5 @@ Button.propTypes = {
   onPress: PropTypes.func,
   variant: PropTypes.oneOf(["primary", "secondary", "link"]),
   isLoading: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
