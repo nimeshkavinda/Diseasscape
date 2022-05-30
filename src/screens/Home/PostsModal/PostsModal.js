@@ -80,7 +80,7 @@ const PostsModal = ({ visible, postId, post, isNearYou }) => {
               style={styles.authorDetails}
               onPress={() =>
                 navigation.navigate("PublicProfile", {
-                  uid: post?.organizer?.uid,
+                  uid: post?.postedBy?.uid,
                 })
               }
             >

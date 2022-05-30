@@ -51,90 +51,91 @@ const CreatePost = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            disabled={true}
+            onPress={() =>
+              navigation.navigate("PostDetails", {
+                type: "leptospirosis",
+              })
+            }
             style={[
-              styles.disabledTypeButton,
-              { backgroundColor: colors.grey.light },
+              styles.typeButton,
+              { backgroundColor: colors.secondary.bg },
             ]}
           >
             <Ionicons
               name="arrow-forward-circle"
               size={36}
-              color={colors.grey.dark}
+              color={colors.secondary.text}
             />
             <Text
-              style={[
-                styles.disabledTypeButtonText,
-                { color: colors.grey.dark },
-              ]}
+              style={[styles.typeButtonText, { color: colors.secondary.text }]}
+            >
+              Leptospirosis
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("PostDetails", {
+                type: "yellowFever",
+              })
+            }
+            style={[
+              styles.typeButton,
+              { backgroundColor: colors.secondary.bg },
+            ]}
+          >
+            <Ionicons
+              name="arrow-forward-circle"
+              size={36}
+              color={colors.secondary.text}
+            />
+            <Text
+              style={[styles.typeButtonText, { color: colors.secondary.text }]}
             >
               Yellow fever
             </Text>
-            <Text
-              style={[
-                styles.disabledTypeButtonTextLabel,
-                { color: colors.warning.primary },
-              ]}
-            >
-              Coming Soon
-            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            disabled={true}
+            onPress={() =>
+              navigation.navigate("PostDetails", {
+                type: "chikungunya",
+              })
+            }
             style={[
-              styles.disabledTypeButton,
-              { backgroundColor: colors.grey.light },
+              styles.typeButton,
+              { backgroundColor: colors.secondary.bg },
             ]}
           >
             <Ionicons
               name="arrow-forward-circle"
               size={36}
-              color={colors.grey.dark}
+              color={colors.secondary.text}
             />
             <Text
-              style={[
-                styles.disabledTypeButtonText,
-                { color: colors.grey.dark },
-              ]}
+              style={[styles.typeButtonText, { color: colors.secondary.text }]}
             >
               Chikungunya
             </Text>
-            <Text
-              style={[
-                styles.disabledTypeButtonTextLabel,
-                { color: colors.warning.primary },
-              ]}
-            >
-              Coming Soon
-            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            disabled={true}
+            onPress={() =>
+              navigation.navigate("PostDetails", {
+                type: "zika",
+              })
+            }
             style={[
-              styles.disabledTypeButton,
-              { backgroundColor: colors.grey.light },
+              styles.typeButton,
+              { backgroundColor: colors.secondary.bg },
             ]}
           >
             <Ionicons
               name="arrow-forward-circle"
               size={36}
-              color={colors.grey.dark}
+              color={colors.secondary.text}
             />
             <Text
-              style={[
-                styles.disabledTypeButtonText,
-                { color: colors.grey.dark },
-              ]}
+              style={[styles.typeButtonText, { color: colors.secondary.text }]}
             >
               Zika
-            </Text>
-            <Text
-              style={[
-                styles.disabledTypeButtonTextLabel,
-                { color: colors.warning.primary },
-              ]}
-            >
-              Coming Soon
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -166,35 +167,7 @@ const CreatePost = () => {
               Coming Soon
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            disabled={true}
-            style={[
-              styles.disabledTypeButton,
-              { backgroundColor: colors.grey.light },
-            ]}
-          >
-            <Ionicons
-              name="arrow-forward-circle"
-              size={36}
-              color={colors.grey.dark}
-            />
-            <Text
-              style={[
-                styles.disabledTypeButtonText,
-                { color: colors.grey.dark },
-              ]}
-            >
-              Leptospirosis
-            </Text>
-            <Text
-              style={[
-                styles.disabledTypeButtonTextLabel,
-                { color: colors.warning.primary },
-              ]}
-            >
-              Coming Soon
-            </Text>
-          </TouchableOpacity>
+
           <TouchableOpacity
             disabled={true}
             style={[

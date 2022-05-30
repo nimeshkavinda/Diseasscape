@@ -114,7 +114,7 @@ const Home = () => {
         vicinity: address?.city,
         latitude: coords?.latitude,
         longitude: coords?.longitude,
-        latitudeDelta: 0.05,
+        latitudeDelta: 0.2,
         longitudeDelta: 0.01,
       });
       setRegion({
@@ -122,7 +122,7 @@ const Home = () => {
         vicinity: address?.city,
         latitude: coords?.latitude,
         longitude: coords?.longitude,
-        latitudeDelta: 0.05,
+        latitudeDelta: 0.2,
         longitudeDelta: 0.01,
       });
       setIsLoaded({ ...isLoaded, location: true });

@@ -37,6 +37,10 @@ const EventLocation = ({ prevStep, eventData }) => {
     return fetching;
   });
 
+  const loggedInUser = useSelector(({ getLoggedInUser }) =>
+    getLoggedInUser.data ? getLoggedInUser.data[0] : {}
+  );
+
   useEffect(() => {
     if (!postsFetching) {
       let postsArr = Object.keys(posts).map((key) => {
@@ -136,9 +140,29 @@ const EventLocation = ({ prevStep, eventData }) => {
     console.log("Event data final at location change: ", eventDataFinal);
   };
 
+  const createEvent = useSelector(({ createEvent }) =>
+    createEvent.data ? createEvent.data : {}
+  );
+
+  const createEventFetching = useSelector(({ createEvent: { fetching } }) => {
+    return fetching;
+  });
+
   const createEventSubmit = () => {
     console.log("Event data before submit: ", eventDataFinal);
+    console.log("Create event data", createEvent);
     dispatch(ac.createEvent(eventDataFinal));
+    dispatch(
+      ac.updateUser(loggedInUser?.uid, {
+        ...loggedInUser,
+        events: [
+          ...loggedInUser.events,
+          {
+            eventId: createEvent?.data?.id,
+          },
+        ],
+      })
+    );
     Alert.alert(
       "Success",
       "Your event has been created",
@@ -159,14 +183,6 @@ const EventLocation = ({ prevStep, eventData }) => {
       }
     );
   };
-
-  const createEvent = useSelector(({ createEvent }) =>
-    createEvent.data ? createEvent.data : {}
-  );
-
-  const createEventFetching = useSelector(({ createEvent: { fetching } }) => {
-    return fetching;
-  });
 
   return (
     <View style={styles.wrapper}>

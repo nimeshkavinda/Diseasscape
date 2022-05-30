@@ -130,6 +130,17 @@ const PostDetails = ({ navigation, route }) => {
     if (postData !== undefined || "" || null) {
       console.log("Post data state obj before submit: ", postData);
       dispatch(ac.createPost(postData));
+      dispatch(
+        ac.updateUser(loggedInUser?.uid, {
+          ...loggedInUser,
+          posts: [
+            ...loggedInUser.posts,
+            {
+              postId: createPost?.data?.id,
+            },
+          ],
+        })
+      );
       Alert.alert(
         "Success",
         "Your post has been created",
@@ -151,6 +162,21 @@ const PostDetails = ({ navigation, route }) => {
       );
     }
   }, [dispatch, postData]);
+
+  // useEffect(() => {
+  //   console.log("create post data", createPost);
+  //   dispatch(
+  //     ac.updateUser(loggedInUser?.uid, {
+  //       ...loggedInUser,
+  //       posts: [
+  //         ...loggedInUser.posts,
+  //         {
+  //           postId: createPost?.data?.id,
+  //         },
+  //       ],
+  //     })
+  //   );
+  // }, [createPost]);
 
   const deleteImage = (img) => {
     let imgToDelete = images.findIndex((item) => {

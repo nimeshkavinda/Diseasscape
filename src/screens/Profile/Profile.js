@@ -37,7 +37,7 @@ const Profile = () => {
       return fetching;
     }
   );
-
+  console.log("logged in profile", loggedInUser);
   return (
     <SafeAreaView
       style={styles.wrapper}
