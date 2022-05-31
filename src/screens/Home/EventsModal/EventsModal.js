@@ -234,7 +234,9 @@ const EventsModal = ({ visible, eventId, event, isNearYou, posts }) => {
         </View>
         <View style={styles.descriptionWrapper}>
           <Text style={styles.descriptionTitle}>Description</Text>
-          <Text style={styles.description}>{event?.description}</Text>
+          <Text style={styles.description} numberOfLines={3}>
+            {event?.description}
+          </Text>
         </View>
         <View style={styles.postsWrapper}>
           <Text style={styles.postHeading}>Nearby risk sites</Text>

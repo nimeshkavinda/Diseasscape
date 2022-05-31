@@ -15,7 +15,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 let apiKey = Constants.manifest?.extra?.googleMapsApiKey;
 
-const latitudeDelta = 0.05;
+const latitudeDelta = 0.15;
 const longitudeDelta = 0.01;
 
 const EventLocation = ({ prevStep, eventData }) => {

@@ -107,6 +107,7 @@ const SetStatus = ({ navigation, route }) => {
         })
       );
       dispatch(ac.deletePatient(route.params.user?.uid));
+      // dispatch(ac.getLoggedInUser(route.params.user?.uid));
     }
   };
 
@@ -135,6 +136,7 @@ const SetStatus = ({ navigation, route }) => {
       selectedStatus?.value !== route.params?.user?.status ||
       selectedDisease?.value !== route.params?.user?.disease
     ) {
+      console.log("status n disease", status);
       dispatch(
         ac.updateUser(route.params.user?.uid, {
           status: selectedStatus?.value,
